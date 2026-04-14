@@ -615,7 +615,7 @@ export default function App() {
               </button>
             ))}
           </div>
-          <button className="ght-see-all" onClick={() => setActivePage("Handyman")}>
+          <button className="ght-see-all" onClick={() => setActivePage("__services")}>
             See All Services &rsaquo;
           </button>
         </div>
