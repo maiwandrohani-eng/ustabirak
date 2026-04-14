@@ -33,10 +33,11 @@ function App() {
   return (
     <main className="layout">
       <header>
-        <h1>
-          Ustaya<span>Birak</span> Admin
-        </h1>
-        <p>Real-time operations, trust, and marketplace performance control center.</p>
+        <img src="/logo.png" alt="UstayaBirak" />
+        <div>
+          <h1>Ustaya<span>Birak</span> Admin</h1>
+          <p>Real-time operations, trust, and marketplace performance control center.</p>
+        </div>
       </header>
 
       <section className="grid">
