@@ -409,6 +409,45 @@ export default function App() {
           </div>
         </section>
 
+        <footer className="footer-main">
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+            </div>
+            <div className="footer-col">
+              <h4>Discover</h4>
+              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button onClick={() => setActivePage("__services")}>All Services</button>
+              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
+              <button onClick={() => setActivePage("__help")}>Help</button>
+            </div>
+            <div className="footer-col">
+              <h4>Company</h4>
+              <button onClick={() => setActivePage("__about")}>About Us</button>
+              <button onClick={() => setActivePage("__careers")}>Careers</button>
+              <button onClick={() => setActivePage("__blog")}>Blog</button>
+              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+            </div>
+            <div className="footer-col">
+              <h4>Download our app</h4>
+              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <div className="footer-app-badges">
+                <div className="app-badge">📱 App Store</div>
+                <div className="app-badge">🤖 Google Play</div>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <div className="footer-social">
+              <a href="#" aria-label="Facebook">f</a>
+              <a href="#" aria-label="Instagram">ig</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+            </div>
+          </div>
+        </footer>
+
         {showAuth && (
           <AuthModal
             onClose={() => setShowAuth(false)}
@@ -504,6 +543,45 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <footer className="footer-main">
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+            </div>
+            <div className="footer-col">
+              <h4>Discover</h4>
+              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button onClick={() => setActivePage("__services")}>All Services</button>
+              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
+              <button onClick={() => setActivePage("__help")}>Help</button>
+            </div>
+            <div className="footer-col">
+              <h4>Company</h4>
+              <button onClick={() => setActivePage("__about")}>About Us</button>
+              <button onClick={() => setActivePage("__careers")}>Careers</button>
+              <button onClick={() => setActivePage("__blog")}>Blog</button>
+              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+            </div>
+            <div className="footer-col">
+              <h4>Download our app</h4>
+              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <div className="footer-app-badges">
+                <div className="app-badge">📱 App Store</div>
+                <div className="app-badge">🤖 Google Play</div>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <div className="footer-social">
+              <a href="#" aria-label="Facebook">f</a>
+              <a href="#" aria-label="Instagram">ig</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+            </div>
+          </div>
+        </footer>
 
         {showAuth && (
           <AuthModal
@@ -609,6 +687,45 @@ export default function App() {
             </div>
           )}
         </section>
+
+        <footer className="footer-main">
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+            </div>
+            <div className="footer-col">
+              <h4>Discover</h4>
+              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button onClick={() => setActivePage("__services")}>All Services</button>
+              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
+              <button onClick={() => setActivePage("__help")}>Help</button>
+            </div>
+            <div className="footer-col">
+              <h4>Company</h4>
+              <button onClick={() => setActivePage("__about")}>About Us</button>
+              <button onClick={() => setActivePage("__careers")}>Careers</button>
+              <button onClick={() => setActivePage("__blog")}>Blog</button>
+              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+            </div>
+            <div className="footer-col">
+              <h4>Download our app</h4>
+              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <div className="footer-app-badges">
+                <div className="app-badge">📱 App Store</div>
+                <div className="app-badge">🤖 Google Play</div>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <div className="footer-social">
+              <a href="#" aria-label="Facebook">f</a>
+              <a href="#" aria-label="Instagram">ig</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+            </div>
+          </div>
+        </footer>
 
         {showAuth && (
           <AuthModal
