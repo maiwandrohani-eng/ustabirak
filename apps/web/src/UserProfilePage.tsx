@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 interface Props {
   user: { id: string; fullName: string; role: string };
@@ -8,6 +10,7 @@ interface Props {
 }
 
 export default function UserProfilePage({ user, onBack, onSignOut, onNavigate }: Props) {
+  const { lang } = useLang();
   const [name, setName] = useState(user.fullName);
   const [email, setEmail] = useState("user@example.com");
   const [phone, setPhone] = useState("+90 555 000 0000");
@@ -58,22 +61,22 @@ export default function UserProfilePage({ user, onBack, onSignOut, onNavigate }:
           </div>
 
           {saved && (
-            <div className="profile-saved-banner">✅ Profile updated successfully!</div>
+            <div className="profile-saved-banner">{t("prof_saved", lang)}</div>
           )}
 
           <div className="profile-card">
             <div className="profile-card-header">
-              <h2>Personal Information</h2>
+              <h2>{t("prof_personal", lang)}</h2>
               <button className="btn-ghost" onClick={() => setEditing(!editing)}>
-                {editing ? "Cancel" : "Edit"}
+                {editing ? t("prof_cancel", lang) : t("prof_edit", lang)}
               </button>
             </div>
             <div className="profile-fields">
               {[
-                { label: "Full Name", value: name, setter: setName, type: "text" },
-                { label: "Email", value: email, setter: setEmail, type: "email" },
-                { label: "Phone", value: phone, setter: setPhone, type: "tel" },
-                { label: "City", value: city, setter: setCity, type: "text" },
+                { label: t("prof_name", lang), value: name, setter: setName, type: "text" },
+                { label: t("prof_email", lang), value: email, setter: setEmail, type: "email" },
+                { label: t("prof_phone", lang), value: phone, setter: setPhone, type: "tel" },
+                { label: t("prof_city", lang), value: city, setter: setCity, type: "text" },
               ].map(({ label, value, setter, type }) => (
                 <div className="profile-field" key={label}>
                   <label>{label}</label>
@@ -92,14 +95,14 @@ export default function UserProfilePage({ user, onBack, onSignOut, onNavigate }:
             </div>
             {editing && (
               <button className="btn-primary" style={{ marginTop: "1rem" }} onClick={handleSave}>
-                Save Changes
+                {t("prof_save", lang)}
               </button>
             )}
           </div>
 
           <div className="profile-card">
             <div className="profile-card-header">
-              <h2>Saved Addresses</h2>
+              <h2>{t("prof_addresses", lang)}</h2>
               <button className="btn-ghost">+ Add</button>
             </div>
             {[
@@ -118,7 +121,7 @@ export default function UserProfilePage({ user, onBack, onSignOut, onNavigate }:
 
           <div className="profile-card">
             <div className="profile-card-header">
-              <h2>Payment Methods</h2>
+              <h2>{t("prof_payment", lang)}</h2>
               <button className="btn-ghost">+ Add Card</button>
             </div>
             <div className="profile-payment-item">

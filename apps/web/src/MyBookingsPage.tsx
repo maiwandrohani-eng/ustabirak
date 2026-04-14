@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 import type { BookingRecord } from "./CheckoutModal";
 import ReviewModal from "./ReviewModal";
 
@@ -23,13 +25,6 @@ const STATUS_COLORS: Record<string, string> = {
   cancelled: "#ef4444",
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: "Pending",
-  "in-progress": "In Progress",
-  completed: "Completed",
-  cancelled: "Cancelled",
-};
-
 const STATUS_ICONS: Record<string, string> = {
   pending: "🕐",
   "in-progress": "🔵",
@@ -38,6 +33,13 @@ const STATUS_ICONS: Record<string, string> = {
 };
 
 export default function MyBookingsPage({ user, bookings, onBack, onNavigate }: Props) {
+  const { lang } = useLang();
+  const STATUS_LABELS: Record<string, string> = {
+    pending: t("myb_st_pending", lang),
+    "in-progress": t("myb_st_ip", lang),
+    completed: t("myb_st_done", lang),
+    cancelled: t("myb_st_cancelled", lang),
+  };
   const [reviewBooking, setReviewBooking] = useState<BookingRecord | null>(null);
   const [reviewedIds, setReviewedIds] = useState<string[]>([]);
 
@@ -69,12 +71,12 @@ export default function MyBookingsPage({ user, bookings, onBack, onNavigate }: P
       <section className="myb-page">
         <div className="myb-inner">
           <button className="static-back-btn" onClick={onBack}>← Back</button>
-          <h1 className="myb-title">My Bookings</h1>
+          <h1 className="myb-title">{t("myb_title", lang)}</h1>
 
           {/* Active & Upcoming */}
           {active.length > 0 && (
             <>
-              <h2 className="myb-section-heading">Active &amp; Upcoming</h2>
+              <h2 className="myb-section-heading">{t("myb_active", lang)}</h2>
               <div className="myb-list">
                 {active.map((b) => (
                   <div className="myb-card" key={b.id}>
@@ -103,12 +105,12 @@ export default function MyBookingsPage({ user, bookings, onBack, onNavigate }: P
 
           {/* Past Bookings */}
           <h2 className="myb-section-heading" style={{ marginTop: active.length > 0 ? "2.5rem" : 0 }}>
-            Past Bookings
+            {t("myb_past", lang)}
           </h2>
           {past.length === 0 ? (
             <div className="myb-empty">
               <span className="myb-empty-icon">📅</span>
-              <p>No past bookings yet.{" "}
+              <p>{t("myb_empty", lang)}{" "}
                 <button className="link-btn" onClick={() => onNavigate("__services")}>
                   Browse services
                 </button>{" "}
@@ -133,11 +135,11 @@ export default function MyBookingsPage({ user, bookings, onBack, onNavigate }: P
                     <div className="myb-card-right">
                       <span className="myb-amount">₺{b.amount}</span>
                       {b.status === "completed" && !canReview && (
-                        <span className="myb-reviewed-badge">⭐ Reviewed</span>
+                        <span className="myb-reviewed-badge">{t("myb_reviewed", lang)}</span>
                       )}
                       {canReview && (
                         <button className="btn-ghost myb-review-btn" onClick={() => setReviewBooking(b)}>
-                          Leave Review
+                          {t("myb_leave_review", lang)}
                         </button>
                       )}
                       {b.status === "cancelled" && (

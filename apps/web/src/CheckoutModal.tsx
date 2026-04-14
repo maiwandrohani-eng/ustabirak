@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 import type { WorkerProfile } from "@ustaya/shared";
 import { apiPost } from "./api";
 
@@ -24,6 +26,7 @@ interface Props {
 const today = new Date().toISOString().split("T")[0];
 
 export default function CheckoutModal({ worker, serviceTitle, catId, onClose, onSuccess }: Props) {
+  const { lang } = useLang();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [date, setDate] = useState(today);
   const [time, setTime] = useState("10:00");
@@ -101,7 +104,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
 
         <div className="checkout-header">
           <h2 className="checkout-title">
-            {step === 3 ? "Booking Confirmed!" : `Book ${worker.fullName}`}
+            {step === 3 ? t("co_confirmed", lang) : `${t("co_book", lang)} ${worker.fullName}`}
           </h2>
           {step !== 3 && (
             <div className="checkout-steps">
@@ -111,7 +114,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
                 </div>
               ))}
               <div className="checkout-step-label">
-                {step === 1 ? "Schedule" : "Payment"}
+                {step === 1 ? t("co_schedule", lang) : t("co_payment", lang)}
               </div>
             </div>
           )}
@@ -133,7 +136,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
           <div className="checkout-body">
             <div className="checkout-row-2">
               <div className="checkout-field-group">
-                <label className="checkout-label">Date</label>
+                <label className="checkout-label">{t("co_date", lang)}</label>
                 <input
                   className="checkout-input"
                   type="date"
@@ -143,7 +146,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
                 />
               </div>
               <div className="checkout-field-group">
-                <label className="checkout-label">Time</label>
+                <label className="checkout-label">{t("co_time", lang)}</label>
                 <input
                   className="checkout-input"
                   type="time"
@@ -153,10 +156,10 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               </div>
             </div>
             <div className="checkout-field-group">
-              <label className="checkout-label">Notes for worker <span className="optional">(optional)</span></label>
+              <label className="checkout-label">{t("co_notes", lang)} <span className="optional">{t("co_optional", lang)}</span></label>
               <textarea
                 className="checkout-textarea"
-                placeholder="Any special instructions or access notes..."
+                placeholder={lang === "tr" ? "Özel talimatlar veya erişim notları..." : "Any special instructions or access notes..."}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
@@ -164,11 +167,11 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
             </div>
             {error && <p className="checkout-error">{error}</p>}
             <div className="checkout-total-row">
-              <span>Estimated total</span>
+              <span>{t("co_est_total", lang)}</span>
               <strong>₺{total}</strong>
             </div>
             <button className="btn-primary checkout-cta" onClick={() => { if (validateStep1()) setStep(2); }}>
-              Continue to Payment →
+              {t("co_continue", lang)}
             </button>
           </div>
         )}
@@ -186,7 +189,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
             </div>
 
             <div className="checkout-field-group">
-              <label className="checkout-label">Cardholder Name</label>
+              <label className="checkout-label">{t("co_cardholder", lang)}</label>
               <input
                 className="checkout-input"
                 type="text"
@@ -196,7 +199,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               />
             </div>
             <div className="checkout-field-group">
-              <label className="checkout-label">Card Number</label>
+              <label className="checkout-label">{t("co_card_num", lang)}</label>
               <input
                 className="checkout-input"
                 type="text"
@@ -209,7 +212,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
             </div>
             <div className="checkout-row-2">
               <div className="checkout-field-group">
-                <label className="checkout-label">Expiry</label>
+                <label className="checkout-label">{t("co_expiry", lang)}</label>
                 <input
                   className="checkout-input"
                   type="text"
@@ -221,7 +224,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
                 />
               </div>
               <div className="checkout-field-group">
-                <label className="checkout-label">CVV</label>
+                <label className="checkout-label">{t("co_cvv", lang)}</label>
                 <input
                   className="checkout-input"
                   type="password"
@@ -235,13 +238,13 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
             </div>
             {error && <p className="checkout-error">{error}</p>}
             <div className="checkout-total-row">
-              <span>Total to be charged</span>
+              <span>{t("co_total", lang)}</span>
               <strong>₺{total}</strong>
             </div>
             <div className="checkout-actions">
-              <button className="btn-ghost" onClick={() => { setStep(1); setError(""); }}>← Back</button>
+              <button className="btn-ghost" onClick={() => { setStep(1); setError(""); }}>{t("co_back", lang)}</button>
               <button className="btn-primary checkout-cta" onClick={handleConfirm} disabled={loading}>
-                {loading ? "Processing…" : `Confirm & Pay ₺${total}`}
+                {loading ? t("co_processing", lang) : `${t("co_confirm_pay", lang)} ₺${total}`}
               </button>
             </div>
           </div>
@@ -256,26 +259,26 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
             </p>
             <div className="checkout-confirmed-details">
               <div className="checkout-detail-row">
-                <span>Service</span>
+                <span>{t("co_det_service", lang)}</span>
                 <strong>{serviceTitle}</strong>
               </div>
               <div className="checkout-detail-row">
-                <span>Date &amp; Time</span>
+                <span>{t("co_det_datetime", lang)}</span>
                 <strong>{date} at {time}</strong>
               </div>
               <div className="checkout-detail-row">
-                <span>Amount charged</span>
+                <span>{t("co_det_amount", lang)}</span>
                 <strong>₺{total}</strong>
               </div>
               <div className="checkout-detail-row">
-                <span>Booking ID</span>
+                <span>{t("co_det_id", lang)}</span>
                 <strong className="job-id-text">{jobId}</strong>
               </div>
             </div>
             <p className="checkout-confirmed-note">
               You'll receive a confirmation email shortly. The worker will contact you before arrival.
             </p>
-            <button className="btn-primary" onClick={onClose}>Done</button>
+            <button className="btn-primary" onClick={onClose}>{t("co_done", lang)}</button>
           </div>
         )}
       </div>

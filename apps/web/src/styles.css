@@ -70,6 +70,25 @@ a { text-decoration: none; color: inherit; }
 }
 .btn-ghost:hover { border-color: var(--gray-dark); }
 
+/* ── Language toggle ─────────────────────────────────────── */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .4rem .75rem;
+  background: var(--surface, #f8f8f8);
+  color: var(--text);
+  border: 1.5px solid var(--gray-light);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  white-space: nowrap;
+}
+.lang-toggle:hover { border-color: var(--primary); background: #fff4f2; }
+
 /* ── Navbar ─────────────────────────────────────────────── */
 .navbar {
   position: sticky;

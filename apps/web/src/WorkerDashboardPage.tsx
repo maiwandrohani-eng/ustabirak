@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 interface Props {
   user: { id: string; fullName: string; role: string };
@@ -22,6 +24,7 @@ const EARNINGS = [
 const maxEarning = Math.max(...EARNINGS.map((e) => e.amount));
 
 export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props) {
+  const { lang } = useLang();
   const [available, setAvailable] = useState(true);
   const [acceptedIds, setAcceptedIds] = useState<string[]>([]);
   const [declinedIds, setDeclinedIds] = useState<string[]>([]);
@@ -61,10 +64,10 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
           <div className="wd-header">
             <div>
               <h1 className="wd-title">Worker Dashboard</h1>
-              <p className="wd-greeting">Welcome back, {user.fullName.split(" ")[0]}! 👋</p>
+              <p className="wd-greeting">{t("wd_greeting", lang)}, {user.fullName.split(" ")[0]}! 👋</p>
             </div>
             <div className="wd-availability">
-              <span className="wd-avail-label">{available ? "🟢 Available" : "🔴 Unavailable"}</span>
+              <span className="wd-avail-label">{available ? t("wd_available", lang) : t("wd_unavailable", lang)}</span>
               <button
                 className={"wd-toggle" + (available ? " wd-toggle--on" : "")}
                 onClick={() => setAvailable((v) => !v)}
@@ -78,10 +81,10 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
           {/* Stats */}
           <div className="wd-stats">
             {[
-              { icon: "💰", value: `₺${totalThisMonth.toLocaleString()}`, label: "Earned this month" },
-              { icon: "📋", value: String(pendingCount), label: "Pending requests" },
-              { icon: "✅", value: String(42 + acceptedIds.length), label: "Jobs completed" },
-              { icon: "⭐", value: "4.9", label: "Average rating" },
+              { icon: "💰", value: `₺${totalThisMonth.toLocaleString()}`, label: t("wd_earned", lang) },
+              { icon: "📋", value: String(pendingCount), label: t("wd_pending_req", lang) },
+              { icon: "✅", value: String(42 + acceptedIds.length), label: t("wd_completed", lang) },
+              { icon: "⭐", value: "4.9", label: t("wd_avg_rating", lang) },
             ].map(({ icon, value, label }) => (
               <div className="wd-stat-card" key={label}>
                 <span className="wd-stat-icon">{icon}</span>
@@ -95,12 +98,12 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
 
           {/* Active Job */}
           <div className="wd-section">
-            <h2 className="wd-section-title">Active Job</h2>
+            <h2 className="wd-section-title">{t("wd_active_job", lang)}</h2>
             {activeJobDone ? (
-              <div className="wd-empty-state">No active jobs right now. Accept a request below to get started.</div>
+              <div className="wd-empty-state">{t("wd_no_active", lang)}</div>
             ) : (
               <div className="wd-active-job">
-                <div className="wd-active-badge">🟢 In Progress</div>
+                <div className="wd-active-badge">{t("wd_in_progress", lang)}</div>
                 <div className="wd-active-detail">
                   <span className="wd-active-service">Furniture Assembly</span>
                   <span className="wd-active-customer">Customer: Ali R.</span>
@@ -112,7 +115,7 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
                     className="btn-primary btn-sm"
                     onClick={() => setActiveJobDone(true)}
                   >
-                    Mark Complete
+                    {t("wd_mark_complete", lang)}
                   </button>
                 </div>
               </div>
@@ -122,7 +125,7 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
           {/* Job Requests */}
           <div className="wd-section">
             <h2 className="wd-section-title">
-              Job Requests{" "}
+              {t("wd_job_requests", lang)}
               {pendingCount > 0 && <span className="wd-count-badge">{pendingCount}</span>}
             </h2>
             <div className="wd-requests-list">
@@ -139,21 +142,21 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
                     </div>
                     <div className="wd-request-right">
                       <span className="wd-request-amount">₺{req.amount}</span>
-                      {isAccepted && <span className="wd-req-badge wd-req-accepted">Accepted ✓</span>}
-                      {isDeclined && <span className="wd-req-badge wd-req-declined">Declined</span>}
+                      {isAccepted && <span className="wd-req-badge wd-req-accepted">{t("wd_accepted", lang)}</span>}
+                      {isDeclined && <span className="wd-req-badge wd-req-declined">{t("wd_declined", lang)}</span>}
                       {!isAccepted && !isDeclined && (
                         <div className="wd-request-actions">
                           <button
                             className="btn-primary btn-sm"
                             onClick={() => setAcceptedIds((p) => [...p, req.id])}
                           >
-                            Accept
+                            {t("wd_accept", lang)}
                           </button>
                           <button
                             className="btn-ghost btn-sm"
                             onClick={() => setDeclinedIds((p) => [...p, req.id])}
                           >
-                            Decline
+                            {t("wd_decline", lang)}
                           </button>
                         </div>
                       )}
@@ -166,7 +169,7 @@ export default function WorkerDashboardPage({ user, onBack, onNavigate }: Props)
 
           {/* Earnings Chart */}
           <div className="wd-section">
-            <h2 className="wd-section-title">Earnings (2026)</h2>
+            <h2 className="wd-section-title">{t("wd_earnings", lang)}</h2>
             <div className="wd-chart">
               {EARNINGS.map((e) => (
                 <div key={e.month} className="wd-chart-col">

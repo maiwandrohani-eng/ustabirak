@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { apiPost } from "./api";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 type Mode = "signin" | "signup";
 
@@ -15,6 +17,7 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { lang } = useLang();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,24 +73,24 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
             className={"auth-tab" + (mode === "signin" ? " auth-tab--active" : "")}
             onClick={() => { setMode("signin"); setError(""); }}
           >
-            Sign In
+            {t("auth_signin", lang)}
           </button>
           <button
             className={"auth-tab" + (mode === "signup" ? " auth-tab--active" : "")}
             onClick={() => { setMode("signup"); setError(""); }}
           >
-            Sign Up
+            {t("auth_signup", lang)}
           </button>
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           {mode === "signup" && (
             <div className="auth-field">
-              <label className="auth-label">Full Name</label>
+              <label className="auth-label">{t("auth_fullname", lang)}</label>
               <input
                 className="auth-input"
                 type="text"
-                placeholder="Ahmed Yılmaz"
+                placeholder={t("auth_name_ph", lang)}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 autoComplete="name"
@@ -96,11 +99,11 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
           )}
 
           <div className="auth-field">
-            <label className="auth-label">Email Address</label>
+            <label className="auth-label">{t("auth_email", lang)}</label>
             <input
               className="auth-input"
               type="email"
-              placeholder="you@example.com"
+              placeholder={t("auth_email_ph", lang)}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
@@ -109,11 +112,11 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
 
           {mode === "signup" && (
             <div className="auth-field">
-              <label className="auth-label">Phone Number</label>
+              <label className="auth-label">{t("auth_phone", lang)}</label>
               <input
                 className="auth-input"
                 type="tel"
-                placeholder="+90 555 000 00 00"
+                placeholder={t("auth_phone_ph", lang)}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 autoComplete="tel"
@@ -124,21 +127,21 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
           {error && <p className="auth-error">⚠️ {error}</p>}
 
           <button className="btn-primary auth-submit" type="submit" disabled={loading}>
-            {loading ? "Please wait…" : mode === "signin" ? "Sign In" : "Create Account"}
+            {loading ? t("auth_loading", lang) : mode === "signin" ? t("auth_submit_in", lang) : t("auth_submit_up", lang)}
           </button>
         </form>
 
         <p className="auth-switch">
           {mode === "signin" ? (
-            <>New to UstaYolda?{" "}
+            <>{t("auth_new", lang)}{" "}
               <button className="auth-switch-btn" onClick={() => { setMode("signup"); setError(""); }}>
-                Create an account
+                {t("auth_signup_link", lang)}
               </button>
             </>
           ) : (
-            <>Already have an account?{" "}
+            <>{t("auth_have_acct", lang)}{" "}
               <button className="auth-switch-btn" onClick={() => { setMode("signin"); setError(""); }}>
-                Sign in
+                {t("auth_signin_link", lang)}
               </button>
             </>
           )}

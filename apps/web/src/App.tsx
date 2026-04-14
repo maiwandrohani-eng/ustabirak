@@ -9,6 +9,8 @@ import CheckoutModal, { type BookingRecord } from "./CheckoutModal";
 import MyBookingsPage from "./MyBookingsPage";
 import UserProfilePage from "./UserProfilePage";
 import WorkerDashboardPage from "./WorkerDashboardPage";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -65,6 +67,17 @@ const VerifiedIcon = () => (
     <path d="M9 12l2 2 4-4" /><path d="M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z" />
   </svg>
 );
+
+const CAT_LABEL: Record<string, { en: string; tr: string }> = {
+  electrician: { en: "Electrical",   tr: "Elektrik" },
+  plumber:     { en: "Plumbing",     tr: "Su Tesisatı" },
+  cleaning:    { en: "Cleaning",     tr: "Temizlik" },
+  painting:    { en: "Painting",     tr: "Boyama" },
+  "ac-repair": { en: "AC & Heating", tr: "Klima & Isıtma" },
+  moving:      { en: "Moving",       tr: "Nakliyat" },
+  other:       { en: "Home Repairs", tr: "Ev Tamiratı" },
+  _trending:   { en: "Trending",     tr: "Popüler" },
+};
 
 const CATEGORIES = [
   { id: "electrician", label: "Electrical", Icon: ElectricalIcon, accent: "#fff4f2", iconBg: "#fde8e4",
@@ -297,10 +310,65 @@ const STATIC_PAGES: Record<string, { title: string; sections: { heading: string;
   },
 };
 
+
+const STATIC_PAGES_TR: Record<string, { title: string; sections: { heading: string; body: string }[] }> = {
+  "__about": {
+    title: "Hakkımızda",
+    sections: [
+      { heading: "Hikayemiz", body: "UstaYolda, Türkiye'deki insanların evde güvenilir yardım bulmasını kolaylaştırmak için kuruldu. Elektrikçilerden temizlikçilere, nakliyecilerden tamircilere kadar tüm yerel ve güvenilir ustalarımızı tek çatı altında birleştiriyoruz." },
+      { heading: "Misyonumuz", body: "Herkesin güven içinde, stres olmadan evinde ihtiyacı olan yardımı alabilmesi gerektiğine inanıyoruz. Şeffaf fiyatlar, gerçek müşteri yorumları ve kapsamlı kimlik doğrulaması ile sizi doğru ustayla buluşturuyoruz." },
+      { heading: "Ustalarımızı Nasıl Seçiyoruz?", body: "UstaYolda'daki her usta; kimlik doğrulama, geçmiş taraması ve beceri değerlendirmesinden geçtikten sonra platforma kabul edilir. Kaliteyi sürekli yüksek tutmak için puanları ve yorumları düzenli olarak takip ediyoruz." },
+      { heading: "Vizyonumuz", body: "İstanbul'dan Ankara'ya, İzmir'den Antalya'ya Türkiye'nin en güvenilir ev hizmetleri platformunu inşa ediyoruz. Evinizle ilgili bir ihtiyacınız olduğunda akla gelen ilk isim olmak istiyoruz." },
+    ],
+  },
+  "__careers": {
+    title: "Kariyer",
+    sections: [
+      { heading: "Ekibimize Katılın", body: "Türkiye'de ev işlerinin yapılma şeklini dönüştürme misyonuyla büyüyen bir girişimiz. Her zaman yetenekli ve hırslı insanları arıyoruz." },
+      { heading: "Açık Pozisyonlar", body: "🚀 Full Stack Mühendis (İstanbul / Uzaktan)\n🎨 Ürün Tasarımcısı (İstanbul)\n📣 Büyüme & Pazarlama Müdürü (İstanbul)\n🤝 Şehir Operasyon Müdürü (Birden fazla şehir)\n\nRolünüzü bulamadınız mı? careers@ustayolda.com adresine genel başvuru gönderin." },
+      { heading: "Neden UstaYolda?", body: "Rekabetçi maaş ve hisse senedi. Esnek ve uzaktan çalışma dostu kültür. İlk günden itibaren gerçek etki — milyonlarca Türk'ün evde yardım almasını şekillendireceksiniz. Cömert izin, sağlık sigortası ve ekip buluşmaları." },
+    ],
+  },
+  "__blog": {
+    title: "Blog",
+    sections: [
+      { heading: "Asla Ertelememek Gereken 5 Ev Görevi", body: "Akan musluklar, gevşek kapı menteşeleri, tıkalı oluklar — küçük sorunlar hızla büyür. İşte her ev sahibinin pahalı tamiratlara dönüşmeden önce halletmesi gereken beş görev." },
+      { heading: "İstanbul'da Güvenilir Tamirci Nasıl Bulunur?", body: "Yüzlerce tamirci arasından doğru kişiyi nasıl seçersiniz? Nelere dikkat etmeli: kimlik doğrulama, yorumlar, yanıt süresi ve rezervasyon yapmadan önce sormanız gereken sorular." },
+      { heading: "Bahar Temizliği Kontrol Listesi: Oda Oda", body: "O zaman geldi. Oda oda kontrol listemiz, mutfak aletlerinin derinlemesine temizlenmesinden dolap düzenlemesine kadar her şeyi kapsar — ne zaman profesyonel çağırmanız gerektiğine dair ipuçlarıyla birlikte." },
+      { heading: "Perde Arkası: UstaYolda Sizi Ustalarla Nasıl Eşleştiriyor?", body: "Eşleştirme algoritmamız, dakikalar içinde size en iyi ustayı bulmak için konum, müsaitlik, beceri ve puanları değerlendirir. İşin perde arkasına bir göz atın." },
+    ],
+  },
+  "__terms": {
+    title: "Koşullar & Gizlilik",
+    sections: [
+      { heading: "Kullanım Koşulları", body: "UstaYolda'yı kullanarak koşullarımızı kabul etmiş olursunuz. Hizmet rezervasyonu yapabilmek için 18 yaşında veya daha büyük olmanız gerekmektedir. Tüm rezervasyonlar usta müsaitliğine ve platform onayına tabidir." },
+      { heading: "Gizlilik Politikası", body: "Yalnızca hizmetimizi sunmak için gerekli verileri topluyoruz: adınız, e-postanız, konumunuz ve rezervasyon geçmişiniz. Kişisel verilerinizi üçüncü taraflarla asla paylaşmıyoruz." },
+      { heading: "Çerez Politikası", body: "UstaYolda, oturum açık tutmak ve tercihlerinizi hatırlamak için zorunlu çerezler kullanır. Ayrıca onayınızla platformu geliştirmek için analitik çerezler kullanıyoruz." },
+      { heading: "İletişim", body: "Bu politikalar hakkında sorularınız için legal@ustayolda.com adresine yazabilir ya da UstaYolda Ltd., Levent, İstanbul, Türkiye adresine ulaşabilirsiniz." },
+    ],
+  },
+  "__help": {
+    title: "Yardım & Destek",
+    sections: [
+      { heading: "Usta Nasıl Rezerve Edilir?", body: "İhtiyacınız olan hizmeti arayın, müsait ustalar arasından seçin ve Rezervasyon Yap'a tıklayın. Size uygun bir zaman seçin ve güvenli ödemeyi çevrimiçi tamamlayın. Onay alacaksınız ve usta ile doğrudan uygulama içinde iletişime geçebilirsiniz." },
+      { heading: "İptal Etmem Gerekirse?", body: "Randevunuzdan 24 saat öncesine kadar ücretsiz iptal veya yeniden zamanlama yapabilirsiniz. 24 saat içindeki iptallerde küçük bir ücret uygulanabilir." },
+      { heading: "Ödeme Güvenli mi?", body: "Evet. Tüm ödemeler banka düzeyinde şifreleme kullanan onaylı ödeme sağlayıcımız aracılığıyla işlenir. Kart bilgilerinizi sunucularımızda asla saklamıyoruz." },
+      { heading: "Mutluluk Taahhüdü Nedir?", body: "Tamamlanan bir görevden memnun kalmazsanız, 72 saat içinde destek ekibimizle iletişime geçin. Sorunu çözmek için başka bir usta göndereceğiz ya da para iadesi yapacağız." },
+      { heading: "Destek ile Nasıl İletişime Geçilir?", body: "support@ustayolda.com adresine e-posta gönderebilir veya uygulama içi sohbeti kullanabilirsiniz. Destek ekibimiz haftanın 7 günü, 08:00–22:00 İstanbul saatiyle hizmetinizdedir." },
+    ],
+  },
+};
+
 export default function App() {
   const [activeCat, setActiveCat] = useState<CatId>("electrician");
   const [activeSub, setActiveSub] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const { lang, setLang } = useLang();
+  const LangToggle = () => (
+    <button className="lang-toggle" onClick={() => setLang(lang === "tr" ? "en" : "tr")}>
+      {lang === "tr" ? "🇺🇸 EN" : "🇹🇷 TR"}
+    </button>
+  );
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [statusLog, setStatusLog] = useState<string[]>([]);
@@ -394,7 +462,7 @@ export default function App() {
   }
 
   if (activePage && STATIC_PAGES[activePage]) {
-    const sp = STATIC_PAGES[activePage];
+    const sp = lang === "tr" && STATIC_PAGES_TR[activePage] ? STATIC_PAGES_TR[activePage] : STATIC_PAGES[activePage];
     return (
       <div className="root">
         <nav className="navbar">
@@ -403,27 +471,28 @@ export default function App() {
               <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>{t("nav_services", lang)}</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>{t("nav_workers", lang)}</button>
             </div>
             <div className="nav-auth">
+              <LangToggle />
               {currentUser ? (
                 <div className="nav-user">
                   <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
                   <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
               )}
-              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
           </div>
         </nav>
 
         <section className="static-page-section">
           <div className="static-page-inner">
-            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>{t("back_home", lang)}</button>
             <h1 className="static-page-title">{sp.title}</h1>
             {sp.sections.map((sec) => (
               <div className="static-section" key={sec.heading}>
@@ -438,25 +507,25 @@ export default function App() {
           <div className="footer-inner">
             <div className="footer-brand">
               <img src="/logo.png" alt="UstaYolda" height={38} />
-              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+              <p>{t("footer_tagline", lang)}</p>
             </div>
             <div className="footer-col">
-              <h4>Discover</h4>
-              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
-              <button onClick={() => setActivePage("__services")}>All Services</button>
-              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
-              <button onClick={() => setActivePage("__help")}>Help</button>
+              <h4>{t("footer_discover", lang)}</h4>
+              <button onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_all_svc", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_nearby", lang)}</button>
+              <button onClick={() => setActivePage("__help")}>{t("footer_help", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Company</h4>
-              <button onClick={() => setActivePage("__about")}>About Us</button>
-              <button onClick={() => setActivePage("__careers")}>Careers</button>
-              <button onClick={() => setActivePage("__blog")}>Blog</button>
-              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+              <h4>{t("footer_company", lang)}</h4>
+              <button onClick={() => setActivePage("__about")}>{t("footer_about", lang)}</button>
+              <button onClick={() => setActivePage("__careers")}>{t("footer_careers", lang)}</button>
+              <button onClick={() => setActivePage("__blog")}>{t("footer_blog", lang)}</button>
+              <button onClick={() => setActivePage("__terms")}>{t("footer_terms", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Download our app</h4>
-              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <h4>{t("footer_download", lang)}</h4>
+              <p>{t("footer_dl_sub", lang)}</p>
               <div className="footer-app-badges">
                 <div className="app-badge">📱 App Store</div>
                 <div className="app-badge">🤖 Google Play</div>
@@ -464,7 +533,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — {t("footer_rights", lang)}</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -496,29 +565,30 @@ export default function App() {
               <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
-              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>Services</button>
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
+              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>{t("nav_services", lang)}</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>{t("nav_workers", lang)}</button>
             </div>
             <div className="nav-auth">
+              <LangToggle />
               {currentUser ? (
                 <div className="nav-user">
                   <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
                   <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
               )}
-              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
           </div>
         </nav>
 
         <section className="services-page-section">
           <div className="services-page-inner">
-            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
-            <h2 className="services-page-title">What can we help with?</h2>
-            <p className="services-page-subtitle">Browse our most popular service categories</p>
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>{t("back_home", lang)}</button>
+            <h2 className="services-page-title">{t("svc_title", lang)}</h2>
+            <p className="services-page-subtitle">{t("svc_subtitle", lang)}</p>
             <div className="services-grid">
               {[
                 { img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=70", title: "Featured Tasks", desc: "Let Taskers help tackle your to-do list", subs: ["Furniture Assembly", "Home Repairs", "Help Moving", "Yard Work Services", "Spring Cleaning", "TV Mounting", "Plumbing", "Hang Art, Mirror & Decor", "Electrical Help", "Wait in Line", "Closet Organization Service"] },
@@ -573,25 +643,25 @@ export default function App() {
           <div className="footer-inner">
             <div className="footer-brand">
               <img src="/logo.png" alt="UstaYolda" height={38} />
-              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+              <p>{t("footer_tagline", lang)}</p>
             </div>
             <div className="footer-col">
-              <h4>Discover</h4>
-              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
-              <button onClick={() => setActivePage("__services")}>All Services</button>
-              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
-              <button onClick={() => setActivePage("__help")}>Help</button>
+              <h4>{t("footer_discover", lang)}</h4>
+              <button onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_all_svc", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_nearby", lang)}</button>
+              <button onClick={() => setActivePage("__help")}>{t("footer_help", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Company</h4>
-              <button onClick={() => setActivePage("__about")}>About Us</button>
-              <button onClick={() => setActivePage("__careers")}>Careers</button>
-              <button onClick={() => setActivePage("__blog")}>Blog</button>
-              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+              <h4>{t("footer_company", lang)}</h4>
+              <button onClick={() => setActivePage("__about")}>{t("footer_about", lang)}</button>
+              <button onClick={() => setActivePage("__careers")}>{t("footer_careers", lang)}</button>
+              <button onClick={() => setActivePage("__blog")}>{t("footer_blog", lang)}</button>
+              <button onClick={() => setActivePage("__terms")}>{t("footer_terms", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Download our app</h4>
-              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <h4>{t("footer_download", lang)}</h4>
+              <p>{t("footer_dl_sub", lang)}</p>
               <div className="footer-app-badges">
                 <div className="app-badge">📱 App Store</div>
                 <div className="app-badge">🤖 Google Play</div>
@@ -599,7 +669,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — {t("footer_rights", lang)}</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -627,29 +697,30 @@ export default function App() {
               <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
-              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>Workers</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>{t("nav_services", lang)}</button>
+              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>{t("nav_workers", lang)}</button>
             </div>
             <div className="nav-auth">
+              <LangToggle />
               {currentUser ? (
                 <div className="nav-user">
                   <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
                   <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
               )}
-              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
           </div>
         </nav>
 
         <section className="workers-page-hero">
           <div className="workers-page-inner">
-            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
-            <h1 className="workers-page-title">Find trusted Workers</h1>
-            <p className="workers-page-subtitle">Browse by category and book a verified worker today</p>
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>{t("back_home", lang)}</button>
+            <h1 className="workers-page-title">{t("wrk_title", lang)}</h1>
+            <p className="workers-page-subtitle">{t("wrk_subtitle", lang)}</p>
             <div className="category-tabs" style={{ justifyContent: "center", marginTop: "1.5rem" }}>
               {CATEGORIES.map((cat) => (
                 <button
@@ -658,7 +729,7 @@ export default function App() {
                   onClick={() => setActiveCat(cat.id)}
                 >
                   <span className="cat-tab-icon"><cat.Icon /></span>
-                  <span className="cat-tab-label">{cat.label}</span>
+                  <span className="cat-tab-label">{CAT_LABEL[cat.id]?.[lang] ?? cat.label}</span>
                 </button>
               ))}
             </div>
@@ -667,7 +738,7 @@ export default function App() {
 
         <section className="workers-section" style={{ padding: "2.5rem 1.5rem 4rem" }}>
           {workers.length === 0 ? (
-            <p className="empty-state">No workers found for this category.</p>
+            <p className="empty-state">{t("wrk_empty", lang)}</p>
           ) : (
             <div className="worker-grid">
               {workers.map((worker) => (
@@ -678,13 +749,13 @@ export default function App() {
                       <div className="worker-name-row">
                         <span className="worker-name">{worker.fullName}</span>
                         {worker.verified && (
-                          <span className="verified-badge"><VerifiedIcon /> Verified</span>
+                          <span className="verified-badge"><VerifiedIcon /> {t("verified_badge", lang)}</span>
                         )}
                       </div>
                       <div className="worker-rating">
                         <span className="star-icon"><StarIcon /></span>
                         <strong>{worker.rating}</strong>
-                        <span className="review-count">({worker.reviewCount} reviews)</span>
+                        <span className="review-count">({worker.reviewCount} {t("reviews_unit", lang)})</span>
                       </div>
                     </div>
                   </div>
@@ -697,7 +768,7 @@ export default function App() {
                   <div className="worker-footer">
                     <div className="worker-price">
                       <span className="price-amount">₺{worker.hourlyPrice}</span>
-                      <span className="price-unit"> / hour</span>
+                      <span className="price-unit"> {t("hour", lang)}</span>
                     </div>
                     <button
                       className="btn-primary btn-book"
@@ -717,25 +788,25 @@ export default function App() {
           <div className="footer-inner">
             <div className="footer-brand">
               <img src="/logo.png" alt="UstaYolda" height={38} />
-              <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+              <p>{t("footer_tagline", lang)}</p>
             </div>
             <div className="footer-col">
-              <h4>Discover</h4>
-              <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
-              <button onClick={() => setActivePage("__services")}>All Services</button>
-              <button onClick={() => setActivePage("__services")}>Services Nearby</button>
-              <button onClick={() => setActivePage("__help")}>Help</button>
+              <h4>{t("footer_discover", lang)}</h4>
+              <button onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_all_svc", lang)}</button>
+              <button onClick={() => setActivePage("__services")}>{t("footer_nearby", lang)}</button>
+              <button onClick={() => setActivePage("__help")}>{t("footer_help", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Company</h4>
-              <button onClick={() => setActivePage("__about")}>About Us</button>
-              <button onClick={() => setActivePage("__careers")}>Careers</button>
-              <button onClick={() => setActivePage("__blog")}>Blog</button>
-              <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+              <h4>{t("footer_company", lang)}</h4>
+              <button onClick={() => setActivePage("__about")}>{t("footer_about", lang)}</button>
+              <button onClick={() => setActivePage("__careers")}>{t("footer_careers", lang)}</button>
+              <button onClick={() => setActivePage("__blog")}>{t("footer_blog", lang)}</button>
+              <button onClick={() => setActivePage("__terms")}>{t("footer_terms", lang)}</button>
             </div>
             <div className="footer-col">
-              <h4>Download our app</h4>
-              <p>Tackle your to-do list wherever you are with our mobile app.</p>
+              <h4>{t("footer_download", lang)}</h4>
+              <p>{t("footer_dl_sub", lang)}</p>
               <div className="footer-app-badges">
                 <div className="app-badge">📱 App Store</div>
                 <div className="app-badge">🤖 Google Play</div>
@@ -743,7 +814,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — {t("footer_rights", lang)}</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -776,10 +847,11 @@ export default function App() {
             <img src="/logo.png" alt="UstaYolda" height={72} />
           </a>
           <div className="nav-links">
-            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
-            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
+            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>{t("nav_services", lang)}</button>
+            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>{t("nav_workers", lang)}</button>
           </div>
           <div className="nav-auth">
+              <LangToggle />
             {currentUser ? (
               <div className="nav-user" ref={userMenuRef} style={{ position: "relative" }}>
                 <button
@@ -792,32 +864,32 @@ export default function App() {
                 </button>
                 {showUserMenu && (
                   <div className="user-dropdown">
-                    <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>👤 My Profile</button>
-                    <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>📋 My Bookings</button>
+                    <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>{t("nav_profile", lang)}</button>
+                    <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>{t("nav_bookings", lang)}</button>
                     {currentUser.role === "worker" && (
-                      <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>🔧 Worker Dashboard</button>
+                      <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>{t("nav_dashboard", lang)}</button>
                     )}
                     <hr className="dropdown-divider" />
-                    <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>Sign out</button>
+                    <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>{t("nav_signout", lang)}</button>
                   </div>
                 )}
               </div>
             ) : (
-              <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+              <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
             )}
-            <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+            <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
           </div>
         </div>
       </nav>
 
       {/* ── Hero ── */}
       <section className="hero" id="services">
-        <h1 className="hero-title">Book trusted help<br />for home tasks</h1>
+        <h1 className="hero-title">{t("hero_title_1", lang)}<br />{t("hero_title_2", lang)}</h1>
         <div className="search-bar" style={{ position: "relative" }}>
           <input
             className="search-input"
             type="text"
-            placeholder="What do you need help with?"
+            placeholder={t("hero_placeholder", lang)}
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
             onFocus={() => setShowSuggestions(true)}
@@ -870,7 +942,7 @@ export default function App() {
               onClick={() => setActiveCat(cat.id)}
             >
               <span className="cat-tab-icon"><cat.Icon /></span>
-              <span className="cat-tab-label">{cat.label}</span>
+              <span className="cat-tab-label">{CAT_LABEL[cat.id]?.[lang] ?? cat.label}</span>
             </button>
           ))}
         </div>
@@ -898,7 +970,7 @@ export default function App() {
               ))}
             </ul>
             <p className="spotlight-trending">
-              <strong>Now Trending:</strong> {category.trending}
+              <strong>{t("now_trending", lang)}</strong> {category.trending}
             </p>
           </div>
           <div className="spotlight-visual" style={{ background: category.iconBg }}>
@@ -911,14 +983,14 @@ export default function App() {
       <section className="tr-stats-section">
         <div className="tr-stats-inner">
           {[
-            { label: "Tasks completed", value: "48,000+" },
-            { label: "Moving tasks", value: "9,200+" },
-            { label: "Items mounted", value: "12,000+" },
-            { label: "Home repairs", value: "8,500+" },
-            { label: "Homes cleaned", value: "15,000+" },
+            { labelEn: "Tasks completed", labelTr: "Tamamlanan görev", value: "48.000+" },
+            { labelEn: "Moving tasks", labelTr: "Nakliyat görevi", value: "9.200+" },
+            { labelEn: "Items mounted", labelTr: "Montaj yapılan", value: "12.000+" },
+            { labelEn: "Home repairs", labelTr: "Ev tamiratı", value: "8.500+" },
+            { labelEn: "Homes cleaned", labelTr: "Temizlenen ev", value: "15.000+" },
           ].map((s) => (
-            <div className="tr-stat" key={s.label}>
-              <span className="tr-stat-label">{s.label}:</span>
+            <div className="tr-stat" key={s.labelEn}>
+              <span className="tr-stat-label">{lang === "tr" ? s.labelTr : s.labelEn}:</span>
               <strong className="tr-stat-value">{s.value}</strong>
             </div>
           ))}
@@ -928,7 +1000,7 @@ export default function App() {
       {/* ── Popular Projects ── */}
       <section className="popular-projects" id="services-page">
         <div className="pp-inner">
-          <h2 className="pp-heading">Popular Projects</h2>
+          <h2 className="pp-heading">{t("pp_heading", lang)}</h2>
           <div className="pp-grid">
             {POPULAR_PROJECTS.map((p) => (
               <div className="pp-card" key={p.title} onClick={() => setActivePage(p.page)}>
@@ -937,7 +1009,7 @@ export default function App() {
                 </div>
                 <div className="pp-info">
                   <strong className="pp-title">{p.title}</strong>
-                  <span className="pp-price">Projects starting at ₺{p.startPrice}</span>
+                  <span className="pp-price">{t("pp_from", lang)} ₺{p.startPrice}</span>
                 </div>
               </div>
             ))}
@@ -948,7 +1020,7 @@ export default function App() {
       {/* ── Customer Reviews ── */}
       <section className="reviews-section">
         <div className="reviews-inner">
-          <h2 className="reviews-heading">See what happy customers are saying about UstaYolda</h2>
+          <h2 className="reviews-heading">{t("reviews_heading", lang)}</h2>
           <div className="reviews-grid">
             {REVIEWS.map((r) => (
               <div className="review-card" key={r.name}>
@@ -969,22 +1041,22 @@ export default function App() {
       {/* ── Satisfaction Guarantee ── */}
       <section className="guarantee-section">
         <div className="guarantee-inner">
-          <h2 className="guarantee-heading">Your satisfaction, <span className="guarantee-highlight">guaranteed</span></h2>
+          <h2 className="guarantee-heading">{t("guarantee_h1", lang)} <span className="guarantee-highlight">{t("guarantee_h2", lang)}</span></h2>
           <div className="guarantee-grid">
             <div className="guarantee-item">
               <div className="guarantee-icon">🛡️</div>
-              <h3>Happiness Pledge</h3>
-              <p>If you're not satisfied, we'll work to make it right.</p>
+              <h3>{t("guarantee_pledge_t", lang)}</h3>
+              <p>{t("guarantee_pledge_b", lang)}</p>
             </div>
             <div className="guarantee-item">
               <div className="guarantee-icon">✅</div>
-              <h3>Vetted Workers</h3>
-              <p>Workers are always background checked before joining the platform.</p>
+              <h3>{t("guarantee_vetted_t", lang)}</h3>
+              <p>{t("guarantee_vetted_b", lang)}</p>
             </div>
             <div className="guarantee-item">
               <div className="guarantee-icon">💬</div>
-              <h3>Dedicated Support</h3>
-              <p>Friendly service when you need us — every day of the week.</p>
+              <h3>{t("guarantee_support_t", lang)}</h3>
+              <p>{t("guarantee_support_b", lang)}</p>
             </div>
           </div>
         </div>
@@ -994,36 +1066,36 @@ export default function App() {
       <section className="how-it-works">
         <div className="hiw-inner">
           <div className="hiw-content">
-            <h2 className="hiw-heading">How it works</h2>
+            <h2 className="hiw-heading">{t("hiw_heading", lang)}</h2>
             {[
-              { n: 1, text: "Choose a Worker by price, skills, and reviews." },
-              { n: 2, text: "Schedule a Worker as early as today." },
-              { n: 3, text: "Chat, pay, tip, and review all in one place." },
+              { n: 1, textEn: "Choose a Worker by price, skills, and reviews.", textTr: "Fiyat, beceri ve yorumlara göre usta seçin." },
+              { n: 2, textEn: "Schedule a Worker as early as today.", textTr: "Bugün bile randevu alabilirsiniz." },
+              { n: 3, textEn: "Chat, pay, tip, and review all in one place.", textTr: "Tek platformda mesajlaşın, ödeme yapın, yorum bırakın." },
             ].map((s) => (
               <div className="hiw-step" key={s.n}>
                 <span className="hiw-step-num">{s.n}</span>
-                <p>{s.text}</p>
+                <p>{lang === "tr" ? s.textTr : s.textEn}</p>
               </div>
             ))}
             <button className="btn-primary" style={{ marginTop: "1.5rem" }} onClick={() => setActivePage("__become-worker")}>
-              Get started today
+              {t("hiw_cta", lang)}
             </button>
           </div>
           <div className="hiw-visual">
             <div className="hiw-card">
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🔧</span>
-                <span>Handyman services</span>
+                <span>{lang === "tr" ? "Tamirci hizmetleri" : "Handyman services"}</span>
                 <span className="hiw-card-price">from ₺199</span>
               </div>
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🧹</span>
-                <span>Cleaning</span>
+                <span>{lang === "tr" ? "Temizlik" : "Cleaning"}</span>
                 <span className="hiw-card-price">from ₺199</span>
               </div>
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🚚</span>
-                <span>Moving help</span>
+                <span>{lang === "tr" ? "Nakliyat yardımı" : "Moving help"}</span>
                 <span className="hiw-card-price">from ₺279</span>
               </div>
               <div className="hiw-card-row hiw-card-row--btn">
@@ -1040,7 +1112,7 @@ export default function App() {
       <section className="workers-section" id="workers">
         <div className="workers-header">
           <h2 className="section-title">
-            {activeSub ? `Workers for "${activeSub}"` : `Top ${category.label} workers`}
+            {activeSub ? (lang === "tr" ? `Ustalar: "${activeSub}"` : `Workers for "${activeSub}"`) : (lang === "tr" ? `En iyi ${CAT_LABEL[category.id]?.tr ?? category.label} ustat` : `Top ${category.label} workers`)}
           </h2>
           {statusLog.length > 0 && (
             <div className="status-log">
@@ -1051,7 +1123,7 @@ export default function App() {
           )}
         </div>
         {filteredWorkers.length === 0 ? (
-          <p className="empty-state">No workers found. Try a different category or search.</p>
+          <p className="empty-state">{t("no_workers", lang)}</p>
         ) : (
           <div className="worker-grid">
             {filteredWorkers.map((worker) => (
@@ -1062,13 +1134,13 @@ export default function App() {
                     <div className="worker-name-row">
                       <span className="worker-name">{worker.fullName}</span>
                       {worker.verified && (
-                        <span className="verified-badge"><VerifiedIcon /> Verified</span>
+                        <span className="verified-badge"><VerifiedIcon /> {t("verified_badge", lang)}</span>
                       )}
                     </div>
                     <div className="worker-rating">
                       <span className="star-icon"><StarIcon /></span>
                       <strong>{worker.rating}</strong>
-                      <span className="review-count">({worker.reviewCount} reviews)</span>
+                      <span className="review-count">({worker.reviewCount} {t("reviews_unit", lang)})</span>
                     </div>
                   </div>
                 </div>
@@ -1081,14 +1153,14 @@ export default function App() {
                 <div className="worker-footer">
                   <div className="worker-price">
                     <span className="price-amount">₺{worker.hourlyPrice}</span>
-                    <span className="price-unit"> / hour</span>
+                    <span className="price-unit"> {t("hour", lang)}</span>
                   </div>
                   <button
                     className="btn-primary btn-book"
                     onClick={() => handleBook(worker)}
                     disabled={bookingInProgress}
                   >
-                    {bookingInProgress ? "Sending…" : "Book Now"}
+                    {bookingInProgress ? t("sending", lang) : t("book_now", lang)}
                   </button>
                 </div>
               </article>
@@ -1100,7 +1172,7 @@ export default function App() {
       {/* ── Get help Today ── */}
       <section className="get-help-today">
         <div className="ght-inner">
-          <h2 className="ght-heading">Get help Today</h2>
+          <h2 className="ght-heading">{t("ght_heading", lang)}</h2>
           <div className="ght-pills">
             {SERVICE_QUICK_LINKS.map((s) => (
               <button key={s.label} className="ght-pill" onClick={() => setActivePage(s.page)}>
@@ -1109,7 +1181,7 @@ export default function App() {
             ))}
           </div>
           <button className="ght-see-all" onClick={() => setActivePage("__services")}>
-            See All Services &rsaquo;
+            {t("ght_see_all", lang)}
           </button>
         </div>
       </section>
@@ -1118,19 +1190,19 @@ export default function App() {
       <section className="become-worker-section" id="become-worker">
         <div className="become-worker-inner">
           <div className="become-worker-text">
-            <h2 className="become-worker-title">Earn money your way</h2>
-            <p className="become-worker-subtitle">See how much you can make tasking on UstaYolda</p>
+            <h2 className="become-worker-title">{t("bw_title", lang)}</h2>
+            <p className="become-worker-subtitle">{t("bw_subtitle", lang)}</p>
             <div className="become-worker-points">
-              <div className="bw-point"><span className="bw-point-icon">💰</span><div><strong>Set your own rates</strong><p>You decide how much to charge per hour for each task type.</p></div></div>
-              <div className="bw-point"><span className="bw-point-icon">📅</span><div><strong>Choose your schedule</strong><p>Work when it suits you — full time, part time, or weekends only.</p></div></div>
-              <div className="bw-point"><span className="bw-point-icon">📍</span><div><strong>Work in your area</strong><p>Pick jobs near you and build a local client base.</p></div></div>
-              <div className="bw-point"><span className="bw-point-icon">⭐</span><div><strong>Build your reputation</strong><p>Get reviews, grow your profile, and become a top-rated worker.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">💰</span><div><strong>{t("bw_p1_t", lang)}</strong><p>{t("bw_p1_b", lang)}</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📅</span><div><strong>{t("bw_p2_t", lang)}</strong><p>{t("bw_p2_b", lang)}</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📍</span><div><strong>{t("bw_p3_t", lang)}</strong><p>{t("bw_p3_b", lang)}</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">⭐</span><div><strong>{t("bw_p4_t", lang)}</strong><p>{t("bw_p4_b", lang)}</p></div></div>
             </div>
-            <button className="btn-primary btn-become-worker" onClick={() => setActivePage("__become-worker")}>Get started as a Worker</button>
+            <button className="btn-primary btn-become-worker" onClick={() => setActivePage("__become-worker")}>{t("bw_cta", lang)}</button>
           </div>
           <div className="become-worker-visual">
             <div className="become-worker-card">
-              <div className="bw-card-header">Top earners this month</div>
+              <div className="bw-card-header">{t("bw_top_earners", lang)}</div>
               {[
                 { name: "Aryan K.", cat: "Electrical", earn: "₺3,200", rating: "4.9" },
                 { name: "Leila M.", cat: "Cleaning", earn: "₺2,800", rating: "5.0" },
@@ -1158,25 +1230,25 @@ export default function App() {
         <div className="footer-inner">
           <div className="footer-brand">
             <img src="/logo.png" alt="UstaYolda" height={38} />
-            <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+            <p>{t("footer_tagline", lang)}</p>
           </div>
           <div className="footer-col">
-            <h4>Discover</h4>
-            <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
-            <button onClick={() => setActivePage("__services")}>All Services</button>
-            <button onClick={() => setActivePage("__services")}>Services Nearby</button>
-            <button onClick={() => setActivePage("__help")}>Help</button>
+            <h4>{t("footer_discover", lang)}</h4>
+            <button onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
+            <button onClick={() => setActivePage("__services")}>{t("footer_all_svc", lang)}</button>
+            <button onClick={() => setActivePage("__services")}>{t("footer_nearby", lang)}</button>
+            <button onClick={() => setActivePage("__help")}>{t("footer_help", lang)}</button>
           </div>
           <div className="footer-col">
-            <h4>Company</h4>
-            <button onClick={() => setActivePage("__about")}>About Us</button>
-            <button onClick={() => setActivePage("__careers")}>Careers</button>
-            <button onClick={() => setActivePage("__blog")}>Blog</button>
-            <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
+            <h4>{t("footer_company", lang)}</h4>
+            <button onClick={() => setActivePage("__about")}>{t("footer_about", lang)}</button>
+            <button onClick={() => setActivePage("__careers")}>{t("footer_careers", lang)}</button>
+            <button onClick={() => setActivePage("__blog")}>{t("footer_blog", lang)}</button>
+            <button onClick={() => setActivePage("__terms")}>{t("footer_terms", lang)}</button>
           </div>
           <div className="footer-col">
-            <h4>Download our app</h4>
-            <p>Tackle your to-do list wherever you are with our mobile app.</p>
+            <h4>{t("footer_download", lang)}</h4>
+            <p>{t("footer_dl_sub", lang)}</p>
             <div className="footer-app-badges">
               <div className="app-badge">📱 App Store</div>
               <div className="app-badge">🤖 Google Play</div>
@@ -1184,7 +1256,7 @@ export default function App() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
+          <p>© {new Date().getFullYear()} UstaYolda.com — {t("footer_rights", lang)}</p>
           <div className="footer-social">
             <a href="#" aria-label="Facebook">f</a>
             <a href="#" aria-label="Instagram">ig</a>

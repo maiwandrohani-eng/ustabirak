@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 interface Props {
   workerName: string;
@@ -8,12 +10,13 @@ interface Props {
 }
 
 export default function ReviewModal({ workerName, serviceTitle, onClose, onSubmit }: Props) {
+  const { lang } = useLang();
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const labels = ["", "Poor", "Fair", "Good", "Great", "Excellent!"];
+  const labels = ["", t("rev_l1", lang), t("rev_l2", lang), t("rev_l3", lang), t("rev_l4", lang), t("rev_l5", lang)];
 
   const handleSubmit = () => {
     if (rating === 0) return;
@@ -29,13 +32,13 @@ export default function ReviewModal({ workerName, serviceTitle, onClose, onSubmi
         {submitted ? (
           <div className="review-success">
             <div className="review-success-icon">🌟</div>
-            <h3>Thank you for your review!</h3>
+            <h3>{t("rev_thanks", lang)}</h3>
             <p>Your feedback helps the UstaYolda community.</p>
-            <button className="btn-primary" onClick={onClose}>Done</button>
+            <button className="btn-primary" onClick={onClose}>{t("rev_done", lang)}</button>
           </div>
         ) : (
           <>
-            <h2 className="review-modal-title">Rate your experience</h2>
+            <h2 className="review-modal-title">{t("rev_title", lang)}</h2>
             <p className="review-modal-sub">with <strong>{workerName}</strong> — {serviceTitle}</p>
 
             <div className="review-stars-input">
@@ -73,7 +76,7 @@ export default function ReviewModal({ workerName, serviceTitle, onClose, onSubmi
               onClick={handleSubmit}
               disabled={rating === 0}
             >
-              Submit Review
+              {t("rev_submit", lang)}
             </button>
           </>
         )}

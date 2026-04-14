@@ -4,6 +4,8 @@ import { apiGet } from "./api";
 import { SERVICE_DETAILS } from "./serviceData";
 import AuthModal from "./AuthModal";
 import CheckoutModal from "./CheckoutModal";
+import { useLang } from "./LangContext";
+import { t } from "./translations";
 
 const StarIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
@@ -23,6 +25,7 @@ interface Props {
 
 export default function ServiceDetailPage({ serviceId, onBack }: Props) {
   const detail = SERVICE_DETAILS[serviceId];
+  const { lang } = useLang();
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [checkoutWorker, setCheckoutWorker] = useState<WorkerProfile | null>(null);
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
@@ -58,7 +61,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
             <img src="/logo.png" alt="UstaYolda" height={52} />
           </button>
           <div className="nav-links">
-            <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
+            <button className="nav-link nav-link-btn" onClick={onBack}>{t("sd_services", lang)}</button>
             <button
               className="nav-link nav-link-btn"
               onClick={() => { onBack(); setTimeout(() => document.getElementById("workers")?.scrollIntoView({ behavior: "smooth" }), 80); }}
@@ -73,7 +76,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
             </button>
           </div>
           <div className="nav-auth">
-            <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+            <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
             <button
               className="btn-primary"
               onClick={() => { onBack(); setTimeout(() => document.getElementById("become-worker")?.scrollIntoView({ behavior: "smooth" }), 80); }}
@@ -99,7 +102,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
               document.getElementById("sd-workers")?.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            Book Now
+            {t("book_now", lang)}
           </a>
         </div>
       </div>
@@ -107,9 +110,9 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {/* ── Breadcrumb ── */}
       <div className="sd-breadcrumb">
         <div className="sd-breadcrumb-inner">
-          <button className="sd-bc-link" onClick={onBack}>Home</button>
+          <button className="sd-bc-link" onClick={onBack}>{t("sd_home", lang)}</button>
           <span className="sd-bc-sep">›</span>
-          <button className="sd-bc-link" onClick={onBack}>Services</button>
+          <button className="sd-bc-link" onClick={onBack}>{t("sd_services", lang)}</button>
           <span className="sd-bc-sep">›</span>
           <span className="sd-bc-link">{detail.category}</span>
           <span className="sd-bc-sep">›</span>
@@ -174,7 +177,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {/* ── Workers ── */}
       <section className="workers-section" id="sd-workers">
         <div className="workers-header">
-          <h2 className="section-title">Top {detail.title} Workers</h2>
+          <h2 className="section-title">{lang === "tr" ? `En İyi ${detail.title} Ustaları` : `Top ${detail.title} Workers`}</h2>
           {bookingStatus && (
             <div className="status-log">
               <span className="status-pill">{bookingStatus}</span>
@@ -182,7 +185,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
           )}
         </div>
         {workers.length === 0 ? (
-          <p className="empty-state">No workers found. Try searching from the home page.</p>
+          <p className="empty-state">{t("sd_no_workers", lang)}</p>
         ) : (
           <div className="worker-grid">
             {workers.map((worker) => (
@@ -193,13 +196,13 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
                     <div className="worker-name-row">
                       <span className="worker-name">{worker.fullName}</span>
                       {worker.verified && (
-                        <span className="verified-badge"><VerifiedIcon /> Verified</span>
+                        <span className="verified-badge"><VerifiedIcon /> {t("verified_badge", lang)}</span>
                       )}
                     </div>
                     <div className="worker-rating">
                       <span className="star-icon"><StarIcon /></span>
                       <strong>{worker.rating}</strong>
-                      <span className="review-count">({worker.reviewCount} reviews)</span>
+                      <span className="review-count">({worker.reviewCount} {t("reviews_unit", lang)})</span>
                     </div>
                   </div>
                 </div>
@@ -212,13 +215,13 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
                 <div className="worker-footer">
                   <div className="worker-price">
                     <span className="price-amount">&#8364;{worker.hourlyPrice}</span>
-                    <span className="price-unit"> / hour</span>
+                    <span className="price-unit"> {t("hour", lang)}</span>
                   </div>
                   <button
                     className="btn-primary btn-book"
                     onClick={() => handleBook(worker)}
                   >
-                    Book Now
+                    {t("book_now", lang)}
                   </button>
                 </div>
               </article>
