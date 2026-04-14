@@ -107,6 +107,62 @@ const CATEGORIES = [
 
 type CatId = (typeof CATEGORIES)[number]["id"];
 
+const POPULAR_PROJECTS = [
+  { emoji: "🪑", title: "Furniture Assembly", startPrice: 199, color: "#eef0ff", page: "Furniture Assembly" },
+  { emoji: "🖼️", title: "Mount Art or Shelves", startPrice: 249, color: "#fff0f0", page: "Mounting & Installation" },
+  { emoji: "📺", title: "Mount a TV", startPrice: 269, color: "#f0fff8", page: "Mounting & Installation" },
+  { emoji: "🚚", title: "Help Moving", startPrice: 279, color: "#fff8f0", page: "Moving Services" },
+  { emoji: "🧹", title: "Home Cleaning", startPrice: 199, color: "#f0f8ff", page: "Cleaning" },
+  { emoji: "🔧", title: "Minor Plumbing Repair", startPrice: 299, color: "#fffff0", page: "Handyman" },
+  { emoji: "⚡", title: "Electrical Help", startPrice: 279, color: "#fffaf0", page: "Handyman" },
+  { emoji: "💪", title: "Heavy Lifting", startPrice: 249, color: "#fff0fc", page: "Moving Services" },
+];
+
+const REVIEWS = [
+  {
+    name: "Mehmet K.",
+    stars: 5,
+    text: "The worker arrived on time and assembled our IKEA wardrobe perfectly in under an hour. Very professional and cleaned up everything afterward.",
+    service: "IKEA Furniture Assembly",
+    page: "IKEA Services",
+  },
+  {
+    name: "Ayşe D.",
+    stars: 5,
+    text: "Fantastic service! They mounted our TV and two shelves exactly where we wanted. Quick, tidy and friendly. Will definitely book again.",
+    service: "Mounting & Installation",
+    page: "Mounting & Installation",
+  },
+  {
+    name: "Ali R.",
+    stars: 5,
+    text: "We had the whole apartment deep-cleaned before moving in. The difference was incredible — spotless from top to bottom. Highly recommend!",
+    service: "Home Cleaning",
+    page: "Cleaning",
+  },
+];
+
+const SERVICE_QUICK_LINKS = [
+  { label: "General Mounting", page: "Mounting & Installation" },
+  { label: "TV Mounting", page: "Mounting & Installation" },
+  { label: "Furniture Assembly", page: "Furniture Assembly" },
+  { label: "IKEA Furniture Assembly", page: "IKEA Services" },
+  { label: "Help Moving", page: "Moving Services" },
+  { label: "House Cleaning", page: "Cleaning" },
+  { label: "Yardwork", page: "Yardwork" },
+  { label: "Furniture Removal", page: "Moving Services" },
+  { label: "Lawn Care", page: "Yardwork" },
+  { label: "Hang Pictures", page: "Mounting & Installation" },
+  { label: "In Home Furniture Movers", page: "Moving Services" },
+  { label: "Shelf Mounting", page: "Mounting & Installation" },
+  { label: "Light Installation", page: "Handyman" },
+  { label: "Plumbing", page: "Handyman" },
+  { label: "Electrical Help", page: "Handyman" },
+  { label: "Home Repairs", page: "Handyman" },
+  { label: "Painting", page: "Painting" },
+  { label: "Personal Assistant", page: "Personal Assistant" },
+];
+
 export default function App() {
   const [activeCat, setActiveCat] = useState<CatId>("electrician");
   const [activeSub, setActiveSub] = useState<string | null>(null);
@@ -185,7 +241,387 @@ export default function App() {
 
   return (
     <div className="root">
+
+      {/* ── Navbar ── */}
       <nav className="navbar">
+        <div className="navbar-inner">
+          <a href="/" className="nav-logo">
+            <img src="/logo.png" alt="UstayaBirak" height={52} />
+          </a>
+          <div className="nav-links">
+            <a href="#services" className="nav-link">Services</a>
+            <a href="#workers" className="nav-link">Workers</a>
+            <a href="#become-worker" className="nav-link">Become a Worker</a>
+          </div>
+          <div className="nav-auth">
+            {currentUser ? (
+              <div className="nav-user">
+                <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                <span className="nav-user-name">{currentUser.fullName}</span>
+                <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+              </div>
+            ) : (
+              <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+            )}
+            <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Hero ── */}
+      <section className="hero" id="services">
+        <h1 className="hero-title">Book trusted help<br />for home tasks</h1>
+        <div className="search-bar">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="What do you need help with?"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button className="search-btn" aria-label="Search"><SearchIcon /></button>
+        </div>
+        <div className="category-tabs">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              className={"cat-tab" + (activeCat === cat.id ? " cat-tab--active" : "")}
+              onClick={() => setActiveCat(cat.id)}
+            >
+              <span className="cat-tab-icon"><cat.Icon /></span>
+              <span className="cat-tab-label">{cat.label}</span>
+            </button>
+          ))}
+        </div>
+        <div className="sub-pills">
+          {category.subs.map((sub) => (
+            <button
+              key={sub}
+              className={"sub-pill" + (activeSub === sub ? " sub-pill--active" : "")}
+              onClick={() => setActiveSub(activeSub === sub ? null : sub)}
+            >
+              {sub}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Spotlight Card ── */}
+      <section className="spotlight-section">
+        <div className="spotlight-card" style={{ background: category.accent }}>
+          <div className="spotlight-text">
+            <h2 className="spotlight-title">{category.headline}</h2>
+            <ul className="spotlight-bullets">
+              {category.bullets.map((b) => (
+                <li key={b}><span className="bullet-check">&#10003;</span>{b}</li>
+              ))}
+            </ul>
+            <p className="spotlight-trending">
+              <strong>Now Trending:</strong> {category.trending}
+            </p>
+          </div>
+          <div className="spotlight-visual" style={{ background: category.iconBg }}>
+            <div className="spotlight-big-icon"><category.Icon /></div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stats ── */}
+      <section className="tr-stats-section">
+        <div className="tr-stats-inner">
+          {[
+            { label: "Tasks completed", value: "48,000+" },
+            { label: "Moving tasks", value: "9,200+" },
+            { label: "Items mounted", value: "12,000+" },
+            { label: "Home repairs", value: "8,500+" },
+            { label: "Homes cleaned", value: "15,000+" },
+          ].map((s) => (
+            <div className="tr-stat" key={s.label}>
+              <span className="tr-stat-label">{s.label}:</span>
+              <strong className="tr-stat-value">{s.value}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Popular Projects ── */}
+      <section className="popular-projects" id="services-page">
+        <div className="pp-inner">
+          <h2 className="pp-heading">Popular Projects</h2>
+          <div className="pp-grid">
+            {POPULAR_PROJECTS.map((p) => (
+              <div className="pp-card" key={p.title} onClick={() => setActivePage(p.page)}>
+                <div className="pp-img" style={{ background: p.color }}>
+                  <span className="pp-emoji">{p.emoji}</span>
+                </div>
+                <div className="pp-info">
+                  <strong className="pp-title">{p.title}</strong>
+                  <span className="pp-price">Projects starting at ₺{p.startPrice}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Customer Reviews ── */}
+      <section className="reviews-section">
+        <div className="reviews-inner">
+          <h2 className="reviews-heading">See what happy customers are saying about UstayaBirak</h2>
+          <div className="reviews-grid">
+            {REVIEWS.map((r) => (
+              <div className="review-card" key={r.name}>
+                <div className="review-top">
+                  <strong className="reviewer-name">{r.name}</strong>
+                  <div className="review-stars">{"★".repeat(r.stars)}</div>
+                </div>
+                <p className="review-text">{r.text}</p>
+                <span className="review-service-link" onClick={() => setActivePage(r.page)}>
+                  {r.service}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Satisfaction Guarantee ── */}
+      <section className="guarantee-section">
+        <div className="guarantee-inner">
+          <h2 className="guarantee-heading">Your satisfaction, <span className="guarantee-highlight">guaranteed</span></h2>
+          <div className="guarantee-grid">
+            <div className="guarantee-item">
+              <div className="guarantee-icon">🛡️</div>
+              <h3>Happiness Pledge</h3>
+              <p>If you're not satisfied, we'll work to make it right.</p>
+            </div>
+            <div className="guarantee-item">
+              <div className="guarantee-icon">✅</div>
+              <h3>Vetted Workers</h3>
+              <p>Workers are always background checked before joining the platform.</p>
+            </div>
+            <div className="guarantee-item">
+              <div className="guarantee-icon">💬</div>
+              <h3>Dedicated Support</h3>
+              <p>Friendly service when you need us — every day of the week.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="how-it-works">
+        <div className="hiw-inner">
+          <div className="hiw-content">
+            <h2 className="hiw-heading">How it works</h2>
+            {[
+              { n: 1, text: "Choose a Worker by price, skills, and reviews." },
+              { n: 2, text: "Schedule a Worker as early as today." },
+              { n: 3, text: "Chat, pay, tip, and review all in one place." },
+            ].map((s) => (
+              <div className="hiw-step" key={s.n}>
+                <span className="hiw-step-num">{s.n}</span>
+                <p>{s.text}</p>
+              </div>
+            ))}
+            <button className="btn-primary" style={{ marginTop: "1.5rem" }} onClick={() => setActivePage("__become-worker")}>
+              Get started today
+            </button>
+          </div>
+          <div className="hiw-visual">
+            <div className="hiw-card">
+              <div className="hiw-card-row">
+                <span className="hiw-card-icon">🔧</span>
+                <span>Handyman services</span>
+                <span className="hiw-card-price">from ₺199</span>
+              </div>
+              <div className="hiw-card-row">
+                <span className="hiw-card-icon">🧹</span>
+                <span>Cleaning</span>
+                <span className="hiw-card-price">from ₺199</span>
+              </div>
+              <div className="hiw-card-row">
+                <span className="hiw-card-icon">🚚</span>
+                <span>Moving help</span>
+                <span className="hiw-card-price">from ₺279</span>
+              </div>
+              <div className="hiw-card-row hiw-card-row--btn">
+                <button className="btn-primary" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Workers ── */}
+      <section className="workers-section" id="workers">
+        <div className="workers-header">
+          <h2 className="section-title">
+            {activeSub ? `Workers for "${activeSub}"` : `Top ${category.label} workers`}
+          </h2>
+          {statusLog.length > 0 && (
+            <div className="status-log">
+              {statusLog.map((item, i) => (
+                <span key={i} className="status-pill">{item}</span>
+              ))}
+            </div>
+          )}
+        </div>
+        {filteredWorkers.length === 0 ? (
+          <p className="empty-state">No workers found. Try a different category or search.</p>
+        ) : (
+          <div className="worker-grid">
+            {filteredWorkers.map((worker) => (
+              <article className="worker-card" key={worker.id}>
+                <div className="worker-card-top">
+                  <div className="worker-avatar">{worker.fullName.charAt(0)}</div>
+                  <div className="worker-meta">
+                    <div className="worker-name-row">
+                      <span className="worker-name">{worker.fullName}</span>
+                      {worker.verified && (
+                        <span className="verified-badge"><VerifiedIcon /> Verified</span>
+                      )}
+                    </div>
+                    <div className="worker-rating">
+                      <span className="star-icon"><StarIcon /></span>
+                      <strong>{worker.rating}</strong>
+                      <span className="review-count">({worker.reviewCount} reviews)</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="worker-bio">{worker.bio}</p>
+                <div className="worker-tags">
+                  {worker.categories.map((c) => (
+                    <span key={c} className="worker-tag">{c.replace(/-/g, " ")}</span>
+                  ))}
+                </div>
+                <div className="worker-footer">
+                  <div className="worker-price">
+                    <span className="price-amount">₺{worker.hourlyPrice}</span>
+                    <span className="price-unit"> / hour</span>
+                  </div>
+                  <button
+                    className="btn-primary btn-book"
+                    onClick={() => handleBook(worker)}
+                    disabled={bookingInProgress}
+                  >
+                    {bookingInProgress ? "Sending…" : "Book Now"}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ── Get help Today ── */}
+      <section className="get-help-today">
+        <div className="ght-inner">
+          <h2 className="ght-heading">Get help Today</h2>
+          <div className="ght-pills">
+            {SERVICE_QUICK_LINKS.map((s) => (
+              <button key={s.label} className="ght-pill" onClick={() => setActivePage(s.page)}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+          <button className="ght-see-all" onClick={() => setActivePage("Handyman")}>
+            See All Services &rsaquo;
+          </button>
+        </div>
+      </section>
+
+      {/* ── Become a Worker ── */}
+      <section className="become-worker-section" id="become-worker">
+        <div className="become-worker-inner">
+          <div className="become-worker-text">
+            <h2 className="become-worker-title">Earn money your way</h2>
+            <p className="become-worker-subtitle">See how much you can make tasking on UstayaBirak</p>
+            <div className="become-worker-points">
+              <div className="bw-point"><span className="bw-point-icon">💰</span><div><strong>Set your own rates</strong><p>You decide how much to charge per hour for each task type.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📅</span><div><strong>Choose your schedule</strong><p>Work when it suits you — full time, part time, or weekends only.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📍</span><div><strong>Work in your area</strong><p>Pick jobs near you and build a local client base.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">⭐</span><div><strong>Build your reputation</strong><p>Get reviews, grow your profile, and become a top-rated worker.</p></div></div>
+            </div>
+            <button className="btn-primary btn-become-worker" onClick={() => setActivePage("__become-worker")}>Get started as a Worker</button>
+          </div>
+          <div className="become-worker-visual">
+            <div className="become-worker-card">
+              <div className="bw-card-header">Top earners this month</div>
+              {[
+                { name: "Aryan K.", cat: "Electrical", earn: "₺3,200", rating: "4.9" },
+                { name: "Leila M.", cat: "Cleaning", earn: "₺2,800", rating: "5.0" },
+                { name: "Deniz Y.", cat: "Moving", earn: "₺2,450", rating: "4.8" },
+              ].map((w) => (
+                <div className="bw-earner-row" key={w.name}>
+                  <div className="bw-earner-avatar">{w.name.charAt(0)}</div>
+                  <div className="bw-earner-info">
+                    <span className="bw-earner-name">{w.name}</span>
+                    <span className="bw-earner-cat">{w.cat}</span>
+                  </div>
+                  <div className="bw-earner-right">
+                    <span className="bw-earner-earn">{w.earn}</span>
+                    <span className="bw-earner-rating">★ {w.rating}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="footer-main">
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <img src="/logo.png" alt="UstayaBirak" height={38} />
+            <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
+          </div>
+          <div className="footer-col">
+            <h4>Discover</h4>
+            <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+            <button onClick={() => setActivePage("Handyman")}>All Services</button>
+            <button onClick={() => setActivePage("Moving Services")}>Services Nearby</button>
+            <button onClick={() => setShowAuth(true)}>Help</button>
+          </div>
+          <div className="footer-col">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+            <a href="#">Terms &amp; Privacy</a>
+          </div>
+          <div className="footer-col">
+            <h4>Download our app</h4>
+            <p>Tackle your to-do list wherever you are with our mobile app.</p>
+            <div className="footer-app-badges">
+              <div className="app-badge">📱 App Store</div>
+              <div className="app-badge">🤖 Google Play</div>
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+          <div className="footer-social">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="Instagram">ig</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+      </footer>
+
+      {showAuth && (
+        <AuthModal
+          onClose={() => setShowAuth(false)}
+          onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+        />
+      )}
+    </div>
+  );
+}
+
         <div className="navbar-inner">
           <a href="/" className="nav-logo">
             <img src="/logo.png" alt="UstayaBirak" height={52} />
