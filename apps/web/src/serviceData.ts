@@ -1075,4 +1075,1222 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
       ],
     },
   },
+
+  "Door, Cabinet & Furniture Repair": {
+    id: "door-cabinet-furniture-repair",
+    emoji: "🚪",
+    title: "Door, Cabinet & Furniture Repair",
+    titleTr: "Kapı, Dolap & Mobilya Tamiri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Fix sticking doors, repair cabinets, and restore furniture — skilled Taskers ready to help today.",
+    taglineTr: "Sıkışan kapıları onarın, dolapları tamir edin ve mobilyaları yenileyin — yetenekli ustalar bugün yardıma hazır.",
+    heroGradient: "linear-gradient(150deg, #2a1a0a 0%, #5a3a1a 50%, #9a6a3a 100%)",
+    accentBg: "linear-gradient(135deg, #fff8f0 0%, #ffe0b8 100%)",
+    catId: "other",
+    body: {
+      intro: "Sticking doors, broken hinges, sagging cabinet doors — these small issues add up. Our Taskers fix them quickly and affordably so your home feels right again.",
+      introTr: "Sıkışan kapılar, kırık menteşeler, sarkan dolap kapıları — bu küçük sorunlar birikir. Ustalarımız bunları hızlı ve uygun fiyatlı şekilde düzelterek evinizin yeniden doğru hissetmesini sağlar.",
+      sections: [
+        {
+          heading: "Door, Cabinet & Furniture Repair Services",
+          headingTr: "Kapı, Dolap & Mobilya Tamir Hizmetleri",
+          paragraphs: [
+            "From internal doors that won't close properly to cabinet hinges that have come loose, our Taskers handle all types of door, cabinet, and furniture repairs.",
+            "Every Tasker brings their own tools and parts — no need for you to source anything.",
+          ],
+          paragraphsTr: [
+            "Düzgün kapanmayan iç kapılardan gevşemiş dolap menteşelerine kadar, ustalarımız her türlü kapı, dolap ve mobilya tamirini üstlenir.",
+            "Her usta kendi araçlarını ve parçalarını getirir — sizin bir şey temin etmenize gerek yoktur.",
+          ],
+        },
+        {
+          heading: "Common repairs we handle",
+          headingTr: "Üstlendiğimiz yaygın tamirler",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Sticking Doors:", labelTr: "Sıkışan Kapılar:", text: "Plane or adjust doors that stick, drag, or won't latch properly.", textTr: "Sıkışan, sürtünen veya düzgün kilitlenmeyen kapılar tornavidayla veya rendelerek ayarlanır." },
+            { label: "Hinge Replacement:", labelTr: "Menteşe Değişimi:", text: "Replace worn or broken hinges on doors, cabinets, and wardrobes.", textTr: "Kapılar, dolaplar ve gardıroplardaki yıpranmış veya kırık menteşeler değiştirilir." },
+            { label: "Cabinet Door Repair:", labelTr: "Dolap Kapısı Tamiri:", text: "Realign, rehang, or replace damaged cabinet doors and handles.", textTr: "Hasarlı dolap kapıları ve kolları yeniden hizalanır, asılır veya değiştirilir." },
+            { label: "Furniture Repairs:", labelTr: "Mobilya Tamiri:", text: "Fix wobbly chairs, broken drawer runners, and loose joints.", textTr: "Salınan sandalyeler, kırık çekmece rayları ve gevşek eklemler onarılır." },
+            { label: "Lock & Handle Replacement:", labelTr: "Kilit & Kol Değişimi:", text: "Replace door handles, knobs, and lock mechanisms.", textTr: "Kapı kolları, topuzlar ve kilit mekanizmaları değiştirilir." },
+            { label: "Wardrobe Repairs:", labelTr: "Gardırop Tamiri:", text: "Fix sliding wardrobe doors, broken runners, and soft-close mechanisms.", textTr: "Sürgülü gardırop kapıları, kırık raylar ve soft-close mekanizmaları onarılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Door & Cabinet Repair?",
+          headingTr: "Kapı & Dolap Tamiri için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers are experienced carpenters and handymen who fix these problems every day. Fast, tidy, and reliable.",
+            "Book same-day for urgent repairs or schedule at a convenient time. No callout fees.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız bu sorunları her gün çözen deneyimli marangozlar ve tamircilerdir. Hızlı, düzenli ve güvenilir.",
+            "Acil tamirler için aynı gün rezervasyon yapın veya uygun bir zamanda planlayın. Çağrı ücreti yoktur.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Appliance Installation & Repairs": {
+    id: "appliance-installation-repairs",
+    emoji: "🔌",
+    title: "Appliance Installation & Repairs",
+    titleTr: "Beyaz Eşya Kurulum & Tamiri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Install or repair washing machines, dishwashers, ovens, and more — get your appliances working perfectly.",
+    taglineTr: "Çamaşır makinesi, bulaşık makinesi, fırın ve daha fazlasını kurun veya tamir edin — beyaz eşyalarınızı mükemmel çalıştırın.",
+    heroGradient: "linear-gradient(150deg, #1a1a3a 0%, #2a3a7a 50%, #3a5abf 100%)",
+    accentBg: "linear-gradient(135deg, #f0f0ff 0%, #c8d0ff 100%)",
+    catId: "other",
+    body: {
+      intro: "New appliance arrived but needs connecting? Old one acting up? Our Taskers install, connect, and repair household appliances safely and efficiently.",
+      introTr: "Yeni bir beyaz eşya geldi ama bağlantısı yapılmadı mı? Eskisi sorun mu çıkarıyor? Ustalarımız ev aletlerini güvenli ve verimli şekilde kurar, bağlar ve tamir eder.",
+      sections: [
+        {
+          heading: "Appliance Installation & Repair Services",
+          headingTr: "Beyaz Eşya Kurulum & Tamir Hizmetleri",
+          paragraphs: [
+            "From connecting a new washing machine to diagnosing why your dishwasher isn't draining, our Taskers handle all types of appliance work.",
+            "All appliance work is carried out safely. Taskers check connections, test functionality, and leave everything working as it should.",
+          ],
+          paragraphsTr: [
+            "Yeni bir çamaşır makinesi bağlamaktan bulaşık makinenizin neden boşalmadığını teşhis etmeye kadar, ustalarımız her türlü beyaz eşya işini halleder.",
+            "Tüm beyaz eşya çalışmaları güvenle yürütülür. Ustalar bağlantıları kontrol eder, işlevselliği test eder ve her şeyi gerektiği gibi çalışır bırakır.",
+          ],
+        },
+        {
+          heading: "Appliances we install and repair",
+          headingTr: "Kurduğumuz ve tamir ettiğimiz beyaz eşyalar",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Washing Machine:", labelTr: "Çamaşır Makinesi:", text: "Install, connect water lines, and test your washing machine.", textTr: "Çamaşır makinenizi kurun, su hatlarını bağlayın ve test edin." },
+            { label: "Dishwasher:", labelTr: "Bulaşık Makinesi:", text: "Fit, plumb in, and connect your dishwasher to power and drainage.", textTr: "Bulaşık makinenizi yerleştirin, su tesisatına ve elektriğe bağlayın." },
+            { label: "Oven & Cooker:", labelTr: "Fırın & Ocak:", text: "Install electric or gas ovens and hobs safely.", textTr: "Elektrikli veya gazlı fırın ve ocakları güvenle kurun." },
+            { label: "Fridge & Freezer:", labelTr: "Buzdolabı & Dondurucu:", text: "Position, level, and connect refrigerators and freezers.", textTr: "Buzdolabı ve dondurucuları yerleştirin, dengeleyin ve bağlayın." },
+            { label: "Tumble Dryer:", labelTr: "Kurutma Makinesi:", text: "Install vented or condenser dryers with proper ventilation.", textTr: "Havalandırmalı veya yoğuşmalı kurutucuları uygun havalandırmayla kurun." },
+            { label: "Minor Repairs:", labelTr: "Küçük Tamirler:", text: "Diagnose and fix common appliance faults and malfunctions.", textTr: "Yaygın beyaz eşya arızalarını teşhis edin ve düzeltin." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Appliance Work?",
+          headingTr: "Beyaz Eşya İşleri için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers are experienced with all major appliance brands and installation types. Safe, fast, and done right.",
+            "Book same-day for urgent installations or repairs — no long waits for an engineer.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız tüm büyük beyaz eşya markaları ve kurulum türlerinde deneyimlidir. Güvenli, hızlı ve doğru yapılır.",
+            "Acil kurulum veya tamirler için aynı gün rezervasyon yapın — bir teknisyen için uzun bekleme yoktur.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "TV Mounting": {
+    id: "tv-mounting",
+    emoji: "📺",
+    title: "TV Mounting",
+    titleTr: "TV Montajı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Get your TV mounted safely on any wall — cables hidden, perfectly level, first time.",
+    taglineTr: "TV'nizi her duvara güvenle monte edin — kablolar gizli, mükemmel hizalanmış, ilk seferinde.",
+    heroGradient: "linear-gradient(150deg, #0a1a2a 0%, #1a3a5a 50%, #2a5a8a 100%)",
+    accentBg: "linear-gradient(135deg, #e8f0ff 0%, #b0ccff 100%)",
+    catId: "other",
+    body: {
+      intro: "Wall-mounting a TV looks simple but getting it perfectly level, finding the studs, and hiding the cables takes skill. Our Taskers do it properly — first time, every time.",
+      introTr: "TV'yi duvara monte etmek basit görünür ama mükemmel hizalamak, direkleri bulmak ve kabloları gizlemek beceri gerektirir. Ustalarımız bunu doğru yapar — her seferinde ilk seferinde.",
+      sections: [
+        {
+          heading: "TV Mounting Services",
+          headingTr: "TV Montaj Hizmetleri",
+          paragraphs: [
+            "From a small bedroom TV to a large living room screen, our Taskers mount any size TV on any wall type — plasterboard, brick, stone, or tile.",
+            "Cable management included: Taskers route cables neatly behind the wall or along trunking so your setup looks clean.",
+          ],
+          paragraphsTr: [
+            "Küçük bir yatak odası TV'sinden büyük bir oturma odası ekranına kadar, ustalarımız her boyutta TV'yi her duvar tipine monte eder — alçıpan, tuğla, taş veya fayans.",
+            "Kablo yönetimi dahil: Ustalar kurulumunuzun temiz görünmesi için kabloları duvarda veya kablo kanalında düzenli şekilde yönlendirir.",
+          ],
+        },
+        {
+          heading: "What's included in TV mounting",
+          headingTr: "TV montajına dahil olanlar",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Wall Bracket Fitting:", labelTr: "Duvar Braketi Takma:", text: "Fixed, tilting, or full-motion brackets fitted on any wall.", textTr: "Her duvara sabit, eğim ayarlı veya tam hareketli braket takılır." },
+            { label: "Cable Management:", labelTr: "Kablo Yönetimi:", text: "Cables hidden in-wall or along trunking for a tidy finish.", textTr: "Temiz bir görünüm için kablolar duvar içine veya kablo kanalına gizlenir." },
+            { label: "All Screen Sizes:", labelTr: "Tüm Ekran Boyutları:", text: "Mount screens from 32\" up to 85\" and beyond.", textTr: "32\" ile 85\" ve üstü ekranlar monte edilir." },
+            { label: "All Wall Types:", labelTr: "Tüm Duvar Tipleri:", text: "Plasterboard, brick, concrete, and stud walls all covered.", textTr: "Alçıpan, tuğla, beton ve ahşap karkas duvarlar dahil tümü kapsanır." },
+            { label: "HDMI & Cable Setup:", labelTr: "HDMI & Kablo Kurulumu:", text: "Connect devices, run cables, and test the picture quality.", textTr: "Cihazlar bağlanır, kablolar çekilir ve görüntü kalitesi test edilir." },
+            { label: "Multi-TV Setups:", labelTr: "Çoklu TV Kurulumu:", text: "Mount multiple TVs in the same room or different rooms.", textTr: "Aynı odada veya farklı odalarda birden fazla TV monte edilir." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for TV Mounting?",
+          headingTr: "TV Montajı için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers use professional spirit levels and the right wall anchors for every wall type. No tilted screens, no falling TVs.",
+            "Book same-day — most TV mounting jobs are done in under an hour.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız her duvar tipi için profesyonel su terazileri ve doğru dübeller kullanır. Eğri ekranlar yok, düşen TV'ler yok.",
+            "Aynı gün rezervasyon yapın — çoğu TV montaj işi bir saatten kısa sürede tamamlanır.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Drywall Repair Service": {
+    id: "drywall-repair",
+    emoji: "🪣",
+    title: "Drywall Repair Service",
+    titleTr: "Alçıpan Tamir Hizmeti",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Patch holes, fix cracks, and restore your walls to a smooth, paint-ready finish.",
+    taglineTr: "Delikleri kapatın, çatlakları onarın ve duvarlarınızı pürüzsüz, boyamaya hazır bir görünüme kavuşturun.",
+    heroGradient: "linear-gradient(150deg, #2a2a2a 0%, #4a4a4a 50%, #7a7a7a 100%)",
+    accentBg: "linear-gradient(135deg, #f8f8f8 0%, #e0e0e0 100%)",
+    catId: "other",
+    body: {
+      intro: "Holes from door handles, cracks from settling, and scuffs from moving furniture — our Taskers repair all types of drywall damage, leaving walls smooth and ready to paint.",
+      introTr: "Kapı kollarından oluşan delikler, çökmeden kaynaklanan çatlaklar ve mobilya taşırken oluşan izler — ustalarımız her türlü alçıpan hasarını onarır, duvarları pürüzsüz ve boyamaya hazır bırakır.",
+      sections: [
+        {
+          heading: "Drywall Repair Services",
+          headingTr: "Alçıpan Tamir Hizmetleri",
+          paragraphs: [
+            "Whether it's a small nail hole or a large section of damaged drywall, our Taskers have the skills and materials to repair it properly.",
+            "Repairs are sanded smooth and primed so your wall is ready for painting immediately after.",
+          ],
+          paragraphsTr: [
+            "İster küçük bir çivi deliği ister büyük bir hasar alanı olsun, ustalarımız onu düzgün şekilde tamir etmek için gerekli beceri ve malzemelere sahiptir.",
+            "Tamirler pürüzsüz zımparalanır ve astar uygulanır, böylece duvarınız hemen boyamaya hazır olur.",
+          ],
+        },
+        {
+          heading: "Drywall repairs we handle",
+          headingTr: "Üstlendiğimiz alçıpan tamirler",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Small Holes:", labelTr: "Küçük Delikler:", text: "Nail holes, screw holes, and anchor holes filled and smoothed.", textTr: "Çivi delikleri, vida delikleri ve dübel delikleri doldurulur ve düzeltilir." },
+            { label: "Large Holes:", labelTr: "Büyük Delikler:", text: "Door handle holes and fist-sized damage patched with new drywall.", textTr: "Kapı kolu delikleri ve yumruk büyüklüğündeki hasarlar yeni alçıpanla kapatılır." },
+            { label: "Cracks & Hairlines:", labelTr: "Çatlaklar & Saç Kılı Çatlaklar:", text: "Fill and tape hairline cracks to prevent them reappearing.", textTr: "Saç kılı çatlakları doldurulur ve bantlanır, tekrar oluşması önlenir." },
+            { label: "Water Damage Repair:", labelTr: "Su Hasarı Tamiri:", text: "Replace water-damaged sections and treat for staining.", textTr: "Su hasarlı bölümler değiştirilir ve leke oluşumuna karşı işlem uygulanır." },
+            { label: "Textured Finishes:", labelTr: "Dokulu Kaplamalar:", text: "Match existing wall texture for a seamless, invisible repair.", textTr: "Görünmez bir tamir için mevcut duvar dokusuyla eşleştirilir." },
+            { label: "Full Wall Skim:", labelTr: "Tam Duvar Sıvası:", text: "Skim coat entire walls for a perfectly smooth, fresh finish.", textTr: "Mükemmel pürüzsüz ve taze bir görünüm için tüm duvarlar ince sıva ile kaplanır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Drywall Repair?",
+          headingTr: "Alçıpan Tamiri için neden UstaYolda?",
+          paragraphs: [
+            "Expert repairs that blend seamlessly with your existing walls — no visible patches or uneven surfaces.",
+            "Taskers come fully equipped with joint compound, tape, and sanding tools. You won't need to buy a thing.",
+          ],
+          paragraphsTr: [
+            "Mevcut duvarlarınızla kusursuz şekilde bütünleşen uzman tamirler — görünür yamalar veya düzensiz yüzeyler yok.",
+            "Ustalar derz alçısı, bant ve zımpara aletleriyle tam donanımlı gelir. Hiçbir şey satın almanıza gerek yoktur.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Flooring & Tiling Help": {
+    id: "flooring-tiling",
+    emoji: "🪵",
+    title: "Flooring & Tiling Help",
+    titleTr: "Zemin & Fayans Yardımı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Tile installation, laminate fitting, and floor repairs — perfect floors from skilled Taskers.",
+    taglineTr: "Fayans döşeme, laminat montajı ve zemin onarımları — yetenekli ustalardan mükemmel zeminler.",
+    heroGradient: "linear-gradient(150deg, #1a0a00 0%, #4a2a0a 50%, #8a5a1a 100%)",
+    accentBg: "linear-gradient(135deg, #fff8e8 0%, #ffd8a0 100%)",
+    catId: "other",
+    body: {
+      intro: "New tiles in the bathroom, laminate in the living room, or a cracked floor tile that needs replacing — our Taskers handle all types of flooring and tiling work.",
+      introTr: "Banyoda yeni fayanslar, oturma odasında laminat veya değiştirilmesi gereken kırık bir zemin fayansi — ustalarımız her türlü zemin ve fayans işini halleder.",
+      sections: [
+        {
+          heading: "Flooring & Tiling Services",
+          headingTr: "Zemin & Fayans Hizmetleri",
+          paragraphs: [
+            "From a single cracked tile to a full bathroom floor, our Taskers are skilled in laying tiles, fitting laminate, and repairing damaged flooring.",
+            "They work neatly, cut precisely, and leave a professional finish that lasts.",
+          ],
+          paragraphsTr: [
+            "Tek kırık bir fayans işinden tam banyo zeminine kadar, ustalarımız fayans döşeme, laminat yerleştirme ve hasar görmüş zemin onarımında yeteneklidir.",
+            "Düzenli çalışırlar, hassas kesiş yaparlar ve kalıcı profesyonel bir sonuç bırakırlar.",
+          ],
+        },
+        {
+          heading: "Flooring tasks we handle",
+          headingTr: "Üstlendiğimiz zemin işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Tile Installation:", labelTr: "Fayans Döşeme:", text: "Floor and wall tiles laid perfectly level with uniform grout lines.", textTr: "Zemin ve duvar fayansları eşit derz aralıklarıyla mükemmel düzgünlükte döşenir." },
+            { label: "Tile Replacement:", labelTr: "Fayans Değişimi:", text: "Remove and replace cracked, chipped, or stained tiles.", textTr: "Çatlak, kırık veya lekeli fayanslar sökülür ve değiştirilir." },
+            { label: "Laminate Fitting:", labelTr: "Laminat Döşeme:", text: "Floating laminate floors fitted in living rooms and bedrooms.", textTr: "Oturma odaları ve yatak odaları için yüzer laminat zemin döşenir." },
+            { label: "Vinyl & LVT:", labelTr: "Vinil & LVT:", text: "Luxury vinyl tiles and sheet vinyl laid to a smooth finish.", textTr: "Lüks vinil karolar ve levha vinil pürüzsüz şekilde döşenir." },
+            { label: "Grout Repair & Regrouting:", labelTr: "Derz Onarımı & Yeniden Derzleme:", text: "Remove old, cracked, and discoloured grout and regrout freshly.", textTr: "Eski, çatlak ve rengi değişmiş derz sökülür ve yenisi uygulanır." },
+            { label: "Subfloor Prep:", labelTr: "Alt Zemin Hazırlığı:", text: "Level and prepare subfloors before tile or laminate installation.", textTr: "Fayans veya laminat döşemeden önce alt zemin düzlenir ve hazırlanır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Flooring?",
+          headingTr: "Zemin İşleri için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers are experienced tilers and floor fitters who ensure level, long-lasting results.",
+            "Bring your own tiles or ask your Tasker to source them — flexible to suit your project.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız düzgün ve kalıcı sonuçlar sağlayan deneyimli fayansçılar ve zemin döşemecileridir.",
+            "Kendi fayanslarınızı getirin veya ustanızın temin etmesini isteyin — projenize göre esnek.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Electrical Help": {
+    id: "electrical-help",
+    emoji: "⚡",
+    title: "Electrical Help",
+    titleTr: "Elektrik Yardımı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Fix outlets, install light fixtures, and handle electrical tasks safely — book a Tasker today.",
+    taglineTr: "Prizleri onarın, aydınlatma armatürlerini takın ve elektrik işlerini güvenle hallediyin — bugün bir usta rezervasyonu yapın.",
+    heroGradient: "linear-gradient(150deg, #2a2a00 0%, #5a5a00 50%, #a0a000 100%)",
+    accentBg: "linear-gradient(135deg, #fffde8 0%, #fff0a0 100%)",
+    catId: "electrician",
+    body: {
+      intro: "Electrical issues can be daunting, but our skilled Taskers handle common household electrical tasks safely and efficiently — from fixing a dead outlet to installing a new light fixture.",
+      introTr: "Elektrik sorunları korkutucu olabilir, ancak yetenekli ustalarımız bozuk bir prizi onarmaktan yeni bir aydınlatma armatürü takmaya kadar yaygın ev elektrik işlerini güvenle ve verimli şekilde halleder.",
+      sections: [
+        {
+          heading: "Electrical Help Services",
+          headingTr: "Elektrik Yardım Hizmetleri",
+          paragraphs: [
+            "Our Taskers handle a wide range of non-specialist electrical tasks in the home, from replacing switches and outlets to installing light fittings and ceiling fans.",
+            "All electrical work is carried out safely with proper testing. Taskers ensure everything is working correctly before they leave.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız, şalter ve priz değişiminden aydınlatma armatürü ve tavan vantilatörü takılmasına kadar evdeki çok çeşitli elektrik işlerini üstlenir.",
+            "Tüm elektrik çalışmaları uygun testlerle güvenle yürütülür. Ustalar gitmeden önce her şeyin doğru çalıştığından emin olur.",
+          ],
+        },
+        {
+          heading: "Electrical tasks we handle",
+          headingTr: "Üstlendiğimiz elektrik işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Outlet Repair & Replacement:", labelTr: "Priz Onarım & Değişimi:", text: "Fix dead or sparking outlets and replace faulty sockets.", textTr: "Ölü veya kıvılcım çıkaran prizler onarılır ve arızalı soketler değiştirilir." },
+            { label: "Light Fixture Installation:", labelTr: "Aydınlatma Armatürü Kurulumu:", text: "Install pendant lights, ceiling lights, wall lights, and spotlights.", textTr: "Sarkıt lambalar, tavan lambaları, aplikler ve spot lambaları kurulumu." },
+            { label: "Switch Replacement:", labelTr: "Anahtar Değişimi:", text: "Replace worn, broken, or outdated light switches.", textTr: "Yıpranmış, kırık veya eski moda aydınlatma anahtarları değiştirilir." },
+            { label: "Ceiling Fan Wiring:", labelTr: "Tavan Vantilatörü Kablolaması:", text: "Wire and connect ceiling fans to existing switch circuits.", textTr: "Tavan vantilatörleri mevcut anahtar devrelerine bağlanır." },
+            { label: "Smart Switches & Dimmers:", labelTr: "Akıllı Anahtarlar & Kısıcılar:", text: "Install smart switches, dimmer controls, and programmable timers.", textTr: "Akıllı anahtarlar, kısma kontrolleri ve programlanabilir zamanlayıcılar kurulur." },
+            { label: "Outdoor Lighting:", labelTr: "Dış Mekan Aydınlatması:", text: "Install security lights, garden lights, and porch fixtures.", textTr: "Güvenlik lambaları, bahçe lambaları ve veranda armatürleri kurulur." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Electrical Help?",
+          headingTr: "Elektrik Yardımı için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers handle common electrical tasks safely and efficiently. All work is tested before completion.",
+            "Book same-day for urgent electrical faults or schedule a convenient time for installations.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız yaygın elektrik işlerini güvenle ve verimli şekilde halleder. Tüm işler tamamlanmadan önce test edilir.",
+            "Acil elektrik arızaları için aynı gün rezervasyon yapın veya kurulumlar için uygun bir zaman planlayın.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Sealing & Caulking": {
+    id: "sealing-caulking",
+    emoji: "🔩",
+    title: "Sealing & Caulking",
+    titleTr: "Derz & Sızdırmazlık",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Re-caulk bathrooms, seal gaps, and weatherproof your home — clean lines from a skilled Tasker.",
+    taglineTr: "Banyoları yeniden derzleyin, boşlukları kapatın ve evinizi hava koşullarına karşı koruyun — yetenekli bir ustadan temiz çizgiler.",
+    heroGradient: "linear-gradient(150deg, #0a2a1a 0%, #1a5a3a 50%, #2a8a5a 100%)",
+    accentBg: "linear-gradient(135deg, #e8fff4 0%, #b0ffd0 100%)",
+    catId: "other",
+    body: {
+      intro: "Old, cracked, or mouldy caulk looks awful and lets in water. Our Taskers remove the old sealant and apply a fresh, clean bead — making your bathroom and kitchen look brand new.",
+      introTr: "Eski, çatlak veya küflü derz malzemesi hem çirkin görünür hem de suya yol açar. Ustalarımız eski sızdırmazlık malzemesini kaldırır ve taze, temiz bir kat uygular — banyonuzu ve mutfağınızı yepyeni gösterir.",
+      sections: [
+        {
+          heading: "Sealing & Caulking Services",
+          headingTr: "Derz & Sızdırmazlık Hizmetleri",
+          paragraphs: [
+            "From bathroom re-caulking to sealing gaps around windows and doors, our Taskers apply sealant precisely and neatly.",
+            "They remove all old sealant first, clean the surface, and apply fresh caulk in a long-lasting, moisture-resistant bead.",
+          ],
+          paragraphsTr: [
+            "Banyo yeniden derzlemesinden pencere ve kapı çevresindeki boşlukların kapatılmasına kadar, ustalarımız sızdırmazlık malzemesini düzgün ve temiz şekilde uygular.",
+            "Önce tüm eski sızdırmazlık malzemesini kaldırırlar, yüzeyi temizlerler ve uzun ömürlü, neme dayanıklı yeni bir tabaka uygularlar.",
+          ],
+        },
+        {
+          heading: "Sealing tasks we handle",
+          headingTr: "Üstlendiğimiz sızdırmazlık işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Bathroom Re-caulking:", labelTr: "Banyo Yeniden Derzleme:", text: "Remove mouldy caulk around baths, showers, and basins and re-seal.", textTr: "Küvet, duş ve lavabo çevresindeki küflü derz kaldırılır ve yeniden sızdırmazlanır." },
+            { label: "Kitchen Caulking:", labelTr: "Mutfak Derzleme:", text: "Seal gaps between worktops, sinks, and tiles in kitchens.", textTr: "Mutfaklarda tezgahlar, lavabolar ve fayanslar arasındaki boşluklar kapatılır." },
+            { label: "Window & Door Sealing:", labelTr: "Pencere & Kapı Sızdırmazlığı:", text: "Draught-proof and weatherseal windows and external doors.", textTr: "Pencereler ve dış kapılar hava sızıntısına karşı korunur ve sızdırmazlanır." },
+            { label: "Shower Tray Sealing:", labelTr: "Duş Teknesi Sızdırmazlığı:", text: "Seal around shower trays to prevent water damage below.", textTr: "Altındaki su hasarını önlemek için duş teknelerinin çevresi sızdırmazlanır." },
+            { label: "External Gap Sealing:", labelTr: "Dış Boşluk Sızdırmazlığı:", text: "Fill and seal external gaps around pipes and cables.", textTr: "Borular ve kablolar çevresindeki dış boşluklar doldurulur ve kapatılır." },
+            { label: "Floor & Wall Joints:", labelTr: "Zemin & Duvar Birleşim Yerleri:", text: "Seal expansion joints between floors and walls cleanly.", textTr: "Zemin ve duvarlar arasındaki genleşme derzleri temizce kapatılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Sealing & Caulking?",
+          headingTr: "Derz & Sızdırmazlık için neden UstaYolda?",
+          paragraphs: [
+            "Proper caulk removal and application takes patience and a steady hand. Our Taskers deliver perfectly straight, clean lines every time.",
+            "High-quality, mould-resistant sealants used as standard — your bathroom will stay looking great for years.",
+          ],
+          paragraphsTr: [
+            "Uygun derz kaldırma ve uygulama sabır ve sabit bir el gerektirir. Ustalarımız her seferinde mükemmel düz, temiz çizgiler sunar.",
+            "Standart olarak yüksek kaliteli, küf dirençli sızdırmazlık malzemeleri kullanılır — banyonuz yıllarca harika görünmeye devam eder.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Plumbing": {
+    id: "plumbing",
+    emoji: "🚿",
+    title: "Plumbing",
+    titleTr: "Su Tesisatı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Fix leaks, clear drains, and install fixtures — trusted plumbing help when you need it most.",
+    taglineTr: "Sızıntıları onarın, tıkalı giderleri açın ve armatürleri kurun — en çok ihtiyaç duyduğunuzda güvenilir tesisat yardımı.",
+    heroGradient: "linear-gradient(150deg, #001a3a 0%, #003a7a 50%, #005abf 100%)",
+    accentBg: "linear-gradient(135deg, #e8f4ff 0%, #a0d0ff 100%)",
+    catId: "plumber",
+    body: {
+      intro: "A dripping tap, blocked drain, or leaking pipe can cause serious damage if left. Our Taskers fix plumbing problems quickly and correctly before they get worse.",
+      introTr: "Damlayan bir musluk, tıkalı bir gider veya sızan bir boru放置 edilirse ciddi hasara yol açabilir. Ustalarımız tesisat sorunlarını daha kötüleşmeden önce hızlı ve doğru şekilde düzeltir.",
+      sections: [
+        {
+          heading: "Plumbing Services",
+          headingTr: "Su Tesisatı Hizmetleri",
+          paragraphs: [
+            "From fixing a dripping tap to unblocking a slow drain or fitting a new toilet, our Taskers handle a wide range of household plumbing tasks.",
+            "All plumbing work is checked for leaks before the Tasker leaves. You won't be left with a wet surprise.",
+          ],
+          paragraphsTr: [
+            "Damlayan bir musluğu onarmaktan tıkalı bir gideri açmaya veya yeni bir tuvalet takmaya kadar, ustalarımız çok çeşitli ev tesisatı işlerini üstlenir.",
+            "Tüm tesisat çalışmaları usta gitmeden önce sızıntı açısından kontrol edilir. Sizi ıslak bir sürprizle bırakmayacaklar.",
+          ],
+        },
+        {
+          heading: "Plumbing tasks we handle",
+          headingTr: "Üstlendiğimiz tesisat işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Dripping Taps:", labelTr: "Damlayan Musluklar:", text: "Fix leaking taps by replacing washers, o-rings, and cartridges.", textTr: "Contalar, o-halkalar ve kartuşlar değiştirilerek sızan musluklar onarılır." },
+            { label: "Blocked Drains:", labelTr: "Tıkalı Giderler:", text: "Unblock sinks, baths, showers, and toilets quickly.", textTr: "Lavabolar, küvetler, duşlar ve tuvaletler hızlıca açılır." },
+            { label: "Toilet Repairs:", labelTr: "Tuvalet Tamiri:", text: "Fix running toilets, replace flush valves, and adjust ballcocks.", textTr: "Sürekli çalışan tuvaletler onarılır, sifon valfleri değiştirilir, şamandıralar ayarlanır." },
+            { label: "Tap & Fixture Installation:", labelTr: "Musluk & Armatür Kurulumu:", text: "Install new taps, mixers, showerheads, and bathroom fittings.", textTr: "Yeni musluklar, mikserlı armatürler, duş başlıkları ve banyo armatürleri kurulur." },
+            { label: "Pipe Leaks:", labelTr: "Boru Sızıntıları:", text: "Locate and repair leaking pipes under sinks and behind walls.", textTr: "Lavabo altındaki ve duvardaki sızan borular tespit edilir ve onarılır." },
+            { label: "Radiator Bleeding:", labelTr: "Radyatör Havalandırma:", text: "Bleed radiators and top up pressure for better heating efficiency.", textTr: "Radyatörler havalandırılır ve daha iyi ısıtma verimliliği için basınç artırılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Plumbing?",
+          headingTr: "Su Tesisatı için neden UstaYolda?",
+          paragraphs: [
+            "Fast response for plumbing emergencies — book same-day and get the problem sorted before water damage sets in.",
+            "Transparent pricing by the hour. No surprise call-out fees or inflated emergency rates.",
+          ],
+          paragraphsTr: [
+            "Tesisat acil durumları için hızlı yanıt — aynı gün rezervasyon yapın ve su hasarı oluşmadan sorunu çözün.",
+            "Saatlik şeffaf fiyatlandırma. Sürpriz çağrı ücretleri veya şişirilmiş acil fiyatlar yok.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Window & Blinds Repair": {
+    id: "window-blinds-repair",
+    emoji: "🪟",
+    title: "Window & Blinds Repair",
+    titleTr: "Pencere & Stor Tamiri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Repair broken windows, fix blind mechanisms, and restore window hardware — fast and affordable.",
+    taglineTr: "Kırık pencereleri onarın, stor mekanizmalarını düzeltin ve pencere donanımını eski haline getirin — hızlı ve uygun fiyatlı.",
+    heroGradient: "linear-gradient(150deg, #0a1a3a 0%, #1a3a6a 50%, #2a5a9a 100%)",
+    accentBg: "linear-gradient(135deg, #eaf2ff 0%, #b0ccff 100%)",
+    catId: "other",
+    body: {
+      intro: "Broken window locks, damaged blind cords, and sticking sash windows are more than an inconvenience — they affect your home's security and energy efficiency. Our Taskers fix them fast.",
+      introTr: "Kırık pencere kilitleri, hasarlı stor ipleri ve sıkışan çerçeveli pencereler sadece bir rahatsızlık değil — ev güvenliğinizi ve enerji verimliliğinizi etkiler. Ustalarımız bunları hızlıca düzeltir.",
+      sections: [
+        {
+          heading: "Window & Blinds Repair Services",
+          headingTr: "Pencere & Stor Tamir Hizmetleri",
+          paragraphs: [
+            "From a broken window lock to a blind that won't raise or lower, our Taskers diagnose and fix all types of window and blind problems.",
+            "They carry common replacement parts so most repairs are completed in a single visit.",
+          ],
+          paragraphsTr: [
+            "Kırık bir pencere kilidinden kaldırılıp indirilemeyen bir stora kadar, ustalarımız her türlü pencere ve stor sorununu teşhis edip düzeltir.",
+            "Yaygın yedek parçaları yanlarında taşırlar, böylece çoğu tamir tek bir ziyarette tamamlanır.",
+          ],
+        },
+        {
+          heading: "Window & blind repairs we handle",
+          headingTr: "Üstlendiğimiz pencere & stor tamirler",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Window Lock Repair:", labelTr: "Pencere Kilidi Tamiri:", text: "Repair or replace broken window locks and restrictor catches.", textTr: "Kırık pencere kilitleri ve kısıtlayıcı mandaller onarılır veya değiştirilir." },
+            { label: "Sash Window Repairs:", labelTr: "Kanatlı Pencere Tamiri:", text: "Fix sticking, rattling, or painted-shut sash windows.", textTr: "Sıkışan, gürültülü veya boyayla kapatılan kanatlı pencereler onarılır." },
+            { label: "Blind Mechanism Repair:", labelTr: "Stor Mekanizması Tamiri:", text: "Fix roller blinds, Venetian blinds, and Roman blind mechanisms.", textTr: "Rulo stor, jaluzi ve kıvrım stor mekanizmaları onarılır." },
+            { label: "Blind Installation:", labelTr: "Stor Kurulumu:", text: "Fit new roller, Venetian, or blackout blinds on any window.", textTr: "Her pencereye yeni rulo, jaluzi veya karartma stor takılır." },
+            { label: "Window Handle Replacement:", labelTr: "Pencere Kolu Değişimi:", text: "Replace damaged or stiff window handles and espagnolette bolts.", textTr: "Hasarlı veya sert pencere kolları ve espagnolette sürgüler değiştirilir." },
+            { label: "Draught Proofing:", labelTr: "Hava Sızıntısı Önleme:", text: "Seal draughty windows with new brush seals and weatherstripping.", textTr: "Hava sızdıran pencereler yeni fırça contalar ve hava sızdırmaz bantlarla kapatılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Window & Blind Repair?",
+          headingTr: "Pencere & Stor Tamiri için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers carry standard replacement parts and have experience with all window and blind types — most repairs done in one visit.",
+            "Same-day booking available. Broken locks and security issues dealt with as a priority.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız standart yedek parçalar taşır ve tüm pencere ve stor türlerinde deneyimlidir — çoğu tamir tek ziyarette tamamlanır.",
+            "Aynı gün rezervasyon mevcut. Kırık kilitler ve güvenlik sorunları öncelikli olarak ele alınır.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Ceiling Fan Installation": {
+    id: "ceiling-fan-installation",
+    emoji: "🌀",
+    title: "Ceiling Fan Installation",
+    titleTr: "Tavan Vantilatörü Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Get a ceiling fan safely installed and balanced — cool your home comfortably all summer.",
+    taglineTr: "Tavan vantilatörünüzü güvenle kurun ve dengeleyin — tüm yaz boyunca evinizi rahatça serin tutun.",
+    heroGradient: "linear-gradient(150deg, #001a3a 0%, #00408a 50%, #0060bf 100%)",
+    accentBg: "linear-gradient(135deg, #e8f8ff 0%, #a0e0ff 100%)",
+    catId: "electrician",
+    body: {
+      intro: "Installing a ceiling fan is more complex than it looks — it involves electrical wiring, secure mounting on a fan-rated box, and careful balancing. Our Taskers do it safely and correctly.",
+      introTr: "Bir tavan vantilatörü kurmak göründüğünden daha karmaşıktır — elektrik kablolaması, vantilatör değerlendirilmiş bir kutuya güvenli montaj ve dikkatli dengeleme gerektirir. Ustalarımız bunu güvenle ve doğru şekilde yapar.",
+      sections: [
+        {
+          heading: "Ceiling Fan Installation Services",
+          headingTr: "Tavan Vantilatörü Kurulum Hizmetleri",
+          paragraphs: [
+            "Our Taskers install ceiling fans in any room — bedrooms, living rooms, kitchens, and covered outdoor areas.",
+            "Whether you're replacing an existing light fitting or installing on a new circuit, Taskers handle the full job from start to finish.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız her odaya — yatak odaları, oturma odaları, mutfaklar ve kapalı dış alanlara — tavan vantilatörü kurar.",
+            "Mevcut bir aydınlatma armatürünü değiştiriyor veya yeni bir devreye kurulum yapıyor olsanız da, ustalar işin tamamını başından sonuna kadar halleder.",
+          ],
+        },
+        {
+          heading: "What's included in ceiling fan installation",
+          headingTr: "Tavan vantilatörü kurulumuna dahil olanlar",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "New Fan Installation:", labelTr: "Yeni Vantilatör Kurulumu:", text: "Install a brand new ceiling fan from your box to working.", textTr: "Kutusundan çıkarılmasından çalışır hale gelmesine kadar yeni tavan vantilatörü kurulumu." },
+            { label: "Fan Replacement:", labelTr: "Vantilatör Değişimi:", text: "Remove old fan and install a new one on the existing wiring.", textTr: "Eski vantilatör sökülerek yeni vantilatör mevcut kablolamaya kurulur." },
+            { label: "Light Fixture Swap:", labelTr: "Aydınlatma Armatürü Değişimi:", text: "Replace an existing ceiling light with a fan and light combo.", textTr: "Mevcut tavan lambası, aydınlatmalı bir vantilatör ile değiştirilir." },
+            { label: "Remote Control Setup:", labelTr: "Uzaktan Kumanda Kurulumu:", text: "Install and programme remote controls and wall dimmers.", textTr: "Uzaktan kumandalar ve duvar kısıcıları kurularak programlanır." },
+            { label: "Fan Balancing:", labelTr: "Vantilatör Dengeleme:", text: "Balance wobbling fans using balancing kits for smooth, quiet operation.", textTr: "Sallanan vantilatörler denge kitleri kullanılarak yumuşak ve sessiz çalışma için dengelenir." },
+            { label: "Outdoor Fan Installation:", labelTr: "Dış Mekan Vantilatörü Kurulumu:", text: "Install damp or wet-rated ceiling fans on porches and covered patios.", textTr: "Verandalar ve kapalı teraslara nem veya ıslatma dayanımlı tavan vantilatörleri kurulur." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Ceiling Fan Installation?",
+          headingTr: "Tavan Vantilatörü Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Safe electrical work and secure mounting — our Taskers leave your fan running smoothly with no wobble or noise.",
+            "Book at a time that suits you. Most ceiling fan installations are completed within an hour.",
+          ],
+          paragraphsTr: [
+            "Güvenli elektrik çalışmaları ve sağlam montaj — ustalarımız vantilatörünüzü sallanma veya gürültü olmadan sorunsuz çalışır bırakır.",
+            "Size uygun bir zamanda rezervasyon yapın. Çoğu tavan vantilatörü kurulumu bir saat içinde tamamlanır.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Smart Home Installation": {
+    id: "smart-home-installation",
+    emoji: "🏠",
+    title: "Smart Home Installation",
+    titleTr: "Akıllı Ev Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Smart lights, thermostats, video doorbells, and hubs — get your smart home set up by a Tasker.",
+    taglineTr: "Akıllı ışıklar, termostatlar, görüntülü kapı zilleri ve hub'lar — akıllı evinizi bir usta tarafından kurun.",
+    heroGradient: "linear-gradient(150deg, #0a0a2a 0%, #1a1a5a 50%, #2a2a9a 100%)",
+    accentBg: "linear-gradient(135deg, #f0f0ff 0%, #c8c8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Smart home devices can transform how you live, but setting them up can be frustrating. Our Taskers configure and install smart devices quickly — no confusing manuals needed.",
+      introTr: "Akıllı ev cihazları yaşam şeklinizi dönüştürebilir, ancak bunları kurmak sinir bozucu olabilir. Ustalarımız akıllı cihazları hızlıca yapılandırır ve kurar — kafa karıştırıcı kılavuzlara gerek yoktur.",
+      sections: [
+        {
+          heading: "Smart Home Installation Services",
+          headingTr: "Akıllı Ev Kurulum Hizmetleri",
+          paragraphs: [
+            "From a single smart bulb to a full smart home ecosystem, our Taskers set up and configure all types of smart home devices.",
+            "They link everything to your phone, set up automations, and make sure everything is working together before they leave.",
+          ],
+          paragraphsTr: [
+            "Tek bir akıllı ampulden tam akıllı ev ekosistemine kadar, ustalarımız her türlü akıllı ev cihazını kurar ve yapılandırır.",
+            "Her şeyi telefonunuza bağlar, otomasyonları ayarlar ve gitmeden önce her şeyin birlikte düzgün çalıştığından emin olurlar.",
+          ],
+        },
+        {
+          heading: "Smart home devices we install",
+          headingTr: "Kurduğumuz akıllı ev cihazları",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Smart Lighting:", labelTr: "Akıllı Aydınlatma:", text: "Install and configure smart bulbs, strips, and lighting scenes.", textTr: "Akıllı ampuller, şerit ışıklar ve aydınlatma sahneleri kurulur ve yapılandırılır." },
+            { label: "Smart Thermostat:", labelTr: "Akıllı Termostat:", text: "Install and set up Nest, Hive, or other smart thermostat brands.", textTr: "Nest, Hive veya diğer akıllı termostat markaları kurulur ve ayarlanır." },
+            { label: "Video Doorbell:", labelTr: "Görüntülü Kapı Zili:", text: "Install Ring, Nest Hello, and other video doorbells with app setup.", textTr: "Ring, Nest Hello ve diğer görüntülü kapı zilleri uygulama ayarıyla kurulur." },
+            { label: "Smart Plugs & Switches:", labelTr: "Akıllı Priz & Anahtarlar:", text: "Install smart plugs and switches to automate any device.", textTr: "Herhangi bir cihazı otomatikleştirmek için akıllı priz ve anahtarlar kurulur." },
+            { label: "Smart Hub Setup:", labelTr: "Akıllı Hub Kurulumu:", text: "Configure Amazon Echo, Google Home, and Apple HomeKit hubs.", textTr: "Amazon Echo, Google Home ve Apple HomeKit hub'ları yapılandırılır." },
+            { label: "Security Cameras:", labelTr: "Güvenlik Kameraları:", text: "Mount and configure indoor and outdoor security cameras.", textTr: "İç ve dış mekan güvenlik kameraları monte edilir ve yapılandırılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Smart Home Installation?",
+          headingTr: "Akıllı Ev Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers are tech-savvy and experienced with all major smart home platforms. Setup done right, first time.",
+            "They can integrate multiple systems and leave you confident on how to use everything.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız teknoloji konusunda bilgili ve tüm büyük akıllı ev platformlarında deneyimlidir. Kurulum ilk seferinde doğru yapılır.",
+            "Birden fazla sistemi entegre edebilirler ve her şeyi nasıl kullanacağınız konusunda sizi güvende bırakırlar.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Install Air Conditioner": {
+    id: "install-air-conditioner",
+    emoji: "❄️",
+    title: "Install Air Conditioner",
+    titleTr: "Klima Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Professional air conditioner installation — stay cool and comfortable all summer long.",
+    taglineTr: "Profesyonel klima kurulumu — tüm yaz boyunca serin ve rahat kalın.",
+    heroGradient: "linear-gradient(150deg, #001a3a 0%, #003a5a 50%, #00608a 100%)",
+    accentBg: "linear-gradient(135deg, #e8f8ff 0%, #a0e8ff 100%)",
+    catId: "ac-repair",
+    body: {
+      intro: "A properly installed air conditioner makes all the difference in summer comfort. Our Taskers install portable, window, and split AC units efficiently and safely.",
+      introTr: "Düzgün kurulmuş bir klima yaz aylarındaki konforu tamamen değiştirir. Ustalarımız taşınabilir, pencere tipi ve split klima ünitelerini verimli ve güvenle kurar.",
+      sections: [
+        {
+          heading: "Air Conditioner Installation Services",
+          headingTr: "Klima Kurulum Hizmetleri",
+          paragraphs: [
+            "Our Taskers handle the full installation of air conditioning units — positioning, mounting, electrical connection, and testing.",
+            "They ensure your unit is installed for maximum efficiency and longevity.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız klima ünitelerinin tam kurulumunu üstlenir — konumlandırma, montaj, elektrik bağlantısı ve test.",
+            "Ünitenizin maksimum verimlilik ve uzun ömür için kurulduğundan emin olurlar.",
+          ],
+        },
+        {
+          heading: "AC units we install",
+          headingTr: "Kurduğumuz klima türleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Portable AC Units:", labelTr: "Taşınabilir Klimalar:", text: "Set up and position portable AC units with window venting.", textTr: "Taşınabilir klimalar pencereden havalandırma ile kurulur ve konumlandırılır." },
+            { label: "Window AC Units:", labelTr: "Pencere Tipi Klimalar:", text: "Install window air conditioners securely and level in any frame.", textTr: "Pencere tipi klimalar her çerçeveye güvenli ve dengeli şekilde kurulur." },
+            { label: "Split AC Indoor Unit:", labelTr: "Split Klima İç Ünite:", text: "Mount and position the indoor unit of a split system.", textTr: "Split sistemin iç ünitesi monte edilir ve konumlandırılır." },
+            { label: "Electrical Connection:", labelTr: "Elektrik Bağlantısı:", text: "Wire and connect AC units to dedicated circuits safely.", textTr: "Klima üniteleri ayrı devrelere güvenle bağlanır." },
+            { label: "AC Removal & Seasonal Storage:", labelTr: "Klima Söküm & Sezonluk Depolama:", text: "Remove and store window units safely at end of season.", textTr: "Sezon sonunda pencere üniteleri güvenle sökülür ve depolanır." },
+            { label: "AC Unit Servicing:", labelTr: "Klima Bakımı:", text: "Clean filters, check refrigerant, and service AC units for peak performance.", textTr: "Filtreler temizlenir, soğutucu kontrol edilir ve klimalar en yüksek performans için bakıma alınır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for AC Installation?",
+          headingTr: "Klima Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Safe, efficient installation that maximises your unit's performance. No DIY shortcuts that could void your warranty.",
+            "Book before the summer heat — our Taskers are in high demand during warm weather.",
+          ],
+          paragraphsTr: [
+            "Ünitenizin performansını en üst düzeye çıkaran güvenli, verimli kurulum. Garantinizi geçersiz kılabilecek kendin yap kısayolları yok.",
+            "Yaz sıcağı gelmeden önce rezervasyon yapın — ustalarımız sıcak havalarda yoğun talep görür.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Home Maintenance": {
+    id: "home-maintenance",
+    emoji: "🏡",
+    title: "Home Maintenance",
+    titleTr: "Ev Bakımı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Keep your home in top condition with scheduled or one-off maintenance from a trusted Tasker.",
+    taglineTr: "Güvenilir bir ustadan düzenli veya tek seferlik bakımla evinizi en iyi durumda tutun.",
+    heroGradient: "linear-gradient(150deg, #0a2a0a 0%, #1a5a1a 50%, #2a8a2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f0a0 100%)",
+    catId: "other",
+    body: {
+      intro: "Staying on top of home maintenance prevents small problems from becoming expensive repairs. Our Taskers help you keep your home safe, functional, and looking its best.",
+      introTr: "Ev bakımını takip etmek, küçük sorunların pahalı onarımlara dönüşmesini önler. Ustalarımız evinizi güvenli, işlevsel ve en iyi görünümde tutmanıza yardımcı olur.",
+      sections: [
+        {
+          heading: "Home Maintenance Services",
+          headingTr: "Ev Bakımı Hizmetleri",
+          paragraphs: [
+            "From checking smoke alarms to clearing gutters and servicing appliances, our Taskers tackle your home maintenance list efficiently.",
+            "Book a one-off maintenance visit or set up a regular seasonal check — whatever keeps your home in top shape.",
+          ],
+          paragraphsTr: [
+            "Duman detektörlerini kontrol etmekten olukları temizlemeye ve beyaz eşyaları bakıma almaya kadar, ustalarımız ev bakımı listenizi verimli şekilde halleder.",
+            "Tek seferlik bakım ziyareti rezervasyonu yapın veya düzenli mevsimlik kontrol ayarlayın — evinizi en iyi durumda tutan her şey.",
+          ],
+        },
+        {
+          heading: "Home maintenance tasks we handle",
+          headingTr: "Üstlendiğimiz ev bakımı işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Smoke & CO Alarm Check:", labelTr: "Duman & CO Alarmı Kontrolü:", text: "Test, replace batteries, and reposition smoke and carbon monoxide alarms.", textTr: "Duman ve karbon monoksit alarmları test edilir, pilleri değiştirilir ve yeniden konumlandırılır." },
+            { label: "Gutter Clearing:", labelTr: "Oluk Temizliği:", text: "Clear blocked gutters and downpipes before they cause leaks.", textTr: "Sızıntıya yol açmadan önce tıkalı oluklar ve yağmur boruları temizlenir." },
+            { label: "Door & Window Check:", labelTr: "Kapı & Pencere Kontrolü:", text: "Check and lubricate locks, hinges, and window mechanisms.", textTr: "Kilitler, menteşeler ve pencere mekanizmaları kontrol edilerek yağlanır." },
+            { label: "Caulk & Seal Inspection:", labelTr: "Derz & Sızdırmazlık Kontrolü:", text: "Inspect and replace failed seals in bathrooms and kitchens.", textTr: "Banyo ve mutfaklardaki bozulmuş contalar kontrol edilerek değiştirilir." },
+            { label: "Seasonal Checklist:", labelTr: "Mevsimlik Kontrol Listesi:", text: "Winter prep or spring refresh — full seasonal maintenance check.", textTr: "Kış hazırlığı veya bahar tazelemesi — tam mevsimlik bakım kontrolü." },
+            { label: "Odd Jobs List:", labelTr: "Çeşitli İşler Listesi:", text: "Tackle a list of small jobs efficiently in a single visit.", textTr: "Küçük işlerin listesini tek bir ziyarette verimli şekilde halleder." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Home Maintenance?",
+          headingTr: "Ev Bakımı için neden UstaYolda?",
+          paragraphs: [
+            "Regular maintenance saves money long-term. Our Taskers help you stay ahead of problems before they become costly.",
+            "Great for landlords and homeowners alike — schedule seasonal visits and keep your property in perfect condition.",
+          ],
+          paragraphsTr: [
+            "Düzenli bakım uzun vadede para tasarrufu sağlar. Ustalarımız sorunların pahalıya dönüşmeden önce önde kalmanıza yardımcı olur.",
+            "Hem ev sahipleri hem de kiracılar için harika — mevsimlik ziyaretler planlayın ve mülkünüzü mükemmel durumda tutun.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Home Repairs": {
+    id: "home-repairs",
+    emoji: "🛠️",
+    title: "Home Repairs",
+    titleTr: "Ev Tamiratı",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "General home repairs done right — no job too small for our skilled Taskers.",
+    taglineTr: "Genel ev tamiratı doğru yapılır — yetenekli ustalarımız için hiçbir iş çok küçük değildir.",
+    heroGradient: "linear-gradient(150deg, #1a0a00 0%, #3a2a10 50%, #6a4a20 100%)",
+    accentBg: "linear-gradient(135deg, #fff8e8 0%, #ffe8b8 100%)",
+    catId: "other",
+    body: {
+      intro: "Every home has a list of repairs that never quite gets done. Our Taskers tackle that list — fixing, patching, adjusting, and improving your home one task at a time.",
+      introTr: "Her evin hiç bitirilemeyen bir tamirat listesi vardır. Ustalarımız bu listeyi tek seferde ele alır — evinizi onarır, yalar, ayarlar ve iyileştirir.",
+      sections: [
+        {
+          heading: "Home Repair Services",
+          headingTr: "Ev Tamirat Hizmetleri",
+          paragraphs: [
+            "From a leaky tap to a broken door hinge to a cracked tile, our Taskers handle all types of general home repairs quickly and professionally.",
+            "No job too small. Book a Tasker with a list of repairs and get through them in one efficient visit.",
+          ],
+          paragraphsTr: [
+            "Sızan bir musluktan kırık bir kapı menteşesine, çatlak bir fayanstan, ustalarımız her türlü genel ev tamiratını hızlı ve profesyonel şekilde halleder.",
+            "Hiçbir iş çok küçük değildir. Bir tamirat listesiyle usta rezervasyonu yapın ve tek verimli bir ziyarette tamamlayın.",
+          ],
+        },
+        {
+          heading: "Common home repairs we handle",
+          headingTr: "Üstlendiğimiz yaygın ev tamiratları",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Door & Window Fixes:", labelTr: "Kapı & Pencere Düzeltmeleri:", text: "Fix sticking doors, broken handles, and draughty windows.", textTr: "Sıkışan kapılar, kırık kollar ve hava sızdıran pencereler düzeltilir." },
+            { label: "Wall & Ceiling Repairs:", labelTr: "Duvar & Tavan Tamiratı:", text: "Fill holes, repair cracks, and patch damaged plaster.", textTr: "Delikler doldurulur, çatlaklar onarılır ve hasar görmüş sıva yamanır." },
+            { label: "Tile & Grout Fixes:", labelTr: "Fayans & Derz Düzeltmeleri:", text: "Replace cracked tiles and refresh discoloured grout lines.", textTr: "Çatlak fayanslar değiştirilir ve rengi değişmiş derz hatları tazelenir." },
+            { label: "Minor Plumbing:", labelTr: "Küçük Tesisat:", text: "Dripping taps, running toilets, and minor pipe issues sorted.", textTr: "Damlayan musluklar, sürekli çalışan tuvaletler ve küçük boru sorunları çözülür." },
+            { label: "Painting Touch-ups:", labelTr: "Boya Rötuşları:", text: "Touch up scuffs, marks, and areas that need a fresh coat.", textTr: "İzler, lekeler ve yeni bir kat gerektiren alanlar rötuş yapılır." },
+            { label: "Odd Jobs:", labelTr: "Çeşitli İşler:", text: "Any small repair or fix around the house — bring your list.", textTr: "Evdeki her türlü küçük tamir veya düzeltme — listenizi getirin." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Home Repairs?",
+          headingTr: "Ev Tamiratı için neden UstaYolda?",
+          paragraphs: [
+            "Book a Tasker with your full list of jobs and get everything done in one visit — no calling multiple tradesmen.",
+            "Same-day booking available. Trusted, reviewed Taskers who take pride in their work.",
+          ],
+          paragraphsTr: [
+            "Tüm iş listenizle usta rezervasyonu yapın ve tek bir ziyarette her şeyi tamamlatın — birden fazla ustacı aramak zorunda değilsiniz.",
+            "Aynı gün rezervasyon mevcut. İşlerinden gurur duyan güvenilir, değerlendirilen ustalar.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Carpentry Services": {
+    id: "carpentry-services",
+    emoji: "🪚",
+    title: "Carpentry Services",
+    titleTr: "Marangozluk Hizmetleri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Custom carpentry, wood repairs, and built-in solutions from skilled carpenters.",
+    taglineTr: "Yetenekli marangozlardan özel marangozluk, ahşap onarımları ve ankastre çözümler.",
+    heroGradient: "linear-gradient(150deg, #2a0a00 0%, #5a2a00 50%, #9a5010 100%)",
+    accentBg: "linear-gradient(135deg, #fff5e0 0%, #ffd898 100%)",
+    catId: "other",
+    body: {
+      intro: "From custom shelving to wood repairs and fitted furniture, our carpenter Taskers bring the skill and tools to make any carpentry project a success.",
+      introTr: "Özel raflıklardan ahşap onarımlarına ve yerleşik mobilyalara kadar, marangoz ustalarımız her marangozluk projesini başarılı kılmak için gereken beceri ve araçları getirir.",
+      sections: [
+        {
+          heading: "Carpentry Services",
+          headingTr: "Marangozluk Hizmetleri",
+          paragraphs: [
+            "Our carpenter Taskers work with all types of wood, MDF, and timber — from small repairs to bespoke fitted furniture.",
+            "Skilled in both traditional and modern carpentry techniques, they deliver precise, high-quality results.",
+          ],
+          paragraphsTr: [
+            "Marangoz ustalarımız küçük onarımlardan ısmarlama yerleşik mobilyalara kadar her türlü ahşap, MDF ve ker teste ile çalışır.",
+            "Hem geleneksel hem de modern marangozluk tekniklerinde yetenekli olarak hassas, yüksek kaliteli sonuçlar sunarlar.",
+          ],
+        },
+        {
+          heading: "Carpentry tasks we handle",
+          headingTr: "Üstlendiğimiz marangozluk işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Custom Shelving:", labelTr: "Özel Raf Yapımı:", text: "Built-to-measure shelves for alcoves, home offices, and living spaces.", textTr: "Girintiler, ev ofisleri ve yaşam alanları için ölçüye göre yapılan raflar." },
+            { label: "Fitted Furniture:", labelTr: "Yerleşik Mobilya:", text: "Built-in wardrobes, under-stairs storage, and alcove units.", textTr: "Yerleşik gardıroplar, merdiven altı depolama ve girintili üniteler." },
+            { label: "Wood Repairs:", labelTr: "Ahşap Onarımı:", text: "Repair damaged timber, replace rotted sections, and restore woodwork.", textTr: "Hasar görmüş ahşap onarılır, çürük bölümler değiştirilir ve ahşap işleri restore edilir." },
+            { label: "Skirting & Architrave:", labelTr: "Süpürgelik & Söve:", text: "Fit, replace, or repair skirting boards and door architraves.", textTr: "Süpürgelikler ve kapı söveleri takılır, değiştirilir veya onarılır." },
+            { label: "Stud Wall Framing:", labelTr: "Bölme Duvar Çerçeveleme:", text: "Build timber stud frames for new partition walls.", textTr: "Yeni bölme duvarlar için ahşap iskelet çerçeveler inşa edilir." },
+            { label: "Decking & Fencing:", labelTr: "Ahşap Teras & Çit:", text: "Build and repair timber decking, fencing, and garden structures.", textTr: "Ahşap teras, çit ve bahçe yapıları inşa edilir ve onarılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Carpentry?",
+          headingTr: "Marangozluk için neden UstaYolda?",
+          paragraphs: [
+            "Skilled carpenters with a portfolio of completed projects. Quality craftsmanship you can trust.",
+            "Flexible bookings for small repairs or larger projects. Taskers provide a clear estimate before starting.",
+          ],
+          paragraphsTr: [
+            "Tamamlanmış projeleri olan yetenekli marangozlar. Güvenebileceğiniz kaliteli işçilik.",
+            "Küçük onarımlar veya büyük projeler için esnek rezervasyonlar. Ustalar başlamadan önce net bir tahmin sunar.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Cabinet Installation": {
+    id: "cabinet-installation",
+    emoji: "🗄️",
+    title: "Cabinet Installation",
+    titleTr: "Dolap Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Kitchen and bathroom cabinet installation — precise, level, and professionally fitted.",
+    taglineTr: "Mutfak ve banyo dolabı kurulumu — hassas, düzgün ve profesyonelce monte edilmiş.",
+    heroGradient: "linear-gradient(150deg, #1a1a1a 0%, #3a3a2a 50%, #6a5a3a 100%)",
+    accentBg: "linear-gradient(135deg, #f8f5e8 0%, #e8d8a8 100%)",
+    catId: "other",
+    body: {
+      intro: "New kitchen or bathroom cabinets transform a space, but installation requires precision and the right tools. Our Taskers install cabinets perfectly level and securely mounted.",
+      introTr: "Yeni mutfak veya banyo dolapları bir mekanı dönüştürür, ancak kurulum hassasiyet ve doğru araçlar gerektirir. Ustalarımız dolapları mükemmel düzgünlükte ve güvenli şekilde monte eder.",
+      sections: [
+        {
+          heading: "Cabinet Installation Services",
+          headingTr: "Dolap Kurulum Hizmetleri",
+          paragraphs: [
+            "Our Taskers install all types of kitchen and bathroom cabinets — wall-mounted, base, tower, and larder units — to a professional standard.",
+            "They ensure all cabinets are level, plumb, and square, with doors and drawers aligned perfectly.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız duvara monte, zemin, kule ve kiler üniteleri de dahil olmak üzere her türlü mutfak ve banyo dolabını profesyonel standartlarda kurar.",
+            "Tüm dolapların düzgün, dik ve kare olmasını, kapı ve çekmecelerin mükemmel hizalanmasını sağlarlar.",
+          ],
+        },
+        {
+          heading: "Cabinet installation tasks we handle",
+          headingTr: "Üstlendiğimiz dolap kurulum işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Kitchen Wall Cabinets:", labelTr: "Mutfak Duvar Dolapları:", text: "Mount and level kitchen wall cabinets securely on any wall.", textTr: "Mutfak duvar dolapları her duvara güvenli şekilde monte edilir ve düzeltilir." },
+            { label: "Base & Floor Cabinets:", labelTr: "Alt & Zemin Dolapları:", text: "Install base units level and square on uneven kitchen floors.", textTr: "Alt üniteler düzensiz mutfak zeminlerinde düzgün ve kare olarak kurulur." },
+            { label: "Bathroom Vanity:", labelTr: "Banyo Tezgahı:", text: "Fit bathroom vanity units, mirror cabinets, and storage units.", textTr: "Banyo tezgah üniteleri, aynalı dolaplar ve depolama üniteleri takılır." },
+            { label: "Wardrobe Installation:", labelTr: "Gardırop Kurulumu:", text: "Assemble and install flat-pack and fitted wardrobe systems.", textTr: "Demonte ve yerleşik gardırop sistemleri monte edilir ve kurulur." },
+            { label: "Door & Drawer Alignment:", labelTr: "Kapı & Çekmece Hizalama:", text: "Adjust hinges and drawer runners for perfect alignment.", textTr: "Mükemmel hizalama için menteşeler ve çekmece rayları ayarlanır." },
+            { label: "Cabinet Handles & Hardware:", labelTr: "Dolap Kolları & Donanımı:", text: "Fit handles, knobs, and soft-close mechanisms to cabinets.", textTr: "Dolaplara kollar, topuzlar ve soft-close mekanizmaları takılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Cabinet Installation?",
+          headingTr: "Dolap Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Precision installation that makes your kitchen or bathroom look like it was built by professionals — because it was.",
+            "Taskers bring all necessary tools and fixings. Fast, clean, and zero mess left behind.",
+          ],
+          paragraphsTr: [
+            "Mutfağınızı veya banyonuzu profesyoneller tarafından yapılmış gibi gösterin — çünkü öyle olacak.",
+            "Ustalar tüm gerekli araçları ve bağlantı elemanlarını getirir. Hızlı, temiz ve sıfır dağınıklık.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Wallpapering Service": {
+    id: "wallpapering-service",
+    emoji: "🎨",
+    title: "Wallpapering Service",
+    titleTr: "Duvar Kağıdı Hizmeti",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Hang wallpaper perfectly — feature walls, full rooms, and wallpaper removal done professionally.",
+    taglineTr: "Duvar kağıdını mükemmel asın — aksan duvarlar, tam odalar ve duvar kağıdı sökme işlemi profesyonelce yapılır.",
+    heroGradient: "linear-gradient(150deg, #3a0a3a 0%, #6a1a6a 50%, #a030a0 100%)",
+    accentBg: "linear-gradient(135deg, #fce8ff 0%, #f0b0ff 100%)",
+    catId: "painting",
+    body: {
+      intro: "Wallpapering takes patience and precision to get right. Our Taskers hang wallpaper perfectly — patterns matched, seams invisible, and edges crisp.",
+      introTr: "Duvar kağıdı asmak doğru yapmak için sabır ve hassasiyet gerektirir. Ustalarımız duvar kağıdını mükemmel şekilde asar — desenler hizalanmış, dikişler görünmez ve kenarlar keskin.",
+      sections: [
+        {
+          heading: "Wallpapering Services",
+          headingTr: "Duvar Kağıdı Hizmetleri",
+          paragraphs: [
+            "From a single feature wall to a full room, our Taskers are experienced in hanging all types of wallpaper — from simple rolls to complex pattern-matched designs.",
+            "They prepare the walls properly, ensuring a smooth base, and leave a perfect, professional finish.",
+          ],
+          paragraphsTr: [
+            "Tek bir aksan duvardan tam bir odaya kadar, ustalarımız basit rulolardan karmaşık desenli tasarımlara kadar her türlü duvar kağıdı asmada deneyimlidir.",
+            "Duvarları düzgün şekilde hazırlarlar, pürüzsüz bir zemin sağlarlar ve mükemmel, profesyonel bir sonuç bırakırlar.",
+          ],
+        },
+        {
+          heading: "Wallpapering tasks we handle",
+          headingTr: "Üstlendiğimiz duvar kağıdı işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Feature Wall:", labelTr: "Aksan Duvar:", text: "Transform one statement wall with premium wallpaper.", textTr: "Premium duvar kağıdıyla bir aksan duvarı dönüştürün." },
+            { label: "Full Room Papering:", labelTr: "Tam Oda Kağıtlama:", text: "Paper all walls in bedrooms, living rooms, and hallways.", textTr: "Yatak odaları, oturma odaları ve koridorlardaki tüm duvarlar kağıtlanır." },
+            { label: "Pattern Matching:", labelTr: "Desen Hizalama:", text: "Complex pattern-matched wallpapers hung precisely and seamlessly.", textTr: "Karmaşık desenli duvar kağıtları hassas ve kesintisiz şekilde asılır." },
+            { label: "Wallpaper Removal:", labelTr: "Duvar Kağıdı Sökme:", text: "Remove old wallpaper and prepare walls for painting or re-papering.", textTr: "Eski duvar kağıtları sökülür ve duvarlar boyama veya yeniden kağıtlama için hazırlanır." },
+            { label: "Wall Preparation:", labelTr: "Duvar Hazırlığı:", text: "Fill, sand, and prime walls before papering for a flawless base.", textTr: "Kusursuz bir zemin için duvarlar duvar kağıtlanmadan önce doldurulur, zımparalanır ve astar uygulanır." },
+            { label: "Specialty Wallpapers:", labelTr: "Özel Duvar Kağıtları:", text: "Hang textured, fabric, metallic, and hand-painted wallcoverings.", textTr: "Dokulu, kumaşlı, metalik ve el boyamalı duvar kaplamaları asılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Wallpapering?",
+          headingTr: "Duvar Kağıdı için neden UstaYolda?",
+          paragraphs: [
+            "Experienced Taskers who know how to handle every wallpaper type — no bubbles, no mismatched patterns, no lifting edges.",
+            "They advise on quantities needed and can help choose the right adhesive for your wallpaper type.",
+          ],
+          paragraphsTr: [
+            "Her duvar kağıdı türünü nasıl ele alacağını bilen deneyimli ustalar — hava kabarcığı yok, hizalanmamış desenler yok, kalkan kenarlar yok.",
+            "Gerekli miktar konusunda tavsiye verirler ve duvar kağıdı türünüz için doğru yapıştırıcıyı seçmenize yardımcı olabilirler.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Fence Installation & Repair": {
+    id: "fence-installation-repair",
+    emoji: "🏕️",
+    title: "Fence Installation & Repair",
+    titleTr: "Çit Kurulum & Tamiri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "New fence installation or existing fence repair — secure your garden with a trusted Tasker.",
+    taglineTr: "Yeni çit kurulumu veya mevcut çit tamiri — güvenilir bir ustayla bahçenizi güvence altına alın.",
+    heroGradient: "linear-gradient(150deg, #0a1a00 0%, #2a4a00 50%, #4a7a00 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe0 0%, #c0e890 100%)",
+    catId: "other",
+    body: {
+      intro: "A good fence provides privacy, security, and structure to your garden. Our Taskers install new fencing and repair existing panels, posts, and gates quickly and professionally.",
+      introTr: "İyi bir çit bahçenize gizlilik, güvenlik ve yapı sağlar. Ustalarımız yeni çit kurar ve mevcut panelleri, direkleri ve kapıları hızlı ve profesyonelce onarır.",
+      sections: [
+        {
+          heading: "Fence Installation & Repair Services",
+          headingTr: "Çit Kurulum & Tamir Hizmetleri",
+          paragraphs: [
+            "From a single broken panel to a full new fence line, our Taskers handle all types of fencing installation and repair.",
+            "They ensure posts are set deep and secure, panels are level, and the finished fence looks great and lasts.",
+          ],
+          paragraphsTr: [
+            "Tek kırık bir panelden tam yeni bir çit hattına kadar, ustalarımız her türlü çit kurulum ve tamirini üstlenir.",
+            "Direklerin derin ve güvenli yerleştirildiğini, panellerin düzgün olduğunu ve bitmiş çitin harika göründüğünü ve uzun ömürlü olduğunu sağlarlar.",
+          ],
+        },
+        {
+          heading: "Fence tasks we handle",
+          headingTr: "Üstlendiğimiz çit işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Panel Fence Installation:", labelTr: "Panel Çit Kurulumu:", text: "Install new wooden or composite fence panels with concrete posts.", textTr: "Beton direklerle yeni ahşap veya kompozit çit panelleri kurulur." },
+            { label: "Fence Panel Replacement:", labelTr: "Çit Paneli Değişimi:", text: "Replace damaged, rotten, or storm-damaged fence panels.", textTr: "Hasarlı, çürümüş veya fırtınayla zarar görmüş çit panelleri değiştirilir." },
+            { label: "Post Replacement:", labelTr: "Direk Değişimi:", text: "Replace broken or leaning fence posts with new concrete footings.", textTr: "Kırık veya eğik çit direkleri yeni beton temelle değiştirilir." },
+            { label: "Gate Installation:", labelTr: "Kapı Kurulumu:", text: "Fit new garden gates with secure hinges and latches.", textTr: "Güvenli menteşe ve mandallarla yeni bahçe kapıları takılır." },
+            { label: "Fence Painting & Staining:", labelTr: "Çit Boyama & Ahşap Koruyucu:", text: "Paint or stain timber fencing for weather protection and appearance.", textTr: "Ahşap çitler hava koruması ve görünüm için boyanır veya ahşap koruyucu uygulanır." },
+            { label: "Trellis & Screening:", labelTr: "Kafes & Paravan:", text: "Fit trellis panels, bamboo screening, and privacy panels.", textTr: "Kafes paneller, bambu ekranlar ve gizlilik panelleri takılır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Fencing?",
+          headingTr: "Çit için neden UstaYolda?",
+          paragraphs: [
+            "Properly installed fences that stay upright through all weathers. Our Taskers use the right concrete mix and post depth for a lasting result.",
+            "Fast turnaround — most fence repairs and single runs completed in one day.",
+          ],
+          paragraphsTr: [
+            "Her hava koşulunda dik kalan düzgün kurulmuş çitler. Ustalarımız kalıcı bir sonuç için doğru beton karışımı ve direk derinliği kullanır.",
+            "Hızlı dönüş — çoğu çit tamiri ve tek hat tek günde tamamlanır.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Deck Restoration Services": {
+    id: "deck-restoration",
+    emoji: "🏗️",
+    title: "Deck Restoration Services",
+    titleTr: "Deck Restorasyon Hizmetleri",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Sand, stain, and restore your deck — make your outdoor space beautiful again.",
+    taglineTr: "Terası zımparalayın, boyana ve restore edin — dış mekanınızı yeniden güzel kılın.",
+    heroGradient: "linear-gradient(150deg, #2a1a00 0%, #5a3a10 50%, #8a6020 100%)",
+    accentBg: "linear-gradient(135deg, #fff5e0 0%, #ffd890 100%)",
+    catId: "other",
+    body: {
+      intro: "Years of sun, rain, and foot traffic take their toll on timber decking. Our Taskers restore your deck to its former glory — cleaned, sanded, and freshly stained or painted.",
+      introTr: "Yıllar içinde güneş, yağmur ve yoğun kullanım ahşap terası yorar. Ustalarımız terasınızı eski güzelliğine kavuşturur — temizlenmiş, zımparalanmış ve taze boyanmış veya ahşap koruyucu uygulanmış.",
+      sections: [
+        {
+          heading: "Deck Restoration Services",
+          headingTr: "Deck Restorasyon Hizmetleri",
+          paragraphs: [
+            "From a thorough clean and re-stain to full board replacement and structural repairs, our Taskers restore decks of all sizes and conditions.",
+            "A restored deck not only looks like new — it's safer underfoot and better protected against weathering.",
+          ],
+          paragraphsTr: [
+            "Kapsamlı temizlik ve yeniden ahşap koruyucu uygulamasından tam tahta değişimine ve yapısal onarımlara kadar, ustalarımız her boyut ve durumda terasları restore eder.",
+            "Restore edilen bir teras sadece yeni gibi görünmekle kalmaz — ayak altında daha güvenli ve hava koşullarına karşı daha iyi korunmuş olur.",
+          ],
+        },
+        {
+          heading: "Deck restoration tasks we handle",
+          headingTr: "Üstlendiğimiz deck restorasyon işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Deck Cleaning:", labelTr: "Teras Temizliği:", text: "Pressure wash and deep clean decking to remove algae, moss, and dirt.", textTr: "Yosun, yosun ve kiri gidermek için teras yüksek basınçla yıkanır ve derinlemesine temizlenir." },
+            { label: "Sanding & Stripping:", labelTr: "Zımparalama & Soyma:", text: "Sand down weathered boards to reveal fresh, clean timber.", textTr: "Hava koşullarından etkilenmiş tahtalar zımparalanarak taze, temiz ahşap ortaya çıkarılır." },
+            { label: "Staining & Sealing:", labelTr: "Ahşap Koruyucu & Sızdırmazlık:", text: "Apply premium deck stain or sealant for lasting protection.", textTr: "Kalıcı koruma için premium teras koruyucu veya sızdırmazlık uygulanır." },
+            { label: "Board Replacement:", labelTr: "Tahta Değişimi:", text: "Replace individual rotten or damaged deck boards.", textTr: "Çürük veya hasarlı teras tahtaları tek tek değiştirilir." },
+            { label: "Structural Repairs:", labelTr: "Yapısal Onarımlar:", text: "Repair joists, posts, and framework for a solid, safe deck.", textTr: "Sağlam ve güvenli bir teras için kirişler, direkler ve çerçeveler onarılır." },
+            { label: "Deck Painting:", labelTr: "Teras Boyama:", text: "Paint composite or timber decking in any colour for a fresh look.", textTr: "Kompozit veya ahşap terası taze bir görünüm için herhangi bir renkte boyanır." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Deck Restoration?",
+          headingTr: "Deck Restorasyonu için neden UstaYolda?",
+          paragraphs: [
+            "Your deck deserves more than a hurried DIY job. Our Taskers take time to do it properly — sanded smooth, evenly coated, and long-lasting.",
+            "Book before summer for the best results. A restored deck makes outdoor living so much better.",
+          ],
+          paragraphsTr: [
+            "Terasınız aceleyle yapılan kendin yap işten daha fazlasını hak ediyor. Ustalarımız bunu düzgün yapmak için zaman ayırır — pürüzsüz zımparalanmış, eşit kaplanmış ve uzun ömürlü.",
+            "En iyi sonuçlar için yaz tatilinden önce rezervasyon yapın. Restore edilmiş bir teras açık havada yaşamı çok daha güzel kılar.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Doorbell Installation": {
+    id: "doorbell-installation",
+    emoji: "🔔",
+    title: "Doorbell Installation",
+    titleTr: "Kapı Zili Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "Install a traditional or smart video doorbell — quick, clean setup from a skilled Tasker.",
+    taglineTr: "Geleneksel veya akıllı görüntülü kapı zili kurun — yetenekli bir ustadan hızlı, temiz kurulum.",
+    heroGradient: "linear-gradient(150deg, #1a1a0a 0%, #3a3a1a 50%, #6a5a1a 100%)",
+    accentBg: "linear-gradient(135deg, #fffbe8 0%, #ffecb8 100%)",
+    catId: "other",
+    body: {
+      intro: "Whether you want a traditional wired doorbell or a modern smart video doorbell, our Taskers install and configure it quickly — so you never miss a visitor.",
+      introTr: "İster geleneksel kablolu bir kapı zili ister modern akıllı görüntülü bir kapı zili isteyin, ustalarımız bunu hızlıca kurar ve yapılandırır — böylece hiçbir ziyaretçiyi kaçırmazsınız.",
+      sections: [
+        {
+          heading: "Doorbell Installation Services",
+          headingTr: "Kapı Zili Kurulum Hizmetleri",
+          paragraphs: [
+            "Our Taskers install all types of doorbells — wired, wireless, and smart video doorbells — with full setup and configuration.",
+            "For video doorbells, they'll set up the app on your phone, connect to your WiFi, and configure motion zones before they leave.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız kablolu, kablosuz ve akıllı görüntülü kapı zilleri dahil her türlü kapı zilini tam kurulum ve yapılandırmayla takar.",
+            "Görüntülü kapı zilleri için gitmeden önce telefonunuzdaki uygulamayı kurarlar, WiFi'ye bağlarlar ve hareket bölgelerini yapılandırırlar.",
+          ],
+        },
+        {
+          heading: "Doorbell types we install",
+          headingTr: "Kurduğumuz kapı zili türleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Wired Doorbell:", labelTr: "Kablolu Kapı Zili:", text: "Install hardwired doorbells connected to your home's electrical system.", textTr: "Evinizin elektrik sistemine bağlı kablolu kapı zilleri kurulur." },
+            { label: "Wireless Doorbell:", labelTr: "Kablosuz Kapı Zili:", text: "Fit battery-powered wireless doorbells quickly and cleanly.", textTr: "Pille çalışan kablosuz kapı zilleri hızlı ve temiz şekilde takılır." },
+            { label: "Ring Video Doorbell:", labelTr: "Ring Görüntülü Kapı Zili:", text: "Install Ring devices with app setup, WiFi, and motion configuration.", textTr: "Ring cihazları uygulama kurulumu, WiFi ve hareket yapılandırmasıyla kurulur." },
+            { label: "Nest Doorbell:", labelTr: "Nest Kapı Zili:", text: "Install and configure Google Nest Hello and Nest Doorbell.", textTr: "Google Nest Hello ve Nest Doorbell kurulur ve yapılandırılır." },
+            { label: "Intercom Systems:", labelTr: "İnterkom Sistemleri:", text: "Install audio and video intercom systems for flats and gated homes.", textTr: "Daireler ve kapılı evler için sesli ve görüntülü interkom sistemleri kurulur." },
+            { label: "Doorbell Replacement:", labelTr: "Kapı Zili Değişimi:", text: "Remove old doorbell and install a new one on existing wiring.", textTr: "Eski kapı zili sökülür ve yeni biri mevcut kablolamaya kurulur." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Doorbell Installation?",
+          headingTr: "Kapı Zili Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Quick installation with full app setup — our Taskers leave with your doorbell ringing and your phone notified.",
+            "Most doorbell installations are done in under 30 minutes. Great value for the peace of mind.",
+          ],
+          paragraphsTr: [
+            "Tam uygulama kurulumlu hızlı kurulum — ustalarımız kapı ziliniz çalarken ve telefonunuz bildirim alırken gider.",
+            "Çoğu kapı zili kurulumu 30 dakikadan kısa sürede tamamlanır. Gönül rahatlığı için mükemmel değer.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Home Theater Installing": {
+    id: "home-theater-installing",
+    emoji: "🎬",
+    title: "Home Theater Installing",
+    titleTr: "Ev Sineması Kurulumu",
+    category: "Handyman",
+    categoryTr: "Tamirci",
+    tagline: "AV receivers, surround sound, projectors, and screen mounting — your home cinema set up perfectly.",
+    taglineTr: "AV alıcılar, surround ses, projektörler ve ekran montajı — ev sinema sisteminiz mükemmel şekilde kurulur.",
+    heroGradient: "linear-gradient(150deg, #0a0a0a 0%, #1a0a2a 50%, #2a0a4a 100%)",
+    accentBg: "linear-gradient(135deg, #f0e8ff 0%, #d0b0ff 100%)",
+    catId: "other",
+    body: {
+      intro: "A proper home theater setup involves more than just a big TV. Our Taskers handle everything from projector mounting and speaker placement to AV receiver wiring and cable concealment.",
+      introTr: "Düzgün bir ev sinema kurulumu sadece büyük bir TV'den daha fazlasını içerir. Ustalarımız projektör montajından hoparlör yerleşimine, AV alıcı kablolamasından kablo gizlemeye kadar her şeyi halleder.",
+      sections: [
+        {
+          heading: "Home Theater Installation Services",
+          headingTr: "Ev Sineması Kurulum Hizmetleri",
+          paragraphs: [
+            "Our Taskers design and install home theater systems tailored to your room and budget — from a simple surround sound setup to a full dedicated cinema room.",
+            "They handle all the wiring, equipment placement, and system calibration so you get the best possible picture and sound.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız odanıza ve bütçenize uygun ev sinema sistemleri tasarlar ve kurar — basit bir surround ses kurulumundan tam özel bir sinema odasına kadar.",
+            "Tüm kablolamayı, ekipman yerleşimini ve sistem kalibrasyonunu halleder, böylece mümkün olan en iyi görüntü ve sesi elde edersiniz.",
+          ],
+        },
+        {
+          heading: "Home theater tasks we handle",
+          headingTr: "Üstlendiğimiz ev sineması işleri",
+          paragraphs: [],
+          paragraphsTr: [],
+          list: [
+            { label: "Projector Mounting:", labelTr: "Projektör Montajı:", text: "Ceiling or wall mount projectors with proper alignment and focus.", textTr: "Projektörler uygun hizalama ve odaklamayla tavana veya duvara monte edilir." },
+            { label: "Screen Installation:", labelTr: "Ekran Kurulumu:", text: "Install fixed, drop-down, or motorized cinema screens.", textTr: "Sabit, aşağı sarkan veya motorlu sinema ekranları kurulur." },
+            { label: "Surround Sound:", labelTr: "Surround Ses:", text: "Position and wire 5.1, 7.1, and Dolby Atmos speaker systems.", textTr: "5.1, 7.1 ve Dolby Atmos hoparlör sistemleri konumlandırılır ve bağlanır." },
+            { label: "AV Receiver Setup:", labelTr: "AV Alıcı Kurulumu:", text: "Connect and configure AV receivers, streaming boxes, and source devices.", textTr: "AV alıcılar, akış kutuları ve kaynak cihazlar bağlanır ve yapılandırılır." },
+            { label: "Cable Concealment:", labelTr: "Kablo Gizleme:", text: "Hide all HDMI, speaker, and power cables for a clean setup.", textTr: "Temiz bir kurulum için tüm HDMI, hoparlör ve güç kabloları gizlenir." },
+            { label: "System Calibration:", labelTr: "Sistem Kalibrasyonu:", text: "Calibrate audio and video settings for optimal performance in your room.", textTr: "Odanızda en iyi performans için ses ve görüntü ayarları kalibre edilir." },
+          ],
+        },
+        {
+          heading: "Why choose UstaYolda for Home Theater Installation?",
+          headingTr: "Ev Sineması Kurulumu için neden UstaYolda?",
+          paragraphs: [
+            "Our Taskers are experienced with all major AV brands and home theater configurations. They make it sound and look amazing.",
+            "Clean cable management and perfect placement — your home theater will look like it was installed by a professional AV company.",
+          ],
+          paragraphsTr: [
+            "Ustalarımız tüm büyük AV markaları ve ev sinema konfigürasyonlarında deneyimlidir. Muhteşem görüntü ve ses sağlarlar.",
+            "Temiz kablo yönetimi ve mükemmel yerleşim — ev sinanız profesyonel bir AV şirketi tarafından kurulmuş gibi görünecek.",
+          ],
+        },
+      ],
+    },
+  },
 };
