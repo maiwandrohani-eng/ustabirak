@@ -333,8 +333,8 @@ export default function App() {
               <img src="/logo.png" alt="UstayaBirak" height={72} />
             </button>
             <div className="nav-links">
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
-              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Workers</button>
+              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>Services</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
             </div>
             <div className="nav-auth">
               {currentUser ? (
@@ -357,24 +357,24 @@ export default function App() {
             <p className="services-page-subtitle">Browse our most popular service categories</p>
             <div className="services-grid">
               {[
-                { emoji: "⭐", title: "Featured Tasks", desc: "Let Taskers help tackle your to-do list", subs: ["Furniture Assembly", "Home Repairs", "Help Moving", "Yard Work Services", "Spring Cleaning", "TV Mounting", "Plumbing", "Hang Art, Mirror & Decor", "Electrical Help", "Wait in Line", "Closet Organization Service"] },
-                { emoji: "🔧", title: "Handyman", desc: "Hire a Tasker for help around the house", subs: ["Door, Cabinet & Furniture Repair", "Appliance Installation & Repairs", "Furniture Assembly", "TV Mounting", "Drywall Repair Service", "Flooring & Tiling Help", "Electrical Help", "Sealing & Caulking", "Plumbing", "Window & Blinds Repair", "Ceiling Fan Installation", "Smart Home Installation", "Heavy Lifting", "Install Air Conditioner", "Painting", "Install Shelves, Rods & Hooks", "Home Maintenance", "Home Repairs", "Baby Proofing", "Carpentry Services", "General Mounting", "Cabinet Installation", "Wallpapering Service", "Fence Installation & Repair", "Deck Restoration Services", "Doorbell Installation", "Home Theater Installing"] },
-                { emoji: "🧹", title: "Cleaning", desc: "Taskers will make your home sparkle!", subs: ["House Cleaning Services", "Deep Cleaning", "Disinfecting Services", "Move In Cleaning", "Move Out Cleaning", "Vacation Rental Cleaning", "Carpet Cleaning Service", "Garage Cleaning", "One Time Cleaning Services", "Car Washing", "Laundry Help", "Pressure Washing", "Spring Cleaning"] },
-                { emoji: "🪑", title: "Furniture Assembly", desc: "Expert assembly for any furniture brand", subs: ["Furniture Assembly", "Patio Furniture Assembly", "Desk Assembly", "Dresser Assembly", "Bed Assembly", "Bookshelf Assembly", "Couch Assembly", "Chair Assembly", "Wardrobe Assembly", "Table Assembly", "Disassemble Furniture"] },
-                { emoji: "🖼️", title: "Mounting & Installation", desc: "Wall mounting for TVs, shelves, fans & more", subs: ["TV Mounting", "Install Shelves, Rods & Hooks", "Ceiling Fan Installation", "Install Blinds & Window Treatments", "Hang Art, Mirror & Decor", "General Mounting", "Hang Christmas Lights"] },
-                { emoji: "🚚", title: "Moving Services", desc: "From heavy lifting to unpacking — make your move easy", subs: ["Help Moving", "Truck Assisted Help Moving", "Packing Services & Help", "Unpacking Services", "Heavy Lifting", "Local Movers", "Junk Pickup", "Furniture Movers", "One Item Movers", "Storage Unit Moving", "Couch Removal", "Mattress Pick-Up & Removal", "Furniture Removal", "Pool Table Movers", "Appliance Removal", "Heavy Furniture Moving", "Rearranging Furniture", "Full Service Help Moving", "In-Home Furniture Movers"] },
-                { emoji: "🌿", title: "Yardwork", desc: "Hire a Tasker for yardwork & landscaping", subs: ["Gardening Services", "Weed Removal", "Lawn Care Services", "Lawn Mowing Services", "Landscaping Services", "Gutter Cleaning", "Tree Trimming Service", "Vacation Plant Watering", "Patio Cleaning", "Hot Tub Cleaning", "Fence Installation & Repair Services", "Deck Restoration Services", "Patio Furniture Assembly", "Fence Staining", "Mulching Services", "Lawn Fertilizer Service", "Hedge Trimming Service", "Outdoor Party Setup", "Urban Gardening Service", "Leaf Raking & Removal", "Produce Gardening", "Hose Installation", "Shed Maintenance", "Pressure Washing"] },
-                { emoji: "🛒", title: "Shopping & Delivery", desc: "Get anything from groceries to furniture", subs: ["Delivery Service", "Grocery Shopping & Delivery", "Running Your Errands", "Christmas Tree Delivery", "Wait in Line", "Deliver Big Piece of Furniture", "Drop Off Donations", "Contactless Delivery", "Pet Food Delivery", "Baby Food Delivery", "Return Items", "Wait for Delivery", "Shipping", "Breakfast Delivery", "Coffee Delivery"] },
-                { emoji: "🏢", title: "IKEA Services", desc: "Hire a Tasker for all your IKEA needs", subs: ["Light Installation", "Furniture Removal", "Smart Home Installation", "Organization", "Furniture Assembly", "General Mounting"] },
-                { emoji: "🎨", title: "Painting", desc: "Interior, exterior & specialist finishes", subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"] },
-                { emoji: "💼", title: "Virtual & Online Tasks", desc: "Virtual assistance, organization, research & more", subs: ["Virtual Assistant", "Organization", "Data Entry", "Computer Help"] },
-                { emoji: "🏢", title: "Office Services", desc: "Hire a Tasker to help around the office!", subs: ["Office Cleaning", "Office Tech Setup", "Office Movers", "Office Supply & Snack Delivery", "Office Furniture Assembly", "Office Setup & Organization", "Office Administration", "Office Interior Design", "Moving Office Furniture", "Office Mounting Service"] },
-                { emoji: "👶", title: "Baby Prep", desc: "Set up the nursery, childproof your home & more", subs: ["Baby Proofing", "Baby Food Delivery", "Organize a Room", "Painting", "Toy Assembly Service", "Smart Home Installation", "Shopping", "General Cleaning"] },
-                { emoji: "🎁", title: "Holidays", desc: "Holiday help — decorating, gifting & more", subs: ["Gift Wrapping Services", "Hang Christmas Lights", "Christmas Tree Delivery", "Holiday Decorating", "Party Cleaning", "Toy Assembly Service", "Wait in Line", "Christmas Tree Removal"] },
-                { emoji: "❄️", title: "Winter Tasks", desc: "Get help with winter tasks", subs: ["Snow Removal", "Sidewalk Salting", "Window Winterization", "Residential Snow Removal", "Christmas Tree Removal", "AC Winterization", "Winter Yardwork", "Pipe Insulation", "Storm Door Installation", "Winter Deck Maintenance", "Water Heater Maintenance", "Wait in Line"] },
-                { emoji: "🙋", title: "Personal Assistant", desc: "Hire a Tasker to be your personal assistant!", subs: ["Personal Assistant", "Running Your Errands", "Wait in Line", "Organization", "Organize Home", "Closet Organization Service", "Interior Design Service", "Virtual Assistant"] },
-                { emoji: "📦", title: "Contactless Tasks", desc: "No-contact delivery, shopping & errands", subs: ["Contactless Delivery", "Contactless Prescription Pick-up & Delivery", "Running Your Errands", "Grocery Shopping & Delivery", "Disinfecting Services", "Drop Off Donations", "Yard Work Services", "Virtual Assistant"] },
-              ].map(({ emoji, title, desc, subs }) => (
+                { img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=70", title: "Featured Tasks", desc: "Let Taskers help tackle your to-do list", subs: ["Furniture Assembly", "Home Repairs", "Help Moving", "Yard Work Services", "Spring Cleaning", "TV Mounting", "Plumbing", "Hang Art, Mirror & Decor", "Electrical Help", "Wait in Line", "Closet Organization Service"] },
+                { img: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=70", title: "Handyman", desc: "Hire a Tasker for help around the house", subs: ["Door, Cabinet & Furniture Repair", "Appliance Installation & Repairs", "Furniture Assembly", "TV Mounting", "Drywall Repair Service", "Flooring & Tiling Help", "Electrical Help", "Sealing & Caulking", "Plumbing", "Window & Blinds Repair", "Ceiling Fan Installation", "Smart Home Installation", "Heavy Lifting", "Install Air Conditioner", "Painting", "Install Shelves, Rods & Hooks", "Home Maintenance", "Home Repairs", "Baby Proofing", "Carpentry Services", "General Mounting", "Cabinet Installation", "Wallpapering Service", "Fence Installation & Repair", "Deck Restoration Services", "Doorbell Installation", "Home Theater Installing"] },
+                { img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=70", title: "Cleaning", desc: "Taskers will make your home sparkle!", subs: ["House Cleaning Services", "Deep Cleaning", "Disinfecting Services", "Move In Cleaning", "Move Out Cleaning", "Vacation Rental Cleaning", "Carpet Cleaning Service", "Garage Cleaning", "One Time Cleaning Services", "Car Washing", "Laundry Help", "Pressure Washing", "Spring Cleaning"] },
+                { img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=70", title: "Furniture Assembly", desc: "Expert assembly for any furniture brand", subs: ["Furniture Assembly", "Patio Furniture Assembly", "Desk Assembly", "Dresser Assembly", "Bed Assembly", "Bookshelf Assembly", "Couch Assembly", "Chair Assembly", "Wardrobe Assembly", "Table Assembly", "Disassemble Furniture"] },
+                { img: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=70", title: "Mounting & Installation", desc: "Wall mounting for TVs, shelves, fans & more", subs: ["TV Mounting", "Install Shelves, Rods & Hooks", "Ceiling Fan Installation", "Install Blinds & Window Treatments", "Hang Art, Mirror & Decor", "General Mounting", "Hang Christmas Lights"] },
+                { img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=70", title: "Moving Services", desc: "From heavy lifting to unpacking — make your move easy", subs: ["Help Moving", "Truck Assisted Help Moving", "Packing Services & Help", "Unpacking Services", "Heavy Lifting", "Local Movers", "Junk Pickup", "Furniture Movers", "One Item Movers", "Storage Unit Moving", "Couch Removal", "Mattress Pick-Up & Removal", "Furniture Removal", "Pool Table Movers", "Appliance Removal", "Heavy Furniture Moving", "Rearranging Furniture", "Full Service Help Moving", "In-Home Furniture Movers"] },
+                { img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=70", title: "Yardwork", desc: "Hire a Tasker for yardwork & landscaping", subs: ["Gardening Services", "Weed Removal", "Lawn Care Services", "Lawn Mowing Services", "Landscaping Services", "Gutter Cleaning", "Tree Trimming Service", "Vacation Plant Watering", "Patio Cleaning", "Hot Tub Cleaning", "Fence Installation & Repair Services", "Deck Restoration Services", "Patio Furniture Assembly", "Fence Staining", "Mulching Services", "Lawn Fertilizer Service", "Hedge Trimming Service", "Outdoor Party Setup", "Urban Gardening Service", "Leaf Raking & Removal", "Produce Gardening", "Hose Installation", "Shed Maintenance", "Pressure Washing"] },
+                { img: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=70", title: "Shopping & Delivery", desc: "Get anything from groceries to furniture", subs: ["Delivery Service", "Grocery Shopping & Delivery", "Running Your Errands", "Christmas Tree Delivery", "Wait in Line", "Deliver Big Piece of Furniture", "Drop Off Donations", "Contactless Delivery", "Pet Food Delivery", "Baby Food Delivery", "Return Items", "Wait for Delivery", "Shipping", "Breakfast Delivery", "Coffee Delivery"] },
+                { img: "https://images.unsplash.com/photo-1550226940-43a3038f3826?auto=format&fit=crop&w=600&q=70", title: "IKEA Services", desc: "Hire a Tasker for all your IKEA needs", subs: ["Light Installation", "Furniture Removal", "Smart Home Installation", "Organization", "Furniture Assembly", "General Mounting"] },
+                { img: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=600&q=70", title: "Painting", desc: "Interior, exterior & specialist finishes", subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"] },
+                { img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=70", title: "Virtual & Online Tasks", desc: "Virtual assistance, organization, research & more", subs: ["Virtual Assistant", "Organization", "Data Entry", "Computer Help"] },
+                { img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=70", title: "Office Services", desc: "Hire a Tasker to help around the office!", subs: ["Office Cleaning", "Office Tech Setup", "Office Movers", "Office Supply & Snack Delivery", "Office Furniture Assembly", "Office Setup & Organization", "Office Administration", "Office Interior Design", "Moving Office Furniture", "Office Mounting Service"] },
+                { img: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=70", title: "Baby Prep", desc: "Set up the nursery, childproof your home & more", subs: ["Baby Proofing", "Baby Food Delivery", "Organize a Room", "Painting", "Toy Assembly Service", "Smart Home Installation", "Shopping", "General Cleaning"] },
+                { img: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=600&q=70", title: "Holidays", desc: "Holiday help — decorating, gifting & more", subs: ["Gift Wrapping Services", "Hang Christmas Lights", "Christmas Tree Delivery", "Holiday Decorating", "Party Cleaning", "Toy Assembly Service", "Wait in Line", "Christmas Tree Removal"] },
+                { img: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?auto=format&fit=crop&w=600&q=70", title: "Winter Tasks", desc: "Get help with winter tasks", subs: ["Snow Removal", "Sidewalk Salting", "Window Winterization", "Residential Snow Removal", "Christmas Tree Removal", "AC Winterization", "Winter Yardwork", "Pipe Insulation", "Storm Door Installation", "Winter Deck Maintenance", "Water Heater Maintenance", "Wait in Line"] },
+                { img: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=600&q=70", title: "Personal Assistant", desc: "Hire a Tasker to be your personal assistant!", subs: ["Personal Assistant", "Running Your Errands", "Wait in Line", "Organization", "Organize Home", "Closet Organization Service", "Interior Design Service", "Virtual Assistant"] },
+                { img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=600&q=70", title: "Contactless Tasks", desc: "No-contact delivery, shopping & errands", subs: ["Contactless Delivery", "Contactless Prescription Pick-up & Delivery", "Running Your Errands", "Grocery Shopping & Delivery", "Disinfecting Services", "Drop Off Donations", "Yard Work Services", "Virtual Assistant"] },
+              ].map(({ img, title, desc, subs }) => (
                 <div
                   className="service-category-card"
                   key={title}
@@ -384,7 +384,9 @@ export default function App() {
                   onKeyDown={(e) => e.key === "Enter" && setActivePage(title)}
                   style={{ cursor: "pointer" }}
                 >
-                  <div className="service-card-emoji">{emoji}</div>
+                  <div className="service-card-img-wrap">
+                    <img src={img} alt={title} className="service-card-img" loading="lazy" />
+                  </div>
                   <div className="service-card-info">
                     <h3 className="service-card-title">{title}</h3>
                     <p className="service-card-desc">{desc}</p>
@@ -413,6 +415,110 @@ export default function App() {
     );
   }
 
+  if (activePage === "__workers") {
+    return (
+      <div className="root">
+        <nav className="navbar">
+          <div className="navbar-inner">
+            <button className="nav-logo-btn" onClick={() => setActivePage(null)} aria-label="Go to homepage">
+              <img src="/logo.png" alt="UstayaBirak" height={72} />
+            </button>
+            <div className="nav-links">
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
+              <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>Workers</button>
+            </div>
+            <div className="nav-auth">
+              {currentUser ? (
+                <div className="nav-user">
+                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                  <span className="nav-user-name">{currentUser.fullName}</span>
+                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+                </div>
+              ) : (
+                <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+              )}
+              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+            </div>
+          </div>
+        </nav>
+
+        <section className="workers-page-hero">
+          <div className="workers-page-inner">
+            <h1 className="workers-page-title">Find trusted Workers</h1>
+            <p className="workers-page-subtitle">Browse by category and book a verified worker today</p>
+            <div className="category-tabs" style={{ justifyContent: "center", marginTop: "1.5rem" }}>
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  className={"cat-tab" + (activeCat === cat.id ? " cat-tab--active" : "")}
+                  onClick={() => setActiveCat(cat.id)}
+                >
+                  <span className="cat-tab-icon"><cat.Icon /></span>
+                  <span className="cat-tab-label">{cat.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="workers-section" style={{ padding: "2.5rem 1.5rem 4rem" }}>
+          {workers.length === 0 ? (
+            <p className="empty-state">No workers found for this category.</p>
+          ) : (
+            <div className="worker-grid">
+              {workers.map((worker) => (
+                <article className="worker-card" key={worker.id}>
+                  <div className="worker-card-top">
+                    <div className="worker-avatar">{worker.fullName.charAt(0)}</div>
+                    <div className="worker-meta">
+                      <div className="worker-name-row">
+                        <span className="worker-name">{worker.fullName}</span>
+                        {worker.verified && (
+                          <span className="verified-badge"><VerifiedIcon /> Verified</span>
+                        )}
+                      </div>
+                      <div className="worker-rating">
+                        <span className="star-icon"><StarIcon /></span>
+                        <strong>{worker.rating}</strong>
+                        <span className="review-count">({worker.reviewCount} reviews)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="worker-bio">{worker.bio}</p>
+                  <div className="worker-tags">
+                    {worker.categories.map((c) => (
+                      <span key={c} className="worker-tag">{c.replace(/-/g, " ")}</span>
+                    ))}
+                  </div>
+                  <div className="worker-footer">
+                    <div className="worker-price">
+                      <span className="price-amount">₺{worker.hourlyPrice}</span>
+                      <span className="price-unit"> / hour</span>
+                    </div>
+                    <button
+                      className="btn-primary btn-book"
+                      onClick={() => handleBook(worker)}
+                      disabled={bookingInProgress}
+                    >
+                      {bookingInProgress ? "Sending\u2026" : "Book Now"}
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {showAuth && (
+          <AuthModal
+            onClose={() => setShowAuth(false)}
+            onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+          />
+        )}
+      </div>
+    );
+  }
+
   if (activePage) {
     return <ServiceDetailPage serviceId={activePage} onBack={() => setActivePage(null)} />;
   }
@@ -428,7 +534,7 @@ export default function App() {
           </a>
           <div className="nav-links">
             <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
-            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Workers</button>
+            <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
           </div>
           <div className="nav-auth">
             {currentUser ? (
