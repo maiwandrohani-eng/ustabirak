@@ -1040,6 +1040,30 @@ a { text-decoration: none; color: inherit; }
 }
 .bw-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,83,63,.1); }
 .bw-input--error { border-color: #e53e3e; }
+.bw-input--mono { font-family: 'Courier New', Courier, monospace; letter-spacing: .06em; }
+.bw-select {
+  padding: .72rem 2.2rem .72rem 1rem;
+  border: 1.5px solid var(--gray-light);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: .9rem;
+  color: var(--text);
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right .9rem center;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color .18s, box-shadow .18s;
+  outline: none;
+}
+.bw-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,83,63,.1); }
+.bw-select:disabled { background-color: #f5f5f5; color: var(--text-muted); cursor: not-allowed; opacity: .7; }
+
+/* ── Bank Section ── */
+.bw-bank-section { display: flex; flex-direction: column; gap: 1.5rem; }
+.bw-info-box--secure { background: #f0fff4; border-color: #9ae6b4; color: #1a5c38; }
+.bw-review-section--bank { background: #fafafa; border-radius: var(--radius-sm); padding: .75rem 1rem; }
+.bw-review-iban { font-family: 'Courier New', Courier, monospace; letter-spacing: .08em; font-size: .88rem; color: var(--text-muted); }
 .bw-textarea {
   padding: .72rem 1rem;
   border: 1.5px solid var(--gray-light);

@@ -34,6 +34,7 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
         phone: z.string().optional(),
         city: z.string(),
         district: z.string().optional(),
+        mahalle: z.string().optional(),
         bio: z.string().optional(),
         categories: z
           .array(
@@ -42,6 +43,8 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
           .optional(),
         experienceYears: z.number().optional(),
         iban: z.string().optional(),
+        bankName: z.string().optional(),
+        accountHolderName: z.string().optional(),
         hourlyPrice: z.number().positive().optional(),
         serviceRadiusKm: z.number().optional()
       })
@@ -79,10 +82,14 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
         lat: 41,
         lng: 29,
         city: body.city,
-        district: body.district
+        district: body.district,
+        mahalle: body.mahalle
       },
       availability: [],
-      hourlyPrice: body.hourlyPrice ?? 20
+      hourlyPrice: body.hourlyPrice ?? 20,
+      bankName: body.bankName ?? "",
+      accountHolderName: body.accountHolderName ?? "",
+      iban: body.iban ?? ""
     };
     db.workers.push(worker);
     return { user: worker, token: `dev-token-${worker.id}` };

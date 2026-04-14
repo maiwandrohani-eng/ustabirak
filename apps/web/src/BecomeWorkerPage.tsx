@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { apiPost } from "./api";
+import { TURKEY_CITIES, TURKEY_DISTRICTS, TURKEY_MAHALLELER, TURKISH_BANKS } from "./turkeyData";
 
 const SKILL_OPTIONS = [
   { id: "electrician", label: "Electrical", emoji: "⚡", desc: "Wiring, fixtures, outlets, smart home" },
@@ -24,13 +25,16 @@ interface FormState {
   phone: string;
   city: string;
   district: string;
+  mahalle: string;
   bio: string;
   categories: SkillId[];
   experienceYears: number;
   hourlyPrice: number;
   serviceRadiusKm: number;
-  iban: string;
   availableDays: string[];
+  bankName: string;
+  accountHolderName: string;
+  iban: string;
   agreeTerms: boolean;
 }
 
@@ -40,17 +44,20 @@ const INITIAL: FormState = {
   phone: "",
   city: "",
   district: "",
+  mahalle: "",
   bio: "",
   categories: [],
   experienceYears: 1,
   hourlyPrice: 25,
   serviceRadiusKm: 10,
-  iban: "",
   availableDays: [],
+  bankName: "",
+  accountHolderName: "",
+  iban: "",
   agreeTerms: false,
 };
 
-const STEPS = ["About You", "Your Skills", "Rates & Schedule", "Review & Submit"];
+const STEPS = ["About You", "Your Skills", "Rates & Schedule", "Bank Details", "Review & Submit"];
 
 interface Props {
   onBack: () => void;
@@ -100,13 +107,20 @@ export default function BecomeWorkerPage({ onBack }: Props) {
       if (!form.bio.trim() || form.bio.length < 20) errs.bio = "Please write at least 20 characters about yourself.";
     }
     if (step === 2) {
-      if (form.hourlyPrice < 5 || form.hourlyPrice > 500) errs.hourlyPrice = "Please enter a rate between €5 and €500.";
+      if (form.hourlyPrice < 5 || form.hourlyPrice > 500) errs.hourlyPrice = "Please enter a rate between ₺5 and ₺500.";
       if (form.availableDays.length === 0) errs.availableDays = "Please select at least one available day.";
-      if (form.iban.trim() && !/^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/.test(form.iban.replace(/\s/g, ""))) {
-        errs.iban = "Please enter a valid IBAN.";
-      }
     }
     if (step === 3) {
+      if (!form.bankName) errs.bankName = "Please select your bank.";
+      if (!form.accountHolderName.trim() || form.accountHolderName.length < 2) errs.accountHolderName = "Please enter the account holder name.";
+      if (!form.iban.trim()) {
+        errs.iban = "IBAN is required for payouts.";
+      } else {
+        const normalized = form.iban.replace(/\s/g, "");
+        if (!/^TR\d{24}$/.test(normalized)) errs.iban = "Please enter a valid Turkish IBAN (TR + 24 digits).";
+      }
+    }
+    if (step === 4) {
       if (!form.agreeTerms) errs.agreeTerms = "You must agree to the terms to continue.";
     }
     setErrors(errs);
@@ -133,12 +147,15 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         phone: form.phone.trim(),
         city: form.city.trim(),
         district: form.district.trim() || undefined,
+        mahalle: form.mahalle.trim() || undefined,
         bio: form.bio.trim(),
         categories: form.categories,
         experienceYears: form.experienceYears,
         hourlyPrice: form.hourlyPrice,
         serviceRadiusKm: form.serviceRadiusKm,
-        iban: form.iban.trim() || undefined,
+        bankName: form.bankName,
+        accountHolderName: form.accountHolderName.trim(),
+        iban: form.iban.replace(/\s/g, ""),
         availability,
       });
       setSuccess({ id: res.user.id, name: res.user.fullName });
@@ -257,26 +274,58 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                 </div>
 
                 <div className="bw-field">
-                  <label className="bw-label">City <span className="bw-req">*</span></label>
-                  <input
-                    className={"bw-input" + (errors.city ? " bw-input--error" : "")}
-                    type="text"
-                    placeholder="e.g. Istanbul"
+                  <label className="bw-label">City (İl) <span className="bw-req">*</span></label>
+                  <select
+                    className={"bw-select" + (errors.city ? " bw-input--error" : "")}
                     value={form.city}
-                    onChange={(e) => set("city", e.target.value)}
-                  />
+                    onChange={(e) => {
+                      set("city", e.target.value);
+                      set("district", "");
+                      set("mahalle", "");
+                    }}
+                  >
+                    <option value="">— Şehir seçin —</option>
+                    {TURKEY_CITIES.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
                   {errors.city && <span className="bw-error">{errors.city}</span>}
                 </div>
 
                 <div className="bw-field">
-                  <label className="bw-label">District <span className="bw-optional">(optional)</span></label>
-                  <input
-                    className="bw-input"
-                    type="text"
-                    placeholder="e.g. Besiktas"
+                  <label className="bw-label">District (İlçe) <span className="bw-optional">(optional)</span></label>
+                  <select
+                    className="bw-select"
                     value={form.district}
-                    onChange={(e) => set("district", e.target.value)}
-                  />
+                    disabled={!form.city}
+                    onChange={(e) => {
+                      set("district", e.target.value);
+                      set("mahalle", "");
+                    }}
+                  >
+                    <option value="">— İlçe seçin —</option>
+                    {(TURKEY_DISTRICTS[form.city] ?? []).map((d) => (
+                      <option key={d} value={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="bw-field">
+                  <label className="bw-label">Neighbourhood (Mahalle) <span className="bw-optional">(optional)</span></label>
+                  <select
+                    className="bw-select"
+                    value={form.mahalle}
+                    disabled={!form.district}
+                    onChange={(e) => set("mahalle", e.target.value)}
+                  >
+                    <option value="">— Mahalle seçin —</option>
+                    {(TURKEY_MAHALLELER[`${form.city}|${form.district}`] ?? []).map((m) => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
+                  {!form.district || TURKEY_MAHALLELER[`${form.city}|${form.district}`] ? null : (
+                    <p className="bw-field-hint">No neighbourhood data for this district.</p>
+                  )}
                 </div>
               </div>
 
@@ -405,19 +454,6 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                   </div>
                   {errors.availableDays && <span className="bw-error">{errors.availableDays}</span>}
                 </div>
-
-                <div className="bw-field bw-field--full">
-                  <label className="bw-label">IBAN for Payments <span className="bw-optional">(optional — add later)</span></label>
-                  <input
-                    className={"bw-input" + (errors.iban ? " bw-input--error" : "")}
-                    type="text"
-                    placeholder="e.g. TR32 0006 1005 1978 6457 8413 26"
-                    value={form.iban}
-                    onChange={(e) => set("iban", e.target.value.toUpperCase())}
-                  />
-                  {errors.iban && <span className="bw-error">{errors.iban}</span>}
-                  <p className="bw-field-hint">Used for payouts after job completion. Encrypted and secure.</p>
-                </div>
               </div>
 
               <div className="bw-earnings-preview">
@@ -440,8 +476,71 @@ export default function BecomeWorkerPage({ onBack }: Props) {
             </div>
           )}
 
-          {/* ── Step 3: Review & Submit ── */}
+          {/* ── Step 3: Bank Details ── */}
           {step === 3 && (
+            <div className="bw-step">
+              <h2 className="bw-step-title">Bank details for payouts</h2>
+              <p className="bw-step-subtitle">Required to receive payments after job completion. Your data is encrypted and never shared with customers.</p>
+
+              <div className="bw-bank-section">
+                <div className="bw-form-grid">
+                  <div className="bw-field bw-field--full">
+                    <label className="bw-label">Bank <span className="bw-req">*</span></label>
+                    <select
+                      className={"bw-select" + (errors.bankName ? " bw-input--error" : "")}
+                      value={form.bankName}
+                      onChange={(e) => set("bankName", e.target.value)}
+                    >
+                      <option value="">— Banka seçin —</option>
+                      {TURKISH_BANKS.map((b) => (
+                        <option key={b} value={b}>{b}</option>
+                      ))}
+                    </select>
+                    {errors.bankName && <span className="bw-error">{errors.bankName}</span>}
+                  </div>
+
+                  <div className="bw-field bw-field--full">
+                    <label className="bw-label">Account Holder Name <span className="bw-req">*</span></label>
+                    <input
+                      className={"bw-input" + (errors.accountHolderName ? " bw-input--error" : "")}
+                      type="text"
+                      placeholder="Full name as it appears on your bank account"
+                      value={form.accountHolderName}
+                      onChange={(e) => set("accountHolderName", e.target.value)}
+                    />
+                    {errors.accountHolderName && <span className="bw-error">{errors.accountHolderName}</span>}
+                    <p className="bw-field-hint">Must match the name registered with your bank exactly.</p>
+                  </div>
+
+                  <div className="bw-field bw-field--full">
+                    <label className="bw-label">IBAN <span className="bw-req">*</span></label>
+                    <input
+                      className={"bw-input bw-input--mono" + (errors.iban ? " bw-input--error" : "")}
+                      type="text"
+                      placeholder="TR00 0000 0000 0000 0000 0000 00"
+                      value={form.iban}
+                      onChange={(e) => {
+                        const raw = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+                        const formatted = raw.replace(/(.{4})/g, "$1 ").trim();
+                        set("iban", formatted);
+                      }}
+                      maxLength={32}
+                    />
+                    {errors.iban && <span className="bw-error">{errors.iban}</span>}
+                    <p className="bw-field-hint">Turkish IBANs start with <strong>TR</strong> followed by 24 digits — 26 characters total.</p>
+                  </div>
+                </div>
+
+                <div className="bw-info-box bw-info-box--secure">
+                  <span>🔐</span>
+                  <p>Your banking details are encrypted with AES-256 and used solely for payout transfers. We never charge your account.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 4: Review & Submit ── */}
+          {step === 4 && (
             <div className="bw-step">
               <h2 className="bw-step-title">Review your profile</h2>
               <p className="bw-step-subtitle">Everything look good? Submit to create your worker account.</p>
@@ -450,9 +549,9 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                 <div className="bw-review-avatar">{form.fullName.charAt(0).toUpperCase() || "?"}</div>
                 <div className="bw-review-info">
                   <h3 className="bw-review-name">{form.fullName || "—"}</h3>
-                  <p className="bw-review-location">{[form.district, form.city].filter(Boolean).join(", ") || "—"}</p>
+                  <p className="bw-review-location">{[form.mahalle, form.district, form.city].filter(Boolean).join(", ") || "—"}</p>
                 </div>
-                <div className="bw-review-price">€{form.hourlyPrice}<span>/hr</span></div>
+                <div className="bw-review-price">₺{form.hourlyPrice}<span>/hr</span></div>
               </div>
 
               <div className="bw-review-sections">
@@ -485,12 +584,12 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                   <h4>Availability</h4>
                   <p>{form.availableDays.length > 0 ? form.availableDays.join(", ") : "—"} · {form.serviceRadiusKm} km radius</p>
                 </div>
-                {form.iban && (
-                  <div className="bw-review-section">
-                    <h4>IBAN</h4>
-                    <p>{"•".repeat(16)} {form.iban.slice(-4)}</p>
-                  </div>
-                )}
+                <div className="bw-review-section bw-review-section--bank">
+                  <h4>🏦 Bank Details</h4>
+                  <p><strong>{form.bankName}</strong></p>
+                  <p>{form.accountHolderName}</p>
+                  <p className="bw-review-iban">{"•".repeat(18)} {form.iban.replace(/\s/g, "").slice(-4)}</p>
+                </div>
               </div>
 
               <div className="bw-terms-row">
@@ -545,8 +644,8 @@ export default function BecomeWorkerPage({ onBack }: Props) {
           </div>
         </div>
 
-        {/* ── Side Panel (visible steps 0–2) ── */}
-        {step < 3 && (
+        {/* ── Side Panel (visible steps 0–3) ── */}
+        {step < 4 && (
           <div className="bw-reg-side">
             <div className="bw-side-why">
               <h3 className="bw-side-why-title">Why join UstayaBirak?</h3>
