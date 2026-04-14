@@ -699,24 +699,26 @@ export default function BecomeWorkerPage({ onBack }: Props) {
 function Navbar({ onBack }: { onBack: () => void }) {
   const [showAuth, setShowAuth] = useState(false);
   return (
-    <nav className="navbar">
-      <div className="navbar-inner">
-        <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
-          <img src="/logo.png" alt="UstayaBirak" height={52} />
-        </button>
-        <div className="nav-links">
-          <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
-          <button className="nav-link nav-link-btn" onClick={onBack}>Workers</button>
-          <span className="nav-link" style={{ color: "var(--primary)", fontWeight: 700 }}>Become a Worker</span>
+    <>
+      <nav className="navbar">
+        <div className="navbar-inner">
+          <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
+            <img src="/logo.png" alt="UstayaBirak" height={52} />
+          </button>
+          <div className="nav-links">
+            <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
+            <button className="nav-link nav-link-btn" onClick={onBack}>Workers</button>
+            <span className="nav-link" style={{ color: "var(--primary)", fontWeight: 700 }}>Become a Worker</span>
+          </div>
+          <div className="nav-auth">
+            <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+          </div>
         </div>
-        <div className="nav-auth">
-          <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
-        </div>
-      </div>
-    </nav>
-    {showAuth && (
-      <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
-    )}
+      </nav>
+      {showAuth && (
+        <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
+      )}
+    </>
   );
 }
 
