@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { WorkerProfile } from "@ustaya/shared";
 import { apiGet, apiPost } from "./api";
 import { socket } from "./socket";
 import ServiceDetailPage from "./ServiceDetailPage";
 import BecomeWorkerPage from "./BecomeWorkerPage";
 import AuthModal from "./AuthModal";
+import CheckoutModal, { type BookingRecord } from "./CheckoutModal";
+import MyBookingsPage from "./MyBookingsPage";
+import UserProfilePage from "./UserProfilePage";
+import WorkerDashboardPage from "./WorkerDashboardPage";
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -304,8 +308,12 @@ export default function App() {
   const [activePage, setActivePage] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState<{ id: string; fullName: string; role: string } | null>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [checkoutTarget, setCheckoutTarget] = useState<{ worker: WorkerProfile; serviceTitle: string; catId: string } | null>(null);
+  const [bookings, setBookings] = useState<BookingRecord[]>([]);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const customerId = "c1";
-  const category = CATEGORIES.find((c) => c.id === activeCat)!;
+  const category = CATEGORIES.find((c) => c.id === activeCat)!
 
   useEffect(() => {
     socket.emit("join:customer", customerId);
@@ -333,25 +341,10 @@ export default function App() {
     setActiveSub(null);
   }, [activeCat]);
 
-  const handleBook = async (worker: WorkerProfile) => {
-    setBookingInProgress(true);
-    try {
-      const apiCat = activeCat === "_trending" ? "other" : activeCat;
-      const res = await apiPost<{ job: { id: string } }>("/jobs/request", {
-        customerId,
-        category: apiCat,
-        title: `${category.headline} - ${activeSub ?? category.subs[0]}`,
-        description: "Booked via UstaYolda web app",
-        scheduledAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
-        amount: worker.hourlyPrice,
-        location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" },
-      });
-      setStatusLog((prev) =>
-        [`Request sent to ${worker.fullName} — ${res.job.id}`, ...prev].slice(0, 5)
-      );
-    } finally {
-      setBookingInProgress(false);
-    }
+  const handleBook = (worker: WorkerProfile) => {
+    const apiCat = activeCat === "_trending" ? "other" : activeCat;
+    const serviceTitle = `${category.headline} - ${activeSub ?? category.subs[0]}`;
+    setCheckoutTarget({ worker, serviceTitle, catId: apiCat });
   };
 
   const suggestions = searchQuery.trim().length > 0
@@ -367,6 +360,38 @@ export default function App() {
           w.categories.some((c) => c.includes(searchQuery.toLowerCase()))
       )
     : workers;
+
+  if (activePage === "__my-bookings" && currentUser) {
+    return (
+      <MyBookingsPage
+        user={currentUser}
+        bookings={bookings}
+        onBack={() => setActivePage(null)}
+        onNavigate={(p) => setActivePage(p)}
+      />
+    );
+  }
+
+  if (activePage === "__profile" && currentUser) {
+    return (
+      <UserProfilePage
+        user={currentUser}
+        onBack={() => setActivePage(null)}
+        onSignOut={() => { setCurrentUser(null); setActivePage(null); }}
+        onNavigate={(p) => setActivePage(p)}
+      />
+    );
+  }
+
+  if (activePage === "__worker-dashboard" && currentUser) {
+    return (
+      <WorkerDashboardPage
+        user={currentUser}
+        onBack={() => setActivePage(null)}
+        onNavigate={(p) => setActivePage(p)}
+      />
+    );
+  }
 
   if (activePage && STATIC_PAGES[activePage]) {
     const sp = STATIC_PAGES[activePage];
@@ -756,10 +781,26 @@ export default function App() {
           </div>
           <div className="nav-auth">
             {currentUser ? (
-              <div className="nav-user">
-                <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
-                <span className="nav-user-name">{currentUser.fullName}</span>
-                <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+              <div className="nav-user" ref={userMenuRef} style={{ position: "relative" }}>
+                <button
+                  className="nav-user-btn"
+                  onClick={() => setShowUserMenu((v) => !v)}
+                >
+                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                  <span className="nav-user-name">{currentUser.fullName}</span>
+                  <span className="nav-caret">▾</span>
+                </button>
+                {showUserMenu && (
+                  <div className="user-dropdown">
+                    <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>👤 My Profile</button>
+                    <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>📋 My Bookings</button>
+                    {currentUser.role === "worker" && (
+                      <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>🔧 Worker Dashboard</button>
+                    )}
+                    <hr className="dropdown-divider" />
+                    <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>Sign out</button>
+                  </div>
+                )}
               </div>
             ) : (
               <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
@@ -1156,6 +1197,20 @@ export default function App() {
         <AuthModal
           onClose={() => setShowAuth(false)}
           onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+        />
+      )}
+
+      {checkoutTarget && (
+        <CheckoutModal
+          worker={checkoutTarget.worker}
+          serviceTitle={checkoutTarget.serviceTitle}
+          catId={checkoutTarget.catId}
+          onClose={() => setCheckoutTarget(null)}
+          onSuccess={(booking) => {
+            setBookings((prev) => [booking, ...prev]);
+            setStatusLog((prev) => [`Booking confirmed — ${booking.id}`, ...prev].slice(0, 5));
+            setCheckoutTarget(null);
+          }}
         />
       )}
     </div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import type { WorkerProfile } from "@ustaya/shared";
-import { apiGet, apiPost } from "./api";
+import { apiGet } from "./api";
 import { SERVICE_DETAILS } from "./serviceData";
 import AuthModal from "./AuthModal";
+import CheckoutModal from "./CheckoutModal";
 
 const StarIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
@@ -23,7 +24,7 @@ interface Props {
 export default function ServiceDetailPage({ serviceId, onBack }: Props) {
   const detail = SERVICE_DETAILS[serviceId];
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
-  const [bookingInProgress, setBookingInProgress] = useState(false);
+  const [checkoutWorker, setCheckoutWorker] = useState<WorkerProfile | null>(null);
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
 
@@ -44,23 +45,8 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
     );
   }
 
-  const handleBook = async (worker: WorkerProfile) => {
-    setBookingInProgress(true);
-    try {
-      const res = await apiPost<{ job: { id: string } }>("/jobs/request", {
-        customerId: "c1",
-        category: detail.catId,
-        title: detail.title,
-        description: `Booked via UstaYolda — ${detail.title}`,
-        scheduledAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
-        amount: worker.hourlyPrice,
-        location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" },
-      });
-      setBookingStatus(`Request sent to ${worker.fullName} — ${res.job.id}`);
-      setTimeout(() => setBookingStatus(null), 5000);
-    } finally {
-      setBookingInProgress(false);
-    }
+  const handleBook = (worker: WorkerProfile) => {
+    setCheckoutWorker(worker);
   };
 
   return (
@@ -231,9 +217,8 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
                   <button
                     className="btn-primary btn-book"
                     onClick={() => handleBook(worker)}
-                    disabled={bookingInProgress}
                   >
-                    {bookingInProgress ? "Sending…" : "Book Now"}
+                    Book Now
                   </button>
                 </div>
               </article>
@@ -251,6 +236,20 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
 
       {showAuth && (
         <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
+      )}
+
+      {checkoutWorker && (
+        <CheckoutModal
+          worker={checkoutWorker}
+          serviceTitle={detail.title}
+          catId={detail.catId}
+          onClose={() => setCheckoutWorker(null)}
+          onSuccess={(booking) => {
+            setBookingStatus(`Booking confirmed — ${booking.id}`);
+            setCheckoutWorker(null);
+            setTimeout(() => setBookingStatus(null), 5000);
+          }}
+        />
       )}
     </div>
   );
