@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { apiPost } from "./api";
 import { TURKEY_CITIES, TURKEY_DISTRICTS, TURKEY_MAHALLELER, TURKISH_BANKS } from "./turkeyData";
+import AuthModal from "./AuthModal";
 
 const SKILL_OPTIONS = [
   { id: "electrician", label: "Electrical", emoji: "⚡", desc: "Wiring, fixtures, outlets, smart home" },
@@ -696,6 +697,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
 }
 
 function Navbar({ onBack }: { onBack: () => void }) {
+  const [showAuth, setShowAuth] = useState(false);
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -708,10 +710,13 @@ function Navbar({ onBack }: { onBack: () => void }) {
           <span className="nav-link" style={{ color: "var(--primary)", fontWeight: 700 }}>Become a Worker</span>
         </div>
         <div className="nav-auth">
-          <button className="btn-ghost">Sign up / Log in</button>
+          <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
         </div>
       </div>
     </nav>
+    {showAuth && (
+      <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
+    )}
   );
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { WorkerProfile } from "@ustaya/shared";
 import { apiGet, apiPost } from "./api";
 import { SERVICE_DETAILS } from "./serviceData";
+import AuthModal from "./AuthModal";
 
 const StarIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
@@ -24,6 +25,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [bookingInProgress, setBookingInProgress] = useState(false);
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -85,7 +87,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
             </button>
           </div>
           <div className="nav-auth">
-            <button className="btn-ghost">Sign up / Log in</button>
+            <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
             <button
               className="btn-primary"
               onClick={() => { onBack(); setTimeout(() => document.getElementById("become-worker")?.scrollIntoView({ behavior: "smooth" }), 80); }}
@@ -246,6 +248,10 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
         </button>
         <p>&#169; {new Date().getFullYear()} UstayaBirak.com &#8212; All rights reserved.</p>
       </footer>
+
+      {showAuth && (
+        <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
+      )}
     </div>
   );
 }

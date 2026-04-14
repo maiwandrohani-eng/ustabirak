@@ -4,6 +4,7 @@ import { apiGet, apiPost } from "./api";
 import { socket } from "./socket";
 import ServiceDetailPage from "./ServiceDetailPage";
 import BecomeWorkerPage from "./BecomeWorkerPage";
+import AuthModal from "./AuthModal";
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -114,6 +115,8 @@ export default function App() {
   const [statusLog, setStatusLog] = useState<string[]>([]);
   const [bookingInProgress, setBookingInProgress] = useState(false);
   const [activePage, setActivePage] = useState<string | null>(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const [currentUser, setCurrentUser] = useState<{ id: string; fullName: string; role: string } | null>(null);
   const customerId = "c1";
   const category = CATEGORIES.find((c) => c.id === activeCat)!;
 
@@ -193,7 +196,15 @@ export default function App() {
             <a href="#become-worker" className="nav-link">Become a Worker</a>
           </div>
           <div className="nav-auth">
-            <button className="btn-ghost">Sign up / Log in</button>
+            {currentUser ? (
+              <div className="nav-user">
+                <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                <span className="nav-user-name">{currentUser.fullName}</span>
+                <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+              </div>
+            ) : (
+              <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+            )}
             <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
           </div>
         </div>
@@ -417,6 +428,13 @@ export default function App() {
         <img src="/logo.png" alt="UstayaBirak" height={26} />
         <p>&#169; {new Date().getFullYear()} UstayaBirak.com &#8212; All rights reserved.</p>
       </footer>
+
+      {showAuth && (
+        <AuthModal
+          onClose={() => setShowAuth(false)}
+          onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+        />
+      )}
     </div>
   );
 }

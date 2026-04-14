@@ -54,6 +54,7 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       const customer = {
         id: makeId("c"),
         fullName: body.fullName,
+        email: body.email,
         location: {
           lat: 41,
           lng: 29,
@@ -93,6 +94,17 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     };
     db.workers.push(worker);
     return { user: worker, token: `dev-token-${worker.id}` };
+  });
+
+  app.post("/auth/login", async (req) => {
+    const { email } = z.object({ email: z.string().email() }).parse(req.body);
+    // Find existing customer by email, or create a guest session
+    const existing = db.customers.find((c: { email?: string }) => c.email === email);
+    if (existing) return { user: existing, token: `dev-token-${existing.id}` };
+    // Create guest customer
+    const guest = { id: makeId("c"), fullName: email.split("@")[0], email, location: { lat: 41, lng: 29, city: "Istanbul" } };
+    db.customers.push(guest);
+    return { user: guest, token: `dev-token-${guest.id}` };
   });
 
   app.get("/services", async () => ({
