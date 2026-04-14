@@ -392,4 +392,387 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
       ],
     },
   },
+  "Featured Tasks": {
+    id: "featured-tasks",
+    emoji: "⭐",
+    title: "Featured Tasks",
+    category: "Featured Tasks",
+    tagline: "Let Taskers help tackle your to-do list — the most popular services, booked by thousands every week.",
+    heroGradient: "linear-gradient(150deg, #1a1a2e 0%, #2d2d5a 50%, #4a4a8a 100%)",
+    accentBg: "linear-gradient(135deg, #f0f0ff 0%, #d8d8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Not sure where to start? These are the most-booked services on UstayaBirak — trusted by thousands of customers every week. Whatever's on your list, a Tasker can handle it.",
+      sections: [
+        {
+          heading: "Most Popular Services",
+          paragraphs: [
+            "From furniture assembly on delivery day to a spring clean before guests arrive, these are the tasks our customers book most.",
+            "All Taskers are background-checked, reviewed, and bring their own tools. Just pick a task and book in minutes.",
+          ],
+        },
+        {
+          heading: "Top booked tasks right now",
+          paragraphs: [],
+          list: [
+            { label: "Furniture Assembly:", text: "Same-day assembly for IKEA and all major brands." },
+            { label: "Home Repairs:", text: "Fix anything broken — doors, hinges, drywall, and more." },
+            { label: "Help Moving:", text: "Experienced movers for any size job." },
+            { label: "Yard Work:", text: "Lawn mowing, weeding, and garden care." },
+            { label: "Spring Cleaning:", text: "Deep clean every room and start fresh." },
+            { label: "TV Mounting:", text: "Secure installation on any wall type." },
+            { label: "Hang Art, Mirror & Decor:", text: "Gallery walls, heavy mirrors, and statement pieces." },
+            { label: "Electrical Help:", text: "Outlet repairs, light fixtures, and fan installs." },
+            { label: "Wait in Line:", text: "Let a Tasker queue for you anywhere." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak?",
+          paragraphs: [
+            "Transparent pricing, verified workers, and flexible scheduling — book any task in under 2 minutes.",
+            "Not happy? Our satisfaction guarantee means we'll make it right.",
+          ],
+        },
+      ],
+    },
+  },
+  "Moving Services": {
+    id: "moving-services",
+    emoji: "🚚",
+    title: "Moving Services",
+    category: "Moving Services",
+    tagline: "From heavy lifting to unpacking and organising — make your move stress-free with UstayaBirak.",
+    heroGradient: "linear-gradient(150deg, #2d4a1a 0%, #4a7a2a 50%, #6aa83a 100%)",
+    accentBg: "linear-gradient(135deg, #f0fff0 0%, #c8f0be 100%)",
+    catId: "moving",
+    body: {
+      intro: "Moving is stressful enough — let a Tasker handle the heavy lifting, packing, and everything in between. Whether it's a single item, a full apartment, or just packing help, we have experienced movers ready.",
+      sections: [
+        {
+          heading: "Moving Services",
+          paragraphs: [
+            "Taskers help with every stage of your move: packing, loading, transporting, unloading, and unpacking. Book help for the whole job or just the parts you need.",
+            "For bigger moves, truck-assisted moving is available. Taskers work with you to ensure everything arrives safely.",
+          ],
+        },
+        {
+          heading: "Full range of moving help",
+          paragraphs: [],
+          list: [
+            { label: "Help Moving:", text: "Muscle for loading and unloading your truck or van." },
+            { label: "Truck Assisted Moving:", text: "Tasker brings a vehicle for a full door-to-door move." },
+            { label: "Packing & Unpacking:", text: "Careful packing with materials to protect your belongings." },
+            { label: "Heavy Lifting:", text: "Pianos, safes, appliances, and any oversized items." },
+            { label: "Junk Pickup:", text: "Clear out old furniture, appliances, and clutter." },
+            { label: "Furniture Movers:", text: "Rearrange furniture within your home or office." },
+            { label: "Couch & Mattress Removal:", text: "Fast, responsible disposal or donation drop-off." },
+            { label: "Storage Unit Moving:", text: "Move in or out of storage with ease." },
+            { label: "In-Home Furniture Movers:", text: "Rearrange any room without the heavy lifting." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for Moving?",
+          paragraphs: [
+            "Our Taskers are reviewed by real customers and experienced with moves of all sizes. Compare hourly rates and book in minutes.",
+            "Same-day and next-day availability means you can get moving help even on short notice.",
+          ],
+        },
+      ],
+    },
+  },
+  "IKEA Services": {
+    id: "ikea-services",
+    emoji: "🏢",
+    title: "IKEA Services",
+    category: "IKEA Services",
+    tagline: "Hire a Tasker for all your IKEA needs — assembly, mounting, installation & organisation.",
+    heroGradient: "linear-gradient(150deg, #003F88 0%, #0057B7 50%, #006FD6 100%)",
+    accentBg: "linear-gradient(135deg, #e8f0ff 0%, #c0d4ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Skip the stress of flat-pack furniture. Our Taskers are experts with every IKEA range — from MALM beds to KALLAX shelving — and will have everything assembled and looking perfect.",
+      sections: [
+        {
+          heading: "IKEA Assembly & Installation",
+          paragraphs: [
+            "Taskers are familiar with popular IKEA collections like MALM, KALLAX, HEMNES, PAX, BILLY, and BESTA. Whatever you order, they'll put it together correctly and efficiently.",
+            "They bring all the tools needed and can handle instructions in any language — so you don't need to figure out a single diagram.",
+          ],
+        },
+        {
+          heading: "What IKEA services do we offer?",
+          paragraphs: [],
+          list: [
+            { label: "Furniture Assembly:", text: "Beds, wardrobes, desks, sofas, tables, shelving — any IKEA product." },
+            { label: "Light Installation:", text: "Install IKEA light fixtures, smart bulbs, and pendant lights." },
+            { label: "Furniture Removal:", text: "Remove and dispose of old furniture before your new pieces arrive." },
+            { label: "Smart Home Installation:", text: "Set up IKEA Tradfri smart home devices and smart storage." },
+            { label: "Organisation:", text: "Set up PAX wardrobes, KALLAX inserts, and storage systems." },
+            { label: "General Mounting:", text: "Wall mount IKEA mirrors, shelves, and cabinets securely." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for IKEA?",
+          paragraphs: [
+            "Our Taskers have assembled hundreds of IKEA products and know every quirk. They work quickly, accurately, and clean up when done.",
+            "Book same-day or schedule around your IKEA delivery — flexible timing to suit you.",
+          ],
+        },
+      ],
+    },
+  },
+  "Office Services": {
+    id: "office-services",
+    emoji: "🏢",
+    title: "Office Services",
+    category: "Office Services",
+    tagline: "Hire a Tasker to help around the office — cleaning, setup, moving, tech & more.",
+    heroGradient: "linear-gradient(150deg, #1a2a3a 0%, #2a4a6e 50%, #3a6a9a 100%)",
+    accentBg: "linear-gradient(135deg, #eaf4ff 0%, #c0dcf8 100%)",
+    catId: "other",
+    body: {
+      intro: "Keep your office running smoothly. From regular cleaning and furniture assembly to tech setup and office moves, UstayaBirak Taskers are ready to help your workplace look and work its best.",
+      sections: [
+        {
+          heading: "Office Services",
+          paragraphs: [
+            "Our Taskers handle all types of office tasks — whether you need a one-off deep clean before a client visit or ongoing weekly help keeping the space tidy.",
+            "For office moves and reconfigurations, Taskers can disassemble, move, and reassemble workstations, desks, and storage units.",
+          ],
+        },
+        {
+          heading: "What office tasks can Taskers help with?",
+          paragraphs: [],
+          list: [
+            { label: "Office Cleaning:", text: "Regular or deep cleaning of desks, floors, kitchens, and bathrooms." },
+            { label: "Office Tech Setup:", text: "Computer monitors, printers, cabling, and peripherals." },
+            { label: "Office Movers:", text: "Pack, move, and set up your office in the new location." },
+            { label: "Office Supply & Snack Delivery:", text: "Regular restocking of stationery, coffee, and kitchen essentials." },
+            { label: "Office Furniture Assembly:", text: "Desks, chairs, storage units, and shelving systems." },
+            { label: "Office Setup & Organisation:", text: "Cable management, filing systems, and storage optimisation." },
+            { label: "Office Interior Design:", text: "Advise on layout, plants, and creating a productive workspace." },
+            { label: "Office Mounting:", text: "Whiteboards, TVs, display screens, and signage." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for Office Services?",
+          paragraphs: [
+            "Flexible bookings — early morning, evenings, or weekends so your operations aren't disrupted.",
+            "All Taskers are background-checked and experienced. You can book recurring help or a one-time job.",
+          ],
+        },
+      ],
+    },
+  },
+  "Baby Prep": {
+    id: "baby-prep",
+    emoji: "👶",
+    title: "Baby Prep",
+    category: "Baby Prep",
+    tagline: "Set up the nursery, childproof your home, and get ready for your new arrival with a trusted Tasker.",
+    heroGradient: "linear-gradient(150deg, #a04a80 0%, #c870a8 50%, #e890c8 100%)",
+    accentBg: "linear-gradient(135deg, #fff0f8 0%, #ffd8f0 100%)",
+    catId: "other",
+    body: {
+      intro: "Getting ready for a new baby is exciting — and overwhelming. Let a Tasker take care of the practical side so you can focus on the fun parts.",
+      sections: [
+        {
+          heading: "Baby Prep Services",
+          paragraphs: [
+            "Taskers help you get your home ready for your new arrival: assembling nursery furniture, installing safety gates, baby-proofing every room, and even organising the nursery.",
+            "Whether your due date is weeks away or days away, we can get a Tasker to you quickly.",
+          ],
+        },
+        {
+          heading: "How can we help you prepare?",
+          paragraphs: [],
+          list: [
+            { label: "Baby Proofing:", text: "Safety gates, cabinet locks, outlet covers, corner guards, and anchoring furniture." },
+            { label: "Nursery Assembly:", text: "Cots, changing tables, wardrobes, shelves, and rocking chairs." },
+            { label: "Organise a Room:", text: "Set up nursery storage, organise baby clothes, and create a functional space." },
+            { label: "Smart Home Installation:", text: "Baby monitors, smart locks, and automated lighting for peace of mind." },
+            { label: "Painting:", text: "Paint the nursery in your chosen colours with safe, low-VOC paint." },
+            { label: "Shopping & Delivery:", text: "Pick up last-minute essentials — formula, nappies, and baby supplies." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for Baby Prep?",
+          paragraphs: [
+            "Every Tasker is background-checked. We understand how important trust is when preparing your home for a new family member.",
+            "Book quickly and flexibly — even same-day for urgent jobs before your due date.",
+          ],
+        },
+      ],
+    },
+  },
+  "Holidays": {
+    id: "holidays",
+    emoji: "🎁",
+    title: "Holiday Help",
+    category: "Holidays",
+    tagline: "Gift wrapping, Christmas lights, tree delivery, holiday decorating — let a Tasker make the season magical.",
+    heroGradient: "linear-gradient(150deg, #8B1a1a 0%, #c03030 50%, #e05050 100%)",
+    accentBg: "linear-gradient(135deg, #fff0f0 0%, #ffd0cc 100%)",
+    catId: "other",
+    body: {
+      intro: "The holiday season is meant to be enjoyed — not spent untangling lights or fighting with wrapping paper. Let a Tasker handle the decorating, delivering, and clearing up so you can focus on the festive fun.",
+      sections: [
+        {
+          heading: "Holiday Services",
+          paragraphs: [
+            "Whether you want your home to look like a winter wonderland or just need a hand with the heavy lifting, our Taskers are here to help every step of the holiday season.",
+            "From hanging outdoor lights to gift wrapping, Taskers bring the skills and enthusiasm to make your holidays stress-free.",
+          ],
+        },
+        {
+          heading: "Holiday tasks we can help with",
+          paragraphs: [],
+          list: [
+            { label: "Gift Wrapping:", text: "Beautiful, professional wrapping for any number of gifts." },
+            { label: "Hang Christmas Lights:", text: "Indoor and outdoor lights hung safely and neatly." },
+            { label: "Christmas Tree Delivery:", text: "Pick up and deliver your fresh or artificial tree." },
+            { label: "Holiday Decorating:", text: "Full home decoration — mantelpiece, table settings, outdoor displays." },
+            { label: "Party Cleaning:", text: "Before and after party clean-up so you don't have to." },
+            { label: "Toy Assembly Service:", text: "Build gifts before the big day — no surprises on Christmas morning." },
+            { label: "Christmas Tree Removal:", text: "Take down, pack up, and dispose of your tree after the season." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for the Holidays?",
+          paragraphs: [
+            "Book in advance and lock in your preferred date — holiday slots fill up fast.",
+            "All Taskers are reviewed and reliable. No last-minute cancellations ruining your plans.",
+          ],
+        },
+      ],
+    },
+  },
+  "Winter Tasks": {
+    id: "winter-tasks",
+    emoji: "❄️",
+    title: "Winter Tasks",
+    category: "Winter Tasks",
+    tagline: "Get help with winter tasks — snow removal, winterization, pipe insulation, and more.",
+    heroGradient: "linear-gradient(150deg, #1a3a5a 0%, #2a5a8a 50%, #3a7abf 100%)",
+    accentBg: "linear-gradient(135deg, #eaf4ff 0%, #c0dcff 100%)",
+    catId: "other",
+    body: {
+      intro: "Winter brings its own set of challenges. Our Taskers are ready to clear snow, winterise your home, service your heating, and make sure you're safe and warm all season long.",
+      sections: [
+        {
+          heading: "Winter Task Services",
+          paragraphs: [
+            "From first snowfall to the last frost, Taskers handle every seasonal task so you stay comfortable, safe, and prepared.",
+            "Book recurring snow removal, one-off pipe insulation before a cold snap, or anything in between.",
+          ],
+        },
+        {
+          heading: "Winter tasks Taskers can handle",
+          paragraphs: [],
+          list: [
+            { label: "Snow Removal:", text: "Driveways, pathways, steps, and rooftops cleared safely." },
+            { label: "Sidewalk Salting:", text: "Ice prevention and de-icing for safety." },
+            { label: "Window Winterization:", text: "Seal draughts, add insulating film, and weatherstrip windows." },
+            { label: "AC Winterization:", text: "Cover and protect AC units from frost and moisture damage." },
+            { label: "Pipe Insulation:", text: "Insulate exposed pipes to prevent freezing and bursting." },
+            { label: "Storm Door Installation:", text: "Add a storm door for extra insulation and weather protection." },
+            { label: "Water Heater Maintenance:", text: "Flush and service your water heater before cold weather hits." },
+            { label: "Winter Yardwork:", text: "Cut back plants, mulch beds, and prepare your garden for winter." },
+            { label: "Winter Deck Maintenance:", text: "Seal and protect decking from moisture and frost damage." },
+            { label: "Christmas Tree Removal:", text: "Take down and dispose of trees after the holidays." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for Winter Tasks?",
+          paragraphs: [
+            "Book recurring snow removal and never worry about shovelling again. Taskers show up reliably — even in bad weather.",
+            "One-off jobs or regular seasonal help — book exactly what you need.",
+          ],
+        },
+      ],
+    },
+  },
+  "Personal Assistant": {
+    id: "personal-assistant",
+    emoji: "🙋",
+    title: "Personal Assistant",
+    category: "Personal Assistant",
+    tagline: "Hire a Tasker to be your personal assistant — errands, organisation, admin & more on an hourly or ongoing basis.",
+    heroGradient: "linear-gradient(150deg, #3a1a6e 0%, #6a2aa8 50%, #9a4ae0 100%)",
+    accentBg: "linear-gradient(135deg, #f4f0ff 0%, #ddd0ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Busy schedule? A personal assistant Tasker takes the load off. Whether you need ongoing weekly support or help with a one-off project, we have organised, reliable Taskers ready.",
+      sections: [
+        {
+          heading: "Personal Assistant Services",
+          paragraphs: [
+            "Think of your Tasker as a trusted right-hand person — someone who handles the practical side of your life so you have more time for what matters.",
+            "From running errands and organising your home to scheduling and light admin, personal assistant Taskers are flexible and professional.",
+          ],
+        },
+        {
+          heading: "What can a Personal Assistant Tasker do?",
+          paragraphs: [],
+          list: [
+            { label: "Running Errands:", text: "Post office, pharmacy, dry cleaning, returns, and shopping." },
+            { label: "Wait in Line:", text: "Queue for permits, tickets, government offices, and appointments." },
+            { label: "Home Organisation:", text: "Declutter and organise any room, cupboard, or garage." },
+            { label: "Closet Organisation:", text: "Sort, categorise, and create a wardrobe system that works for you." },
+            { label: "Interior Design:", text: "Advice on layout, styling, and sourcing pieces to refresh your space." },
+            { label: "Virtual Assistant:", text: "Email triage, calendar management, bookings, and admin support." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for a Personal Assistant?",
+          paragraphs: [
+            "Find a Tasker you click with and book them regularly — build a working relationship with someone who knows how you like things done.",
+            "Flexible hourly rates with no long-term contracts. Book for a few hours or set up a weekly arrangement.",
+          ],
+        },
+      ],
+    },
+  },
+  "Contactless Tasks": {
+    id: "contactless-tasks",
+    emoji: "📦",
+    title: "Contactless Tasks",
+    category: "Contactless Tasks",
+    tagline: "No-contact delivery, shopping & errands — get things done safely without any in-person interaction.",
+    heroGradient: "linear-gradient(150deg, #1a4a4a 0%, #2a7a7a 50%, #3aacac 100%)",
+    accentBg: "linear-gradient(135deg, #e8ffff 0%, #c0f0f0 100%)",
+    catId: "other",
+    body: {
+      intro: "Need help but prefer no direct contact? Our contactless Taskers handle deliveries, shopping, and errands while maintaining safe social distancing — leaving everything at your door.",
+      sections: [
+        {
+          heading: "Contactless Task Services",
+          paragraphs: [
+            "Taskers complete your errands and deliveries without requiring any in-person interaction. They communicate via the app and leave items at a designated spot.",
+            "Perfect for those who are health-conscious, busy, or simply prefer a hands-off experience.",
+          ],
+        },
+        {
+          heading: "Contactless tasks we offer",
+          paragraphs: [],
+          list: [
+            { label: "Contactless Delivery:", text: "Any item delivered and left at your door — no contact required." },
+            { label: "Prescription Pick-up & Delivery:", text: "Collect and deliver prescriptions from any pharmacy." },
+            { label: "Grocery Shopping & Delivery:", text: "Full grocery shop from your list, delivered contactlessly." },
+            { label: "Running Errands:", text: "Post office, returns, banking, and any local errand." },
+            { label: "Disinfecting Services:", text: "Sanitise high-touch surfaces in your home or office." },
+            { label: "Drop Off Donations:", text: "Take donated items to charity shops or collection points." },
+            { label: "Yard Work:", text: "Lawn and garden work completed while you stay inside." },
+          ],
+        },
+        {
+          heading: "Why choose UstayaBirak for Contactless Tasks?",
+          paragraphs: [
+            "All communications happen through the app — no need to open the door or interact in person.",
+            "Taskers are background-checked and reviewed. Trust that your errands are in safe hands.",
+          ],
+        },
+      ],
+    },
+  },
 };
