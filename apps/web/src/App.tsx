@@ -174,15 +174,16 @@ export default function App() {
       <nav className="navbar">
         <div className="navbar-inner">
           <a href="/" className="nav-logo">
-            <img src="/logo.png" alt="UstayaBirak" height={34} />
+            <img src="/logo.png" alt="UstayaBirak" height={52} />
           </a>
           <div className="nav-links">
             <a href="#services" className="nav-link">Services</a>
             <a href="#workers" className="nav-link">Workers</a>
+            <a href="#become-worker" className="nav-link">Become a Worker</a>
           </div>
           <div className="nav-auth">
             <button className="btn-ghost">Sign up / Log in</button>
-            <button className="btn-primary">Become a Worker</button>
+            <button className="btn-primary" onClick={() => document.getElementById('become-worker')?.scrollIntoView({ behavior: 'smooth' })}>Become a Worker</button>
           </div>
         </div>
       </nav>
@@ -304,6 +305,76 @@ export default function App() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="services-page-section" id="services-page">
+        <div className="services-page-inner">
+          <h2 className="services-page-title">What can we help with?</h2>
+          <p className="services-page-subtitle">Browse our most popular service categories</p>
+          <div className="services-grid">
+            {[
+              { emoji: "🔧", title: "Handyman", desc: "Door, cabinet, appliance & home repairs", subs: ["Door & Cabinet", "Appliance Install", "Home Repairs", "Light Carpentry", "Wall Repair"] },
+              { emoji: "🧹", title: "Cleaning", desc: "Taskers will make your home sparkle!", subs: ["House Cleaning", "Deep Cleaning", "Move-Out Clean", "Office Cleaning", "Carpet Cleaning"] },
+              { emoji: "🪑", title: "Furniture Assembly", desc: "Expert assembly for any furniture brand", subs: ["Furniture Assembly", "Desk Assembly", "Bed Assembly", "Bookshelf Assembly", "Wardrobe Assembly"] },
+              { emoji: "🖼️", title: "Mounting & Installation", desc: "TV mounting, shelves, blinds & more", subs: ["TV Mounting", "Install Shelves", "Ceiling Fan", "Hang Art & Decor", "General Mounting"] },
+              { emoji: "🚚", title: "Moving", desc: "From heavy lifting to full moves", subs: ["Help Moving", "Packing & Help", "Furniture Removal", "Heavy Lifting", "Junk Pickup"] },
+              { emoji: "🌿", title: "Yardwork", desc: "Lawn care, gardening & landscaping", subs: ["Lawn Mowing", "Gardening", "Weed Removal", "Gutter Cleaning", "Tree Trimming"] },
+              { emoji: "🛒", title: "Shopping & Delivery", desc: "Get anything from groceries to furniture", subs: ["Grocery Delivery", "Running Errands", "Contactless Delivery", "Pet Food Delivery", "Return Items"] },
+              { emoji: "💼", title: "Virtual & Online Tasks", desc: "Virtual assistance, research & more", subs: ["Virtual Assistant", "Organization", "Data Entry", "Computer Help", "Research"] },
+              { emoji: "🎨", title: "Painting", desc: "Interior, exterior & specialist finishes", subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"] },
+            ].map(({ emoji, title, desc, subs }) => (
+              <div className="service-category-card" key={title}>
+                <div className="service-card-emoji">{emoji}</div>
+                <div className="service-card-info">
+                  <h3 className="service-card-title">{title}</h3>
+                  <p className="service-card-desc">{desc}</p>
+                  <hr className="service-card-divider" />
+                  <ul className="service-card-subs">
+                    {subs.map(s => <li key={s}><a href="#workers" onClick={() => setActiveCat(title.toLowerCase().includes('clean') ? 'cleaning' : title.toLowerCase().includes('moving') ? 'moving' : title.toLowerCase().includes('paint') ? 'painting' : 'other')} className="service-sub-link">{s}</a></li>)}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="become-worker-section" id="become-worker">
+        <div className="become-worker-inner">
+          <div className="become-worker-text">
+            <h2 className="become-worker-title">Earn money your way</h2>
+            <p className="become-worker-subtitle">See how much you can make tasking on UstayaBirak</p>
+            <div className="become-worker-points">
+              <div className="bw-point"><span className="bw-point-icon">💰</span><div><strong>Set your own rates</strong><p>You decide how much to charge per hour for each task type.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📅</span><div><strong>Choose your schedule</strong><p>Work when it suits you — full time, part time, or weekends only.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">📍</span><div><strong>Work in your area</strong><p>Pick jobs near you and build a local client base.</p></div></div>
+              <div className="bw-point"><span className="bw-point-icon">⭐</span><div><strong>Build your reputation</strong><p>Get reviews, grow your profile, and become a top-rated worker.</p></div></div>
+            </div>
+            <button className="btn-primary btn-become-worker">Get started as a Worker</button>
+          </div>
+          <div className="become-worker-visual">
+            <div className="become-worker-card">
+              <div className="bw-card-header">Top earners this month</div>
+              {[
+                { name: "Aryan K.", cat: "Electrical", earn: "€3,200", rating: "4.9" },
+                { name: "Leila M.", cat: "Cleaning", earn: "€2,800", rating: "5.0" },
+                { name: "Deniz Y.", cat: "Moving", earn: "€2,450", rating: "4.8" },
+              ].map(w => (
+                <div className="bw-earner-row" key={w.name}>
+                  <div className="bw-earner-avatar">{w.name.charAt(0)}</div>
+                  <div className="bw-earner-info">
+                    <span className="bw-earner-name">{w.name}</span>
+                    <span className="bw-earner-cat">{w.cat}</span>
+                  </div>
+                  <div className="bw-earner-right">
+                    <span className="bw-earner-earn">{w.earn}</span>
+                    <span className="bw-earner-rating">★ {w.rating}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="stats-bar">
