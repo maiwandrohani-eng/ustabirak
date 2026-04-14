@@ -249,9 +249,9 @@ const STATIC_PAGES: Record<string, { title: string; sections: { heading: string;
   "__about": {
     title: "About Us",
     sections: [
-      { heading: "Our Story", body: "UstayaBirak was founded with a simple mission: make it easy for people in Turkey to get reliable help at home. We connect customers with vetted, skilled local workers — from electricians and cleaners to movers and handymen — all in one place." },
+      { heading: "Our Story", body: "UstaYolda was founded with a simple mission: make it easy for people in Turkey to get reliable help at home. We connect customers with vetted, skilled local workers — from electricians and cleaners to movers and handymen — all in one place." },
       { heading: "Our Mission", body: "We believe everyone deserves a well-maintained home without the stress of finding trustworthy help. By combining transparent pricing, real customer reviews, and rigorous background checks, we take the guesswork out of hiring." },
-      { heading: "How We Vet Our Workers", body: "Every worker on UstayaBirak goes through identity verification, background screening, and skills assessment before being approved. We continuously monitor ratings and reviews to ensure consistently high quality." },
+      { heading: "How We Vet Our Workers", body: "Every worker on UstaYolda goes through identity verification, background screening, and skills assessment before being approved. We continuously monitor ratings and reviews to ensure consistently high quality." },
       { heading: "Our Vision", body: "We're building Turkey's most trusted home services platform — one task at a time. From Istanbul to Ankara, Izmir to Antalya, our goal is to be the first place you turn whenever you need help around the house." },
     ],
   },
@@ -259,8 +259,8 @@ const STATIC_PAGES: Record<string, { title: string; sections: { heading: string;
     title: "Careers",
     sections: [
       { heading: "Join Our Team", body: "We're a fast-growing startup on a mission to transform how people get home tasks done in Turkey. We're always looking for talented, driven people to join us." },
-      { heading: "Open Roles", body: "🚀 Full Stack Engineer (Istanbul / Remote)\n🎨 Product Designer (Istanbul)\n📣 Growth & Marketing Manager (Istanbul)\n🤝 City Operations Manager (Multiple Cities)\n\nDon't see your role? Send a general application to careers@ustayabirak.com — we'd love to hear from you." },
-      { heading: "Why UstayaBirak?", body: "Competitive salary and equity. Flexible remote-friendly culture. Real impact from day one — you'll shape how millions of Turks get help at home. Generous leave, health insurance, and team off-sites." },
+      { heading: "Open Roles", body: "🚀 Full Stack Engineer (Istanbul / Remote)\n🎨 Product Designer (Istanbul)\n📣 Growth & Marketing Manager (Istanbul)\n🤝 City Operations Manager (Multiple Cities)\n\nDon't see your role? Send a general application to careers@ustayolda.com — we'd love to hear from you." },
+      { heading: "Why UstaYolda?", body: "Competitive salary and equity. Flexible remote-friendly culture. Real impact from day one — you'll shape how millions of Turks get help at home. Generous leave, health insurance, and team off-sites." },
     ],
   },
   "__blog": {
@@ -269,16 +269,16 @@ const STATIC_PAGES: Record<string, { title: string; sections: { heading: string;
       { heading: "5 Home Tasks You Should Never Put Off", body: "Leaky taps, loose door hinges, blocked gutters — small problems compound fast. Here's our guide to the five tasks every homeowner should tackle before they become expensive repairs." },
       { heading: "How to Find a Reliable Handyman in Istanbul", body: "With hundreds of handymen available, how do you choose? We break down what to look for: verifications, reviews, response time, and the questions you should always ask before booking." },
       { heading: "Spring Cleaning Checklist: Room by Room", body: "It's that time of year. Our room-by-room checklist covers everything from deep-cleaning kitchen appliances to decluttering wardrobes — plus tips on when to call in a professional." },
-      { heading: "Behind the App: How UstayaBirak Matches You with Workers", body: "Our matching algorithm considers location, availability, skills, and ratings to find you the best Tasker within minutes. Here's a peek under the hood at how it all works." },
+      { heading: "Behind the App: How UstaYolda Matches You with Workers", body: "Our matching algorithm considers location, availability, skills, and ratings to find you the best Tasker within minutes. Here's a peek under the hood at how it all works." },
     ],
   },
   "__terms": {
     title: "Terms & Privacy",
     sections: [
-      { heading: "Terms of Service", body: "By using UstayaBirak you agree to our terms. You must be 18 or older to book services. All bookings are subject to worker availability and platform approval. Payments are processed securely and refunds are handled per our cancellation policy." },
+      { heading: "Terms of Service", body: "By using UstaYolda you agree to our terms. You must be 18 or older to book services. All bookings are subject to worker availability and platform approval. Payments are processed securely and refunds are handled per our cancellation policy." },
       { heading: "Privacy Policy", body: "We collect only the data necessary to provide our service: your name, email, location, and booking history. We never sell your personal data to third parties. All data is stored securely and encrypted in transit." },
-      { heading: "Cookie Policy", body: "UstayaBirak uses essential cookies to keep you logged in and remember your preferences. We also use analytics cookies (with your consent) to improve the platform. You can manage cookie preferences in your browser settings." },
-      { heading: "Contact", body: "For questions about these policies, contact us at legal@ustayabirak.com or write to UstayaBirak Ltd., Levent, Istanbul, Turkey." },
+      { heading: "Cookie Policy", body: "UstaYolda uses essential cookies to keep you logged in and remember your preferences. We also use analytics cookies (with your consent) to improve the platform. You can manage cookie preferences in your browser settings." },
+      { heading: "Contact", body: "For questions about these policies, contact us at legal@ustayolda.com or write to UstaYolda Ltd., Levent, Istanbul, Turkey." },
     ],
   },
   "__help": {
@@ -288,7 +288,7 @@ const STATIC_PAGES: Record<string, { title: string; sections: { heading: string;
       { heading: "What if I need to cancel?", body: "You can cancel or reschedule up to 24 hours before your appointment at no charge. Cancellations within 24 hours may incur a small fee. Navigate to My Bookings in your account to manage your appointments." },
       { heading: "Is my payment secure?", body: "Yes. All payments are processed through our certified payment provider with bank-level encryption. We never store your card details on our servers." },
       { heading: "What is the Happiness Pledge?", body: "If you're not satisfied with a completed task, contact our support team within 72 hours and we'll work to make it right — either by sending another worker or issuing a refund." },
-      { heading: "How do I contact support?", body: "Email us at support@ustayabirak.com or use the in-app chat. Our support team is available 7 days a week, 08:00–22:00 Istanbul time." },
+      { heading: "How do I contact support?", body: "Email us at support@ustayolda.com or use the in-app chat. Our support team is available 7 days a week, 08:00–22:00 Istanbul time." },
     ],
   },
 };
@@ -341,7 +341,7 @@ export default function App() {
         customerId,
         category: apiCat,
         title: `${category.headline} - ${activeSub ?? category.subs[0]}`,
-        description: "Booked via UstayaBirak web app",
+        description: "Booked via UstaYolda web app",
         scheduledAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         amount: worker.hourlyPrice,
         location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" },
@@ -375,7 +375,7 @@ export default function App() {
         <nav className="navbar">
           <div className="navbar-inner">
             <button className="nav-logo-btn" onClick={() => setActivePage(null)} aria-label="Go to homepage">
-              <img src="/logo.png" alt="UstayaBirak" height={72} />
+              <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
               <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
@@ -412,7 +412,7 @@ export default function App() {
         <footer className="footer-main">
           <div className="footer-inner">
             <div className="footer-brand">
-              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <img src="/logo.png" alt="UstaYolda" height={38} />
               <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
             </div>
             <div className="footer-col">
@@ -439,7 +439,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -468,7 +468,7 @@ export default function App() {
         <nav className="navbar">
           <div className="navbar-inner">
             <button className="nav-logo-btn" onClick={() => setActivePage(null)} aria-label="Go to homepage">
-              <img src="/logo.png" alt="UstayaBirak" height={72} />
+              <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
               <button className="nav-link nav-link-btn" style={{ color: "var(--primary)", fontWeight: 700 }}>Services</button>
@@ -547,7 +547,7 @@ export default function App() {
         <footer className="footer-main">
           <div className="footer-inner">
             <div className="footer-brand">
-              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <img src="/logo.png" alt="UstaYolda" height={38} />
               <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
             </div>
             <div className="footer-col">
@@ -574,7 +574,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -599,7 +599,7 @@ export default function App() {
         <nav className="navbar">
           <div className="navbar-inner">
             <button className="nav-logo-btn" onClick={() => setActivePage(null)} aria-label="Go to homepage">
-              <img src="/logo.png" alt="UstayaBirak" height={72} />
+              <img src="/logo.png" alt="UstaYolda" height={72} />
             </button>
             <div className="nav-links">
               <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
@@ -691,7 +691,7 @@ export default function App() {
         <footer className="footer-main">
           <div className="footer-inner">
             <div className="footer-brand">
-              <img src="/logo.png" alt="UstayaBirak" height={38} />
+              <img src="/logo.png" alt="UstaYolda" height={38} />
               <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
             </div>
             <div className="footer-col">
@@ -718,7 +718,7 @@ export default function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+            <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
             <div className="footer-social">
               <a href="#" aria-label="Facebook">f</a>
               <a href="#" aria-label="Instagram">ig</a>
@@ -748,7 +748,7 @@ export default function App() {
       <nav className="navbar">
         <div className="navbar-inner">
           <a href="/" className="nav-logo">
-            <img src="/logo.png" alt="UstayaBirak" height={72} />
+            <img src="/logo.png" alt="UstaYolda" height={72} />
           </a>
           <div className="nav-links">
             <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
@@ -907,7 +907,7 @@ export default function App() {
       {/* ── Customer Reviews ── */}
       <section className="reviews-section">
         <div className="reviews-inner">
-          <h2 className="reviews-heading">See what happy customers are saying about UstayaBirak</h2>
+          <h2 className="reviews-heading">See what happy customers are saying about UstaYolda</h2>
           <div className="reviews-grid">
             {REVIEWS.map((r) => (
               <div className="review-card" key={r.name}>
@@ -1078,7 +1078,7 @@ export default function App() {
         <div className="become-worker-inner">
           <div className="become-worker-text">
             <h2 className="become-worker-title">Earn money your way</h2>
-            <p className="become-worker-subtitle">See how much you can make tasking on UstayaBirak</p>
+            <p className="become-worker-subtitle">See how much you can make tasking on UstaYolda</p>
             <div className="become-worker-points">
               <div className="bw-point"><span className="bw-point-icon">💰</span><div><strong>Set your own rates</strong><p>You decide how much to charge per hour for each task type.</p></div></div>
               <div className="bw-point"><span className="bw-point-icon">📅</span><div><strong>Choose your schedule</strong><p>Work when it suits you — full time, part time, or weekends only.</p></div></div>
@@ -1116,7 +1116,7 @@ export default function App() {
       <footer className="footer-main">
         <div className="footer-inner">
           <div className="footer-brand">
-            <img src="/logo.png" alt="UstayaBirak" height={38} />
+            <img src="/logo.png" alt="UstaYolda" height={38} />
             <p>Book trusted local workers for any home task — fast, affordable, and guaranteed.</p>
           </div>
           <div className="footer-col">
@@ -1143,7 +1143,7 @@ export default function App() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+          <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
           <div className="footer-social">
             <a href="#" aria-label="Facebook">f</a>
             <a href="#" aria-label="Instagram">ig</a>

@@ -1,8 +1,8 @@
 {
-  "name": "ustayabirak",
+  "name": "ustayolda",
   "version": "1.0.0",
   "private": true,
-  "description": "UstayaBirak on-demand services network monorepo",
+  "description": "UstaYolda on-demand services network monorepo",
   "workspaces": [
     "apps/*",
     "packages/*"

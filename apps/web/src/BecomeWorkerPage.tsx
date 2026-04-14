@@ -175,7 +175,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         <div className="bw-success-page">
           <div className="bw-success-card">
             <div className="bw-success-icon">🎉</div>
-            <h1 className="bw-success-title">Welcome to UstayaBirak, {success.name}!</h1>
+            <h1 className="bw-success-title">Welcome to UstaYolda, {success.name}!</h1>
             <p className="bw-success-subtitle">Your worker profile has been created. Our team will review and verify your account — you'll get an email within 24 hours.</p>
             <div className="bw-success-steps">
               <div className="bw-success-step"><span>✅</span><p>Profile submitted</p></div>
@@ -649,7 +649,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         {step < 4 && (
           <div className="bw-reg-side">
             <div className="bw-side-why">
-              <h3 className="bw-side-why-title">Why join UstayaBirak?</h3>
+              <h3 className="bw-side-why-title">Why join UstaYolda?</h3>
               <div className="bw-side-points">
                 {[
                   { icon: "💰", title: "Set your own rates", text: "Charge what you're worth. Adjust any time." },
@@ -703,7 +703,7 @@ function Navbar({ onBack }: { onBack: () => void }) {
       <nav className="navbar">
         <div className="navbar-inner">
           <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
-            <img src="/logo.png" alt="UstayaBirak" height={52} />
+            <img src="/logo.png" alt="UstaYolda" height={52} />
           </button>
           <div className="nav-links">
             <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
@@ -726,9 +726,9 @@ function Footer({ onBack }: { onBack: () => void }) {
   return (
     <footer className="footer">
       <button className="nav-logo-btn" onClick={onBack}>
-        <img src="/logo.png" alt="UstayaBirak" height={26} />
+        <img src="/logo.png" alt="UstaYolda" height={26} />
       </button>
-      <p>© {new Date().getFullYear()} UstayaBirak.com — All rights reserved.</p>
+      <p>© {new Date().getFullYear()} UstaYolda.com — All rights reserved.</p>
     </footer>
   );
 }

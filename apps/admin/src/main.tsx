@@ -33,7 +33,7 @@ function App() {
   return (
     <main className="layout">
       <header>
-        <img src="/logo.png" alt="UstayaBirak" />
+        <img src="/logo.png" alt="UstaYolda" />
         <div>
           <h1>Ustaya<span>Birak</span> Admin</h1>
           <p>Real-time operations, trust, and marketplace performance control center.</p>

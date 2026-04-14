@@ -50,7 +50,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Handyman work?",
+          heading: "Why choose UstaYolda for Handyman work?",
           paragraphs: [
             "Every Tasker is vetted and reviewed — you can see their ratings, experience, and hourly rate before booking. No surprises.",
             "Flexible scheduling means you can book for today, tomorrow, or whenever it suits you best.",
@@ -89,7 +89,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Cleaning?",
+          heading: "Why choose UstaYolda for Cleaning?",
           paragraphs: [
             "All Taskers are background-checked and reviewed. You pick your preferred Tasker and build a relationship with a cleaner you trust.",
             "Eco-friendly products are available on request — great for families with children or pets.",
@@ -135,7 +135,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for furniture assembly?",
+          heading: "Why choose UstaYolda for furniture assembly?",
           paragraphs: [
             "Taskers are experienced, efficient, and reviewed by real customers. You'll find the perfect fit for your project and schedule.",
             "Flexible booking means you can get assembly help the same day — perfect for new home deliveries.",
@@ -159,7 +159,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
         {
           heading: "Mounting & Installation Services",
           paragraphs: [
-            "From TV wall mounts to ceiling fans and everything in between, UstayaBirak Taskers handle all types of mounting and installation jobs.",
+            "From TV wall mounts to ceiling fans and everything in between, UstaYolda Taskers handle all types of mounting and installation jobs.",
             "They use professional-grade hardware and anchors to ensure everything is secure and level — no guessing, no damage.",
           ],
         },
@@ -175,7 +175,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Mounting?",
+          heading: "Why choose UstaYolda for Mounting?",
           paragraphs: [
             "Every Tasker is reviewed and brings professional tools — drill bits, stud finders, levels, and anchors. No need to buy or borrow anything.",
             "Get same-day availability for urgent installs, or schedule in advance for planned renovations.",
@@ -215,7 +215,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Moving?",
+          heading: "Why choose UstaYolda for Moving?",
           paragraphs: [
             "Our Taskers are reviewed by real customers and experienced with moves of all sizes. You can read reviews, compare hourly rates, and book in minutes.",
             "Same-day and next-day availability means you can get moving help even on short notice.",
@@ -256,7 +256,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Yardwork?",
+          heading: "Why choose UstaYolda for Yardwork?",
           paragraphs: [
             "Book one-time help or set up a regular schedule — weekly, bi-weekly, or monthly. Taskers bring their own tools and leave your yard looking great.",
             "All Taskers are reviewed and rated by real customers. Find someone you trust and keep booking them.",
@@ -296,7 +296,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Shopping & Delivery?",
+          heading: "Why choose UstaYolda for Shopping & Delivery?",
           paragraphs: [
             "Taskers communicate in real time and can substitute items with your approval — just like having a trusted friend do your shopping.",
             "All Taskers are background-checked and reviewed. You can trust them with your home and your errands.",
@@ -336,7 +336,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Virtual Tasks?",
+          heading: "Why choose UstaYolda for Virtual Tasks?",
           paragraphs: [
             "Our virtual Taskers are skilled professionals available on-demand. No long-term commitment — just pay for the hours you need.",
             "Communicate via chat, email, or video call. Taskers are responsive and professional from the first message.",
@@ -383,7 +383,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Painting?",
+          heading: "Why choose UstaYolda for Painting?",
           paragraphs: [
             "Every Tasker brings professional-grade tools, brushes, and rollers. They prep carefully, paint precisely, and clean up completely.",
             "Read verified reviews from real homeowners and see photos of previous work before you book.",
@@ -402,7 +402,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
     accentBg: "linear-gradient(135deg, #f0f0ff 0%, #d8d8ff 100%)",
     catId: "other",
     body: {
-      intro: "Not sure where to start? These are the most-booked services on UstayaBirak — trusted by thousands of customers every week. Whatever's on your list, a Tasker can handle it.",
+      intro: "Not sure where to start? These are the most-booked services on UstaYolda — trusted by thousands of customers every week. Whatever's on your list, a Tasker can handle it.",
       sections: [
         {
           heading: "Most Popular Services",
@@ -427,7 +427,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak?",
+          heading: "Why choose UstaYolda?",
           paragraphs: [
             "Transparent pricing, verified workers, and flexible scheduling — book any task in under 2 minutes.",
             "Not happy? Our satisfaction guarantee means we'll make it right.",
@@ -441,7 +441,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
     emoji: "🚚",
     title: "Moving Services",
     category: "Moving Services",
-    tagline: "From heavy lifting to unpacking and organising — make your move stress-free with UstayaBirak.",
+    tagline: "From heavy lifting to unpacking and organising — make your move stress-free with UstaYolda.",
     heroGradient: "linear-gradient(150deg, #2d4a1a 0%, #4a7a2a 50%, #6aa83a 100%)",
     accentBg: "linear-gradient(135deg, #f0fff0 0%, #c8f0be 100%)",
     catId: "moving",
@@ -471,7 +471,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Moving?",
+          heading: "Why choose UstaYolda for Moving?",
           paragraphs: [
             "Our Taskers are reviewed by real customers and experienced with moves of all sizes. Compare hourly rates and book in minutes.",
             "Same-day and next-day availability means you can get moving help even on short notice.",
@@ -512,7 +512,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for IKEA?",
+          heading: "Why choose UstaYolda for IKEA?",
           paragraphs: [
             "Our Taskers have assembled hundreds of IKEA products and know every quirk. They work quickly, accurately, and clean up when done.",
             "Book same-day or schedule around your IKEA delivery — flexible timing to suit you.",
@@ -531,7 +531,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
     accentBg: "linear-gradient(135deg, #eaf4ff 0%, #c0dcf8 100%)",
     catId: "other",
     body: {
-      intro: "Keep your office running smoothly. From regular cleaning and furniture assembly to tech setup and office moves, UstayaBirak Taskers are ready to help your workplace look and work its best.",
+      intro: "Keep your office running smoothly. From regular cleaning and furniture assembly to tech setup and office moves, UstaYolda Taskers are ready to help your workplace look and work its best.",
       sections: [
         {
           heading: "Office Services",
@@ -555,7 +555,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Office Services?",
+          heading: "Why choose UstaYolda for Office Services?",
           paragraphs: [
             "Flexible bookings — early morning, evenings, or weekends so your operations aren't disrupted.",
             "All Taskers are background-checked and experienced. You can book recurring help or a one-time job.",
@@ -596,7 +596,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Baby Prep?",
+          heading: "Why choose UstaYolda for Baby Prep?",
           paragraphs: [
             "Every Tasker is background-checked. We understand how important trust is when preparing your home for a new family member.",
             "Book quickly and flexibly — even same-day for urgent jobs before your due date.",
@@ -638,7 +638,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for the Holidays?",
+          heading: "Why choose UstaYolda for the Holidays?",
           paragraphs: [
             "Book in advance and lock in your preferred date — holiday slots fill up fast.",
             "All Taskers are reviewed and reliable. No last-minute cancellations ruining your plans.",
@@ -683,7 +683,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Winter Tasks?",
+          heading: "Why choose UstaYolda for Winter Tasks?",
           paragraphs: [
             "Book recurring snow removal and never worry about shovelling again. Taskers show up reliably — even in bad weather.",
             "One-off jobs or regular seasonal help — book exactly what you need.",
@@ -724,7 +724,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for a Personal Assistant?",
+          heading: "Why choose UstaYolda for a Personal Assistant?",
           paragraphs: [
             "Find a Tasker you click with and book them regularly — build a working relationship with someone who knows how you like things done.",
             "Flexible hourly rates with no long-term contracts. Book for a few hours or set up a weekly arrangement.",
@@ -766,7 +766,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
           ],
         },
         {
-          heading: "Why choose UstayaBirak for Contactless Tasks?",
+          heading: "Why choose UstaYolda for Contactless Tasks?",
           paragraphs: [
             "All communications happen through the app — no need to open the door or interact in person.",
             "Taskers are background-checked and reviewed. Trust that your errands are in safe hands.",

@@ -51,7 +51,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
         customerId: "c1",
         category: detail.catId,
         title: detail.title,
-        description: `Booked via UstayaBirak — ${detail.title}`,
+        description: `Booked via UstaYolda — ${detail.title}`,
         scheduledAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
         amount: worker.hourlyPrice,
         location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" },
@@ -69,7 +69,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       <nav className="navbar">
         <div className="navbar-inner">
           <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
-            <img src="/logo.png" alt="UstayaBirak" height={52} />
+            <img src="/logo.png" alt="UstaYolda" height={52} />
           </button>
           <div className="nav-links">
             <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
@@ -244,9 +244,9 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
 
       <footer className="footer">
         <button className="nav-logo-btn" onClick={onBack}>
-          <img src="/logo.png" alt="UstayaBirak" height={26} />
+          <img src="/logo.png" alt="UstaYolda" height={26} />
         </button>
-        <p>&#169; {new Date().getFullYear()} UstayaBirak.com &#8212; All rights reserved.</p>
+        <p>&#169; {new Date().getFullYear()} UstaYolda.com &#8212; All rights reserved.</p>
       </footer>
 
       {showAuth && (

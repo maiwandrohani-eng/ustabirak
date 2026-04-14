@@ -1,6 +1,6 @@
-# UstayaBirak Platform
+# UstaYolda Platform
 
-UstayaBirak is a mobile-first, real-time on-demand services marketplace that connects workers and customers across instant and scheduled bookings.
+UstaYolda is a mobile-first, real-time on-demand services marketplace that connects workers and customers across instant and scheduled bookings.
 
 ## What is included
 

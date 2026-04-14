@@ -61,7 +61,7 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
         <button className="auth-close" onClick={onClose} aria-label="Close">✕</button>
 
         <div className="auth-logo">
-          <img src="/logo.png" alt="UstayaBirak" height={44} />
+          <img src="/logo.png" alt="UstaYolda" height={44} />
         </div>
 
         {/* Tabs */}
@@ -130,7 +130,7 @@ export default function AuthModal({ onClose, onSuccess }: Props) {
 
         <p className="auth-switch">
           {mode === "signin" ? (
-            <>New to UstayaBirak?{" "}
+            <>New to UstaYolda?{" "}
               <button className="auth-switch-btn" onClick={() => { setMode("signup"); setError(""); }}>
                 Create an account
               </button>
