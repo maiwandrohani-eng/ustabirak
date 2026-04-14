@@ -452,6 +452,7 @@ export default function App() {
 
         <section className="services-page-section">
           <div className="services-page-inner">
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
             <h2 className="services-page-title">What can we help with?</h2>
             <p className="services-page-subtitle">Browse our most popular service categories</p>
             <div className="services-grid">
@@ -543,6 +544,7 @@ export default function App() {
 
         <section className="workers-page-hero">
           <div className="workers-page-inner">
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
             <h1 className="workers-page-title">Find trusted Workers</h1>
             <p className="workers-page-subtitle">Browse by category and book a verified worker today</p>
             <div className="category-tabs" style={{ justifyContent: "center", marginTop: "1.5rem" }}>
