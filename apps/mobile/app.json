@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "UstayaBirak",
+    "slug": "ustayabirak",
+    "scheme": "ustayabirak",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#050505"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#050505"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

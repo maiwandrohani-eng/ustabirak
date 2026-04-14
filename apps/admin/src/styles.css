@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  background: #050505;
+  color: #f5f5f5;
+}
+
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 span {
+  color: #ff533f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: linear-gradient(150deg, #151515, #0e0e0e);
+  border: 1px solid #ffffff1f;
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+ul {
+  padding-left: 1.1rem;
+}
+
+pre {
+  background: #ffffff0a;
+  padding: 0.6rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
