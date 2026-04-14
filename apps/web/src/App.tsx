@@ -3,6 +3,7 @@ import type { WorkerProfile } from "@ustaya/shared";
 import { apiGet, apiPost } from "./api";
 import { socket } from "./socket";
 import ServiceDetailPage from "./ServiceDetailPage";
+import BecomeWorkerPage from "./BecomeWorkerPage";
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -171,6 +172,10 @@ export default function App() {
       )
     : workers;
 
+  if (activePage === "__become-worker") {
+    return <BecomeWorkerPage onBack={() => setActivePage(null)} />;
+  }
+
   if (activePage) {
     return <ServiceDetailPage serviceId={activePage} onBack={() => setActivePage(null)} />;
   }
@@ -189,7 +194,7 @@ export default function App() {
           </div>
           <div className="nav-auth">
             <button className="btn-ghost">Sign up / Log in</button>
-            <button className="btn-primary" onClick={() => document.getElementById('become-worker')?.scrollIntoView({ behavior: 'smooth' })}>Become a Worker</button>
+            <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
           </div>
         </div>
       </nav>
@@ -372,7 +377,7 @@ export default function App() {
               <div className="bw-point"><span className="bw-point-icon">📍</span><div><strong>Work in your area</strong><p>Pick jobs near you and build a local client base.</p></div></div>
               <div className="bw-point"><span className="bw-point-icon">⭐</span><div><strong>Build your reputation</strong><p>Get reviews, grow your profile, and become a top-rated worker.</p></div></div>
             </div>
-            <button className="btn-primary btn-become-worker">Get started as a Worker</button>
+            <button className="btn-primary btn-become-worker" onClick={() => setActivePage("__become-worker")}>Get started as a Worker</button>
           </div>
           <div className="become-worker-visual">
             <div className="become-worker-card">

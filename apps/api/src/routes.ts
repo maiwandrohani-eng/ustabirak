@@ -30,14 +30,19 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       .object({
         role: z.enum(["customer", "worker"]),
         fullName: z.string().min(2),
+        email: z.string().email().optional(),
+        phone: z.string().optional(),
         city: z.string(),
         district: z.string().optional(),
+        bio: z.string().optional(),
         categories: z
           .array(
             z.enum(["electrician", "plumber", "cleaning", "painting", "ac-repair", "moving", "other"])
           )
           .optional(),
+        experienceYears: z.number().optional(),
         iban: z.string().optional(),
+        hourlyPrice: z.number().positive().optional(),
         serviceRadiusKm: z.number().optional()
       })
       .parse(req.body);
@@ -60,9 +65,9 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     const worker = {
       id: makeId("w"),
       fullName: body.fullName,
-      bio: "New worker profile",
+      bio: body.bio ?? "New worker profile",
       categories: body.categories ?? ["other"],
-      experienceYears: 0,
+      experienceYears: body.experienceYears ?? 0,
       rating: 5,
       reviewCount: 0,
       completionRate: 1,
@@ -77,7 +82,7 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
         district: body.district
       },
       availability: [],
-      hourlyPrice: 20
+      hourlyPrice: body.hourlyPrice ?? 20
     };
     db.workers.push(worker);
     return { user: worker, token: `dev-token-${worker.id}` };
