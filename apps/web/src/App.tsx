@@ -245,6 +245,54 @@ const SEARCH_INDEX: { label: string; page: string }[] = [
   { label: "Christmas Tree Delivery", page: "Holidays" },
 ];
 
+const STATIC_PAGES: Record<string, { title: string; sections: { heading: string; body: string }[] }> = {
+  "__about": {
+    title: "About Us",
+    sections: [
+      { heading: "Our Story", body: "UstayaBirak was founded with a simple mission: make it easy for people in Turkey to get reliable help at home. We connect customers with vetted, skilled local workers — from electricians and cleaners to movers and handymen — all in one place." },
+      { heading: "Our Mission", body: "We believe everyone deserves a well-maintained home without the stress of finding trustworthy help. By combining transparent pricing, real customer reviews, and rigorous background checks, we take the guesswork out of hiring." },
+      { heading: "How We Vet Our Workers", body: "Every worker on UstayaBirak goes through identity verification, background screening, and skills assessment before being approved. We continuously monitor ratings and reviews to ensure consistently high quality." },
+      { heading: "Our Vision", body: "We're building Turkey's most trusted home services platform — one task at a time. From Istanbul to Ankara, Izmir to Antalya, our goal is to be the first place you turn whenever you need help around the house." },
+    ],
+  },
+  "__careers": {
+    title: "Careers",
+    sections: [
+      { heading: "Join Our Team", body: "We're a fast-growing startup on a mission to transform how people get home tasks done in Turkey. We're always looking for talented, driven people to join us." },
+      { heading: "Open Roles", body: "🚀 Full Stack Engineer (Istanbul / Remote)\n🎨 Product Designer (Istanbul)\n📣 Growth & Marketing Manager (Istanbul)\n🤝 City Operations Manager (Multiple Cities)\n\nDon't see your role? Send a general application to careers@ustayabirak.com — we'd love to hear from you." },
+      { heading: "Why UstayaBirak?", body: "Competitive salary and equity. Flexible remote-friendly culture. Real impact from day one — you'll shape how millions of Turks get help at home. Generous leave, health insurance, and team off-sites." },
+    ],
+  },
+  "__blog": {
+    title: "Blog",
+    sections: [
+      { heading: "5 Home Tasks You Should Never Put Off", body: "Leaky taps, loose door hinges, blocked gutters — small problems compound fast. Here's our guide to the five tasks every homeowner should tackle before they become expensive repairs." },
+      { heading: "How to Find a Reliable Handyman in Istanbul", body: "With hundreds of handymen available, how do you choose? We break down what to look for: verifications, reviews, response time, and the questions you should always ask before booking." },
+      { heading: "Spring Cleaning Checklist: Room by Room", body: "It's that time of year. Our room-by-room checklist covers everything from deep-cleaning kitchen appliances to decluttering wardrobes — plus tips on when to call in a professional." },
+      { heading: "Behind the App: How UstayaBirak Matches You with Workers", body: "Our matching algorithm considers location, availability, skills, and ratings to find you the best Tasker within minutes. Here's a peek under the hood at how it all works." },
+    ],
+  },
+  "__terms": {
+    title: "Terms & Privacy",
+    sections: [
+      { heading: "Terms of Service", body: "By using UstayaBirak you agree to our terms. You must be 18 or older to book services. All bookings are subject to worker availability and platform approval. Payments are processed securely and refunds are handled per our cancellation policy." },
+      { heading: "Privacy Policy", body: "We collect only the data necessary to provide our service: your name, email, location, and booking history. We never sell your personal data to third parties. All data is stored securely and encrypted in transit." },
+      { heading: "Cookie Policy", body: "UstayaBirak uses essential cookies to keep you logged in and remember your preferences. We also use analytics cookies (with your consent) to improve the platform. You can manage cookie preferences in your browser settings." },
+      { heading: "Contact", body: "For questions about these policies, contact us at legal@ustayabirak.com or write to UstayaBirak Ltd., Levent, Istanbul, Turkey." },
+    ],
+  },
+  "__help": {
+    title: "Help & Support",
+    sections: [
+      { heading: "How do I book a Worker?", body: "Search for the service you need, browse available workers, and click Book Now. Choose a time that works for you and complete the secure payment online. You'll receive a confirmation and can chat with your worker directly in the app." },
+      { heading: "What if I need to cancel?", body: "You can cancel or reschedule up to 24 hours before your appointment at no charge. Cancellations within 24 hours may incur a small fee. Navigate to My Bookings in your account to manage your appointments." },
+      { heading: "Is my payment secure?", body: "Yes. All payments are processed through our certified payment provider with bank-level encryption. We never store your card details on our servers." },
+      { heading: "What is the Happiness Pledge?", body: "If you're not satisfied with a completed task, contact our support team within 72 hours and we'll work to make it right — either by sending another worker or issuing a refund." },
+      { heading: "How do I contact support?", body: "Email us at support@ustayabirak.com or use the in-app chat. Our support team is available 7 days a week, 08:00–22:00 Istanbul time." },
+    ],
+  },
+};
+
 export default function App() {
   const [activeCat, setActiveCat] = useState<CatId>("electrician");
   const [activeSub, setActiveSub] = useState<string | null>(null);
@@ -319,6 +367,57 @@ export default function App() {
           w.categories.some((c) => c.includes(searchQuery.toLowerCase()))
       )
     : workers;
+
+  if (activePage && STATIC_PAGES[activePage]) {
+    const sp = STATIC_PAGES[activePage];
+    return (
+      <div className="root">
+        <nav className="navbar">
+          <div className="navbar-inner">
+            <button className="nav-logo-btn" onClick={() => setActivePage(null)} aria-label="Go to homepage">
+              <img src="/logo.png" alt="UstayaBirak" height={72} />
+            </button>
+            <div className="nav-links">
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__services")}>Services</button>
+              <button className="nav-link nav-link-btn" onClick={() => setActivePage("__workers")}>Workers</button>
+            </div>
+            <div className="nav-auth">
+              {currentUser ? (
+                <div className="nav-user">
+                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                  <span className="nav-user-name">{currentUser.fullName}</span>
+                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>Sign out</button>
+                </div>
+              ) : (
+                <button className="btn-ghost" onClick={() => setShowAuth(true)}>Sign up / Log in</button>
+              )}
+              <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
+            </div>
+          </div>
+        </nav>
+
+        <section className="static-page-section">
+          <div className="static-page-inner">
+            <button className="static-back-btn" onClick={() => setActivePage(null)}>← Back to Home</button>
+            <h1 className="static-page-title">{sp.title}</h1>
+            {sp.sections.map((sec) => (
+              <div className="static-section" key={sec.heading}>
+                <h2 className="static-section-heading">{sec.heading}</h2>
+                <p className="static-section-body" style={{ whiteSpace: "pre-line" }}>{sec.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {showAuth && (
+          <AuthModal
+            onClose={() => setShowAuth(false)}
+            onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+          />
+        )}
+      </div>
+    );
+  }
 
   if (activePage === "__become-worker") {
     return <BecomeWorkerPage onBack={() => setActivePage(null)} />;
@@ -904,16 +1003,16 @@ export default function App() {
           <div className="footer-col">
             <h4>Discover</h4>
             <button onClick={() => setActivePage("__become-worker")}>Become a Worker</button>
-            <button onClick={() => setActivePage("Handyman")}>All Services</button>
-            <button onClick={() => setActivePage("Moving Services")}>Services Nearby</button>
-            <button onClick={() => setShowAuth(true)}>Help</button>
+            <button onClick={() => setActivePage("__services")}>All Services</button>
+            <button onClick={() => setActivePage("__services")}>Services Nearby</button>
+            <button onClick={() => setActivePage("__help")}>Help</button>
           </div>
           <div className="footer-col">
             <h4>Company</h4>
-            <a href="#">About Us</a>
-            <a href="#">Careers</a>
-            <a href="#">Blog</a>
-            <a href="#">Terms &amp; Privacy</a>
+            <button onClick={() => setActivePage("__about")}>About Us</button>
+            <button onClick={() => setActivePage("__careers")}>Careers</button>
+            <button onClick={() => setActivePage("__blog")}>Blog</button>
+            <button onClick={() => setActivePage("__terms")}>Terms &amp; Privacy</button>
           </div>
           <div className="footer-col">
             <h4>Download our app</h4>

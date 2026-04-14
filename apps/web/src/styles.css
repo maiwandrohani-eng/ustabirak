@@ -623,6 +623,51 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
 }
 
+/* ── Static Pages (About, Careers, Blog, Terms, Help) ──── */
+.static-page-section {
+  padding: 3rem 1.5rem 5rem;
+  background: #fff;
+  min-height: 60vh;
+}
+.static-page-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.static-back-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 0 1.5rem;
+  display: inline-block;
+}
+.static-back-btn:hover { text-decoration: underline; }
+.static-page-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gray-light);
+}
+.static-section {
+  margin-bottom: 2.2rem;
+}
+.static-section-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 .6rem;
+}
+.static-section-body {
+  font-size: .97rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
 /* ── Become a Worker ────────────────────────────────────── */
 .become-worker-section {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
