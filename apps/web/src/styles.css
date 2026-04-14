@@ -87,7 +87,7 @@ a { text-decoration: none; color: inherit; }
   gap: 1.5rem;
 }
 .nav-logo { display: flex; align-items: center; }
-.nav-logo img { height: 52px; width: auto; }
+.nav-logo img { height: 72px; width: auto; }
 .nav-links {
   display: flex;
   gap: 1.4rem;
@@ -698,7 +698,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
 }
-.nav-logo-btn img { height: 52px; width: auto; }
+.nav-logo-btn img { height: 72px; width: auto; }
 .nav-link-btn {
   background: none;
   border: none;
