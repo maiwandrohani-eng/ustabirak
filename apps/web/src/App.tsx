@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { WorkerProfile } from "@ustaya/shared";
 import { apiGet, apiPost } from "./api";
 import { socket } from "./socket";
+import ServiceDetailPage from "./ServiceDetailPage";
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -111,6 +112,7 @@ export default function App() {
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [statusLog, setStatusLog] = useState<string[]>([]);
   const [bookingInProgress, setBookingInProgress] = useState(false);
+  const [activePage, setActivePage] = useState<string | null>(null);
   const customerId = "c1";
   const category = CATEGORIES.find((c) => c.id === activeCat)!;
 
@@ -168,6 +170,10 @@ export default function App() {
           w.categories.some((c) => c.includes(searchQuery.toLowerCase()))
       )
     : workers;
+
+  if (activePage) {
+    return <ServiceDetailPage serviceId={activePage} onBack={() => setActivePage(null)} />;
+  }
 
   return (
     <div className="root">
@@ -323,14 +329,22 @@ export default function App() {
               { emoji: "💼", title: "Virtual & Online Tasks", desc: "Virtual assistance, research & more", subs: ["Virtual Assistant", "Organization", "Data Entry", "Computer Help", "Research"] },
               { emoji: "🎨", title: "Painting", desc: "Interior, exterior & specialist finishes", subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"] },
             ].map(({ emoji, title, desc, subs }) => (
-              <div className="service-category-card" key={title}>
+              <div
+                className="service-category-card"
+                key={title}
+                role="button"
+                tabIndex={0}
+                onClick={() => setActivePage(title)}
+                onKeyDown={(e) => e.key === "Enter" && setActivePage(title)}
+                style={{ cursor: "pointer" }}
+              >
                 <div className="service-card-emoji">{emoji}</div>
                 <div className="service-card-info">
                   <h3 className="service-card-title">{title}</h3>
                   <p className="service-card-desc">{desc}</p>
                   <hr className="service-card-divider" />
                   <ul className="service-card-subs">
-                    {subs.map(s => <li key={s}><a href="#workers" onClick={() => setActiveCat(title.toLowerCase().includes('clean') ? 'cleaning' : title.toLowerCase().includes('moving') ? 'moving' : title.toLowerCase().includes('paint') ? 'painting' : 'other')} className="service-sub-link">{s}</a></li>)}
+                    {subs.map(s => <li key={s}><a className="service-sub-link" onClick={(e) => { e.stopPropagation(); setActivePage(title); }}>{s}</a></li>)}
                   </ul>
                 </div>
               </div>
