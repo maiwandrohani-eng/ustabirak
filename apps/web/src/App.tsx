@@ -163,10 +163,93 @@ const SERVICE_QUICK_LINKS = [
   { label: "Personal Assistant", page: "Personal Assistant" },
 ];
 
+const SEARCH_INDEX: { label: string; page: string }[] = [
+  { label: "Handyman", page: "Handyman" },
+  { label: "Cleaning", page: "Cleaning" },
+  { label: "Furniture Assembly", page: "Furniture Assembly" },
+  { label: "Mounting & Installation", page: "Mounting & Installation" },
+  { label: "Moving Services", page: "Moving Services" },
+  { label: "Yardwork", page: "Yardwork" },
+  { label: "Shopping & Delivery", page: "Shopping & Delivery" },
+  { label: "IKEA Services", page: "IKEA Services" },
+  { label: "Painting", page: "Painting" },
+  { label: "Virtual & Online Tasks", page: "Virtual & Online Tasks" },
+  { label: "Office Services", page: "Office Services" },
+  { label: "Baby Prep", page: "Baby Prep" },
+  { label: "Holidays", page: "Holidays" },
+  { label: "Winter Tasks", page: "Winter Tasks" },
+  { label: "Personal Assistant", page: "Personal Assistant" },
+  { label: "Contactless Tasks", page: "Contactless Tasks" },
+  { label: "Featured Tasks", page: "Featured Tasks" },
+  { label: "Door, Cabinet & Furniture Repair", page: "Handyman" },
+  { label: "Appliance Installation & Repairs", page: "Handyman" },
+  { label: "TV Mounting", page: "Mounting & Installation" },
+  { label: "Drywall Repair Service", page: "Handyman" },
+  { label: "Flooring & Tiling Help", page: "Handyman" },
+  { label: "Electrical Help", page: "Handyman" },
+  { label: "Plumbing", page: "Handyman" },
+  { label: "Window & Blinds Repair", page: "Handyman" },
+  { label: "Ceiling Fan Installation", page: "Handyman" },
+  { label: "Smart Home Installation", page: "Handyman" },
+  { label: "Heavy Lifting", page: "Moving Services" },
+  { label: "Install Air Conditioner", page: "Handyman" },
+  { label: "Home Maintenance", page: "Handyman" },
+  { label: "Baby Proofing", page: "Baby Prep" },
+  { label: "Carpentry Services", page: "Handyman" },
+  { label: "General Mounting", page: "Mounting & Installation" },
+  { label: "Cabinet Installation", page: "Handyman" },
+  { label: "Wallpapering Service", page: "Handyman" },
+  { label: "Fence Installation & Repair", page: "Handyman" },
+  { label: "Deck Restoration Services", page: "Handyman" },
+  { label: "Doorbell Installation", page: "Handyman" },
+  { label: "House Cleaning Services", page: "Cleaning" },
+  { label: "Deep Cleaning", page: "Cleaning" },
+  { label: "Move In Cleaning", page: "Cleaning" },
+  { label: "Move Out Cleaning", page: "Cleaning" },
+  { label: "Carpet Cleaning Service", page: "Cleaning" },
+  { label: "Garage Cleaning", page: "Cleaning" },
+  { label: "Spring Cleaning", page: "Cleaning" },
+  { label: "Pressure Washing", page: "Cleaning" },
+  { label: "Patio Furniture Assembly", page: "Furniture Assembly" },
+  { label: "Desk Assembly", page: "Furniture Assembly" },
+  { label: "Bed Assembly", page: "Furniture Assembly" },
+  { label: "Bookshelf Assembly", page: "Furniture Assembly" },
+  { label: "Wardrobe Assembly", page: "Furniture Assembly" },
+  { label: "Install Shelves, Rods & Hooks", page: "Mounting & Installation" },
+  { label: "Hang Art, Mirror & Decor", page: "Mounting & Installation" },
+  { label: "Hang Christmas Lights", page: "Mounting & Installation" },
+  { label: "Help Moving", page: "Moving Services" },
+  { label: "Packing Services & Help", page: "Moving Services" },
+  { label: "Junk Pickup", page: "Moving Services" },
+  { label: "Furniture Removal", page: "Moving Services" },
+  { label: "Mattress Pick-Up & Removal", page: "Moving Services" },
+  { label: "Gardening Services", page: "Yardwork" },
+  { label: "Lawn Mowing Services", page: "Yardwork" },
+  { label: "Landscaping Services", page: "Yardwork" },
+  { label: "Tree Trimming Service", page: "Yardwork" },
+  { label: "Gutter Cleaning", page: "Yardwork" },
+  { label: "Weed Removal", page: "Yardwork" },
+  { label: "Grocery Shopping & Delivery", page: "Shopping & Delivery" },
+  { label: "Delivery Service", page: "Shopping & Delivery" },
+  { label: "Running Your Errands", page: "Shopping & Delivery" },
+  { label: "Interior Painting", page: "Painting" },
+  { label: "Exterior Painting", page: "Painting" },
+  { label: "Accent Wall", page: "Painting" },
+  { label: "Wood Staining", page: "Painting" },
+  { label: "Virtual Assistant", page: "Virtual & Online Tasks" },
+  { label: "Data Entry", page: "Virtual & Online Tasks" },
+  { label: "Computer Help", page: "Virtual & Online Tasks" },
+  { label: "Snow Removal", page: "Winter Tasks" },
+  { label: "Gift Wrapping Services", page: "Holidays" },
+  { label: "Holiday Decorating", page: "Holidays" },
+  { label: "Christmas Tree Delivery", page: "Holidays" },
+];
+
 export default function App() {
   const [activeCat, setActiveCat] = useState<CatId>("electrician");
   const [activeSub, setActiveSub] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [statusLog, setStatusLog] = useState<string[]>([]);
   const [bookingInProgress, setBookingInProgress] = useState(false);
@@ -222,6 +305,12 @@ export default function App() {
       setBookingInProgress(false);
     }
   };
+
+  const suggestions = searchQuery.trim().length > 0
+    ? SEARCH_INDEX.filter((s) =>
+        s.label.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 8)
+    : [];
 
   const filteredWorkers = searchQuery.trim()
     ? workers.filter(
@@ -359,15 +448,54 @@ export default function App() {
       {/* ── Hero ── */}
       <section className="hero" id="services">
         <h1 className="hero-title">Book trusted help<br />for home tasks</h1>
-        <div className="search-bar">
+        <div className="search-bar" style={{ position: "relative" }}>
           <input
             className="search-input"
             type="text"
             placeholder="What do you need help with?"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && suggestions.length > 0) {
+                setActivePage(suggestions[0].page);
+                setSearchQuery("");
+                setShowSuggestions(false);
+              }
+            }}
           />
-          <button className="search-btn" aria-label="Search"><SearchIcon /></button>
+          <button
+            className="search-btn"
+            aria-label="Search"
+            onClick={() => {
+              if (suggestions.length > 0) {
+                setActivePage(suggestions[0].page);
+                setSearchQuery("");
+                setShowSuggestions(false);
+              } else if (searchQuery.trim()) {
+                setActivePage("__services");
+              }
+            }}
+          ><SearchIcon /></button>
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="search-suggestions">
+              {suggestions.map((s) => (
+                <li
+                  key={s.label}
+                  className="search-suggestion-item"
+                  onMouseDown={() => {
+                    setActivePage(s.page);
+                    setSearchQuery("");
+                    setShowSuggestions(false);
+                  }}
+                >
+                  <span className="suggestion-label">{s.label}</span>
+                  <span className="suggestion-page">{s.page}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="category-tabs">
           {CATEGORIES.map((cat) => (
