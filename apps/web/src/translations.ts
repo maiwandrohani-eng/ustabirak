@@ -219,6 +219,11 @@ const T = {
   sd_services:        { en: "Services",            tr: "Hizmetler" },
   sd_avail:           { en: "Available Workers",   tr: "Müsait Ustalar" },
   sd_no_workers:      { en: "No workers available for this service yet.", tr: "Bu hizmet için henüz müsait usta bulunmuyor." },
+  sd_avg_rating:      { en: "Average rating",      tr: "Ortalama puan" },
+  sd_jobs_done:       { en: "Jobs completed",      tr: "Tamamlanan iş" },
+  sd_same_day:        { en: "Same day",             tr: "Aynı gün" },
+  sd_availability:    { en: "Availability",         tr: "Müsaitlik" },
+  sd_popular_tasks:   { en: "Popular tasks",        tr: "Popüler görevler" },
   // ── Become Worker Page ───────────────────────────────────
   bwp_title:          { en: "Become a Worker",     tr: "Usta Ol" },
   bwp_subtitle:       { en: "Join 3,200+ verified Taskers and earn on your schedule", tr: "3.200+ onaylı ustaya katıl, kendi programında kazan" },

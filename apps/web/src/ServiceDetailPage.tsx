@@ -91,9 +91,9 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       <div className="sd-hero" style={{ background: detail.heroGradient }}>
         <div className="sd-hero-overlay" />
         <div className="sd-hero-card">
-          <h1 className="sd-hero-title">{detail.title}</h1>
+          <h1 className="sd-hero-title">{lang === "tr" ? detail.titleTr : detail.title}</h1>
           <div className="sd-hero-divider" />
-          <p className="sd-hero-tagline">{detail.tagline}</p>
+          <p className="sd-hero-tagline">{lang === "tr" ? detail.taglineTr : detail.tagline}</p>
           <a
             href="#sd-workers"
             className="btn-primary sd-book-btn"
@@ -114,9 +114,9 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
           <span className="sd-bc-sep">›</span>
           <button className="sd-bc-link" onClick={onBack}>{t("sd_services", lang)}</button>
           <span className="sd-bc-sep">›</span>
-          <span className="sd-bc-link">{detail.category}</span>
+          <span className="sd-bc-link">{lang === "tr" ? detail.categoryTr : detail.category}</span>
           <span className="sd-bc-sep">›</span>
-          <span className="sd-bc-current">{detail.title}</span>
+          <span className="sd-bc-current">{lang === "tr" ? detail.titleTr : detail.title}</span>
         </div>
       </div>
 
@@ -126,15 +126,15 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
           <div className="sd-body-left">
             {detail.body.sections.map((sec, i) => (
               <div key={i}>
-                <h2 className="sd-body-heading">{sec.heading}</h2>
-                {i === 0 && <p className="sd-body-intro">{detail.body.intro}</p>}
-                {sec.paragraphs.map((p, j) => (
+                <h2 className="sd-body-heading">{lang === "tr" ? sec.headingTr : sec.heading}</h2>
+                {i === 0 && <p className="sd-body-intro">{lang === "tr" ? detail.body.introTr : detail.body.intro}</p>}
+                {(lang === "tr" ? sec.paragraphsTr : sec.paragraphs).map((p, j) => (
                   <p key={j} className="sd-body-para">{p}</p>
                 ))}
                 {sec.list && (
                   <ul className="sd-body-list">
                     {sec.list.map((item, k) => (
-                      <li key={k}><strong>{item.label}</strong> {item.text}</li>
+                      <li key={k}><strong>{lang === "tr" ? item.labelTr : item.label}</strong> {lang === "tr" ? item.textTr : item.text}</li>
                     ))}
                   </ul>
                 )}
@@ -148,26 +148,22 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
               <div className="sd-side-stats">
                 <div className="sd-side-stat">
                   <strong>4.9★</strong>
-                  <span>Average rating</span>
+                  <span>{t("sd_avg_rating", lang)}</span>
                 </div>
                 <div className="sd-side-stat">
                   <strong>1,200+</strong>
-                  <span>Jobs completed</span>
+                  <span>{t("sd_jobs_done", lang)}</span>
                 </div>
                 <div className="sd-side-stat">
-                  <strong>Same day</strong>
-                  <span>Availability</span>
+                  <strong>{t("sd_same_day", lang)}</strong>
+                  <span>{t("sd_availability", lang)}</span>
                 </div>
               </div>
               <div className="sd-side-subs">
-                <p className="sd-side-subs-label">Popular tasks</p>
-                {detail.body.sections[0]?.list?.slice(0, 4).map((item) => (
-                  <span key={item.label} className="sd-side-sub-pill">{item.label.replace(":", "")}</span>
-                )) ?? (
-                  detail.body.sections.flatMap(s => s.list ?? []).slice(0, 4).map((item) => (
-                    <span key={item.label} className="sd-side-sub-pill">{item.label.replace(":", "")}</span>
-                  ))
-                )}
+                <p className="sd-side-subs-label">{t("sd_popular_tasks", lang)}</p>
+                {(detail.body.sections[0]?.list?.slice(0, 4) ?? detail.body.sections.flatMap(s => s.list ?? []).slice(0, 4)).map((item) => (
+                  <span key={item.label} className="sd-side-sub-pill">{(lang === "tr" ? item.labelTr : item.label).replace(":", "")}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -177,7 +173,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {/* ── Workers ── */}
       <section className="workers-section" id="sd-workers">
         <div className="workers-header">
-          <h2 className="section-title">{lang === "tr" ? `En İyi ${detail.title} Ustaları` : `Top ${detail.title} Workers`}</h2>
+          <h2 className="section-title">{lang === "tr" ? `En İyi ${detail.titleTr} Ustaları` : `Top ${detail.title} Workers`}</h2>
           {bookingStatus && (
             <div className="status-log">
               <span className="status-pill">{bookingStatus}</span>
@@ -244,7 +240,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {checkoutWorker && (
         <CheckoutModal
           worker={checkoutWorker}
-          serviceTitle={detail.title}
+          serviceTitle={lang === "tr" ? detail.titleTr : detail.title}
           catId={detail.catId}
           onClose={() => setCheckoutWorker(null)}
           onSuccess={(booking) => {
