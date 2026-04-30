@@ -102,9 +102,9 @@ export default function WorkerBrowsingModal({ workers, onSelectWorker, onBack }:
                 />
               </div>
               <div className="wb-price-display">
-                <span>${priceFilter[0]}</span>
+                <span>₺{priceFilter[0]}</span>
                 <span>-</span>
-                <span>${priceFilter[1]}+</span>
+                <span>₺{priceFilter[1]}+</span>
               </div>
             </div>
           </div>

@@ -456,9 +456,9 @@ export default function BecomeWorkerPage({ onBackHome, onOpenServices, onOpenWor
 
               <div className="bw-form-grid">
                 <div className="bw-field">
-                  <label className="bw-label">Hourly Rate (€) <span className="bw-req">*</span></label>
+                  <label className="bw-label">Hourly Rate (₺) <span className="bw-req">*</span></label>
                   <div className="bw-price-input-wrap">
-                    <span className="bw-price-symbol">€</span>
+                    <span className="bw-price-symbol">₺</span>
                     <input
                       className={"bw-input bw-input--price" + (errors.hourlyPrice ? " bw-input--error" : "")}
                       type="number"
@@ -470,7 +470,7 @@ export default function BecomeWorkerPage({ onBackHome, onOpenServices, onOpenWor
                     <span className="bw-price-unit">/ hr</span>
                   </div>
                   {errors.hourlyPrice && <span className="bw-error">{errors.hourlyPrice}</span>}
-                  <p className="bw-field-hint">Average on our platform: <strong>€28–€42 / hr</strong></p>
+                  <p className="bw-field-hint">Average on our platform: <strong>₺200–₺400 / hr</strong></p>
                 </div>
 
                 <div className="bw-field">
@@ -510,15 +510,15 @@ export default function BecomeWorkerPage({ onBackHome, onOpenServices, onOpenWor
                 <h3 className="bw-earnings-title">💰 Your estimated earnings</h3>
                 <div className="bw-earnings-grid">
                   <div className="bw-earnings-item">
-                    <strong>€{(form.hourlyPrice * 3).toFixed(0)}</strong>
+                    <strong>₺{(form.hourlyPrice * 3).toFixed(0)}</strong>
                     <span>Per 3-hour job</span>
                   </div>
                   <div className="bw-earnings-item">
-                    <strong>€{(form.hourlyPrice * 20).toFixed(0)}</strong>
+                    <strong>₺{(form.hourlyPrice * 20).toFixed(0)}</strong>
                     <span>Part-time (20h/wk)</span>
                   </div>
                   <div className="bw-earnings-item">
-                    <strong>€{(form.hourlyPrice * 40).toFixed(0)}</strong>
+                    <strong>₺{(form.hourlyPrice * 40).toFixed(0)}</strong>
                     <span>Full-time (40h/wk)</span>
                   </div>
                 </div>
@@ -721,9 +721,9 @@ export default function BecomeWorkerPage({ onBackHome, onOpenServices, onOpenWor
               <div className="bw-side-earners">
                 <p className="bw-side-earners-label">Top earners this month</p>
                 {[
-                  { name: "Aryan K.", cat: "Electrical", earn: "€3,200" },
-                  { name: "Leila M.", cat: "Cleaning", earn: "€2,800" },
-                  { name: "Deniz Y.", cat: "Moving", earn: "€2,450" },
+                  { name: "Aryan K.", cat: "Electrical", earn: "₺3,200" },
+                  { name: "Leila M.", cat: "Cleaning", earn: "₺2,800" },
+                  { name: "Deniz Y.", cat: "Moving", earn: "₺2,450" },
                 ].map((w) => (
                   <div key={w.name} className="bw-side-earner">
                     <div className="bw-side-earner-av">{w.name.charAt(0)}</div>

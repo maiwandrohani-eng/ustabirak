@@ -122,7 +122,7 @@ function App() {
         </article>
         <article className="card">
           <h2>{text.finance}</h2>
-          <p>{text.commission}: EUR {overview?.finance?.totalCommissionRevenue ?? 0}</p>
+          <p>{text.commission}: ₺{overview?.finance?.totalCommissionRevenue ?? 0}</p>
           <p>{text.payments}: {overview?.finance?.payments ?? 0}</p>
         </article>
         <article className="card">

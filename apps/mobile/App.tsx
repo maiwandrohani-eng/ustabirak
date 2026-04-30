@@ -69,7 +69,7 @@ export default function App() {
       setEvents((prev) => [`${text.acceptedJob}: ${payload.job.id}`, ...prev].slice(0, 8));
     });
     socket.on("payment:released", (payload) => {
-      setEvents((prev) => [`${text.payoutReleased}: ${payload.payoutAmount} EUR`, ...prev].slice(0, 8));
+      setEvents((prev) => [`${text.payoutReleased}: ₺${payload.payoutAmount}`, ...prev].slice(0, 8));
     });
 
     return () => {
