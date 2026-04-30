@@ -664,64 +664,6 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
     },
   },
 
-  "IKEA Services": {
-    id: "ikea-services",
-    emoji: "🛋️",
-    title: "IKEA Services",
-    titleTr: "IKEA Hizmetleri",
-    category: "IKEA Services",
-    categoryTr: "IKEA Hizmetleri",
-    tagline: "IKEA furniture assembly, delivery help, and installation — all handled by expert Taskers.",
-    taglineTr: "IKEA mobilya montajı, teslimat yardımı ve kurulum — tümü uzman ustalar tarafından halledilir.",
-    heroGradient: "linear-gradient(150deg, #1a2a5a 0%, #003399 50%, #0050cc 100%)",
-    accentBg: "linear-gradient(135deg, #eaf0ff 0%, #c0d8ff 100%)",
-    catId: "other",
-    body: {
-      intro: "IKEA furniture shouldn't come with a side of stress. Our Taskers are experts in assembling every IKEA range — from KALLAX to PAX to HEMNES — quickly and correctly.",
-      introTr: "IKEA mobilyaları stresle birlikte gelmek zorunda değil. Ustalarımız KALLAX'tan PAX'a, HEMNES'e kadar her IKEA serisini hızlı ve doğru şekilde monte etme konusunda uzmandır.",
-      sections: [
-        {
-          heading: "IKEA Services Available",
-          headingTr: "Mevcut IKEA Hizmetleri",
-          paragraphs: [
-            "Whether you've just come back from IKEA with a car full of flat-pack or you need an entire room furnished, our Taskers handle it all.",
-            "They carry their own tools and know IKEA assembly inside-out — no instructions needed.",
-          ],
-          paragraphsTr: [
-            "İster IKEA'dan kolunuzda demonte kutularla döndünüz isterse tüm bir odanın döşenmesi gerekiyor olsun, ustalarımız her şeyi halleder.",
-            "Kendi aletlerini taşıyorlar ve IKEA montajını içeriden dışarıya biliyorlar — talimat gerekmez.",
-          ],
-        },
-        {
-          heading: "IKEA tasks we cover",
-          headingTr: "Üstlendiğimiz IKEA işleri",
-          paragraphs: [],
-          paragraphsTr: [],
-          list: [
-            { label: "PAX Wardrobe Assembly:", labelTr: "PAX Gardırop Montajı:", text: "Full PAX wardrobe systems assembled and fitted.", textTr: "Tam PAX gardırop sistemleri monte edilir ve kurulur." },
-            { label: "KALLAX & BILLY:", labelTr: "KALLAX & BILLY:", text: "Shelving and storage units assembled in any configuration.", textTr: "Herhangi bir konfigürasyonda raf ve depolama üniteleri monte edilir." },
-            { label: "HEMNES & MALM Beds:", labelTr: "HEMNES & MALM Yataklar:", text: "Bed frames, storage beds, and headboards built.", textTr: "Yatak çerçeveleri, depolama yatakları ve başlıklar kurulur." },
-            { label: "Kitchen Units:", labelTr: "Mutfak Üniteleri:", text: "IKEA kitchen cabinets and units assembled and positioned.", textTr: "IKEA mutfak dolabı ve üniteleri monte edilir ve yerleştirilir." },
-            { label: "IKEA Delivery Help:", labelTr: "IKEA Teslimat Yardımı:", text: "Help carry and unbox IKEA deliveries to the right room.", textTr: "IKEA teslimatlarını taşımak ve doğru odaya kutudan çıkarmak için yardım." },
-            { label: "Disassembly & Moving:", labelTr: "Demontaj & Taşıma:", text: "Carefully disassemble IKEA furniture for moving or storage.", textTr: "Taşıma veya depolama için IKEA mobilyalarının dikkatle sökülmesi." },
-          ],
-        },
-        {
-          heading: "Why choose UstaYolda for IKEA?",
-          headingTr: "IKEA için neden UstaYolda?",
-          paragraphs: [
-            "Our Taskers have assembled hundreds of IKEA pieces. They're fast, accurate, and leave no bolts behind.",
-            "Book same-day when your delivery arrives, or schedule in advance for a stress-free setup.",
-          ],
-          paragraphsTr: [
-            "Ustalarımız yüzlerce IKEA parçası monte etmiştir. Hızlı, doğru ve arkalarında hiçbir cıvata bırakmaz.",
-            "Teslimatınız geldiğinde aynı gün rezervasyon yapın veya stressiz bir kurulum için önceden planlayın.",
-          ],
-        },
-      ],
-    },
-  },
-
   "Office Services": {
     id: "office-services",
     emoji: "🏢",
@@ -2248,6 +2190,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
     heroGradient: "linear-gradient(150deg, #0a0a0a 0%, #1a0a2a 50%, #2a0a4a 100%)",
     accentBg: "linear-gradient(135deg, #f0e8ff 0%, #d0b0ff 100%)",
     catId: "other",
+
     body: {
       intro: "A proper home theater setup involves more than just a big TV. Our Taskers handle everything from projector mounting and speaker placement to AV receiver wiring and cable concealment.",
       introTr: "Düzgün bir ev sinema kurulumu sadece büyük bir TV'den daha fazlasını içerir. Ustalarımız projektör montajından hoparlör yerleşimine, AV alıcı kablolamasından kablo gizlemeye kadar her şeyi halleder.",
@@ -2289,6 +2232,560 @@ export const SERVICE_DETAILS: Record<string, ServiceDetailData> = {
             "Ustalarımız tüm büyük AV markaları ve ev sinema konfigürasyonlarında deneyimlidir. Muhteşem görüntü ve ses sağlarlar.",
             "Temiz kablo yönetimi ve mükemmel yerleşim — ev sinanız profesyonel bir AV şirketi tarafından kurulmuş gibi görünecek.",
           ],
+        },
+      ],
+    },
+  },
+
+  // CLEANING SUBTYPES
+  "Deep Cleaning": {
+    id: "deep-cleaning",
+    emoji: "🧹",
+    title: "Deep Cleaning",
+    titleTr: "Derin Temizlik",
+    category: "Deep Cleaning",
+    categoryTr: "Derin Temizlik",
+    tagline: "Thorough deep cleaning of your home — every surface, corner, and crevice spotless.",
+    taglineTr: "Evinizdeki kapsamlı derin temizlik — her yüzey, köşe ve yarık pırıl pırıl.",
+    heroGradient: "linear-gradient(150deg, #0d3320 0%, #1a6640 50%, #2a9960 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "cleaning",
+    body: {
+      intro: "When a regular clean isn't enough, book a deep cleaning. Our Taskers tackle every surface, from skirting boards to ceiling corners — leaving your home immaculate.",
+      introTr: "Düzenli temizlik yetmediğinde derin temizlik rezervasyonu yapın. Ustalarımız her yüzeyi, süpurgeden tavan köşelerine kadar halleder — evinizi kusursuz bırakır.",
+      sections: [
+        {
+          heading: "What's included in deep cleaning",
+          headingTr: "Derin temizlikte neler var",
+          paragraphs: [
+            "Deep cleaning goes beyond regular maintenance. We clean inside kitchen cupboards, behind appliances, under furniture, and detail every room thoroughly.",
+            "All baseboards, skirting boards, light switches, and door handles receive special attention.",
+          ],
+          paragraphsTr: [
+            "Derin temizlik düzenli bakımın ötesine gider. Mutfak dolaplarının içini, cihazların arkasını, mobilyanın altını temizleriz ve her odayı derinlemesine temizleriz.",
+            "Tüm tabanlar, çıta tahtaları, ışık anahtarları ve kapı kolları özel ilgi alır.",
+          ],
+        },
+      ],
+    },
+  },
+
+  "Move In Cleaning": {
+    id: "move-in-cleaning",
+    emoji: "🧹",
+    title: "Move In Cleaning",
+    titleTr: "Taşınma Temizliği",
+    category: "Move In Cleaning",
+    categoryTr: "Taşınma Temizliği",
+    tagline: "Fresh and clean before you move in. We'll prepare your new home spotless.",
+    taglineTr: "Taşınmadan önce temiz ve taze. Yeni evinizi pırıl pırıl hazırlayacağız.",
+    heroGradient: "linear-gradient(150deg, #0d3320 0%, #1a6640 50%, #2a9960 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "cleaning",
+    body: {
+      intro: "Start fresh in your new space. Our move-in cleaning ensures every corner is spotless before you unpack a single box.",
+      introTr: "Yeni alanınızda temiz başlayın. Taşınma temizliğimiz, tek bir kutu açmadan önce her köşenin pırıl pırıl olmasını sağlar.",
+      sections: [
+        {
+          heading: "Move-in cleaning includes",
+          headingTr: "Taşınma temizliği içerir",
+          paragraphs: ["Complete room-by-room deep clean ensuring your new home is pristine."],
+          paragraphsTr: ["Yeni evinizin kusursuz olmasını sağlayan oda-oda tam derin temizlik."],
+        },
+      ],
+    },
+  },
+
+  "Spring Cleaning": {
+    id: "spring-cleaning",
+    emoji: "🌱",
+    title: "Spring Cleaning",
+    titleTr: "Bahar Temizliği",
+    category: "Spring Cleaning",
+    categoryTr: "Bahar Temizliği",
+    tagline: "Refresh your home from top to bottom with a complete spring clean.",
+    taglineTr: "Evinizi baştan aşağıya tazeleyip tamamen yenileyin.",
+    heroGradient: "linear-gradient(150deg, #0d3320 0%, #1a6640 50%, #2a9960 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "cleaning",
+    body: {
+      intro: "Time to refresh your home for the season. Spring cleaning tackles all those hard-to-reach places — windows, ceiling fans, carpets, and more.",
+      introTr: "Evinizi sezon için tazelemek zamanı. Bahar temizliği, pencereler, tavan fanları, halılar ve daha fazla gibi tüm ulaşılması zor yerleri temizler.",
+      sections: [
+        {
+          heading: "Spring cleaning services",
+          headingTr: "Bahar temizliği hizmetleri",
+          paragraphs: ["Full home seasonal refresh including windows, carpets, and seasonal maintenance."],
+          paragraphsTr: ["Pencereler, halılar ve mevsimsel bakım dahil tam ev mevsimsel yenileme."],
+        },
+      ],
+    },
+  },
+
+  "Disinfecting Services": {
+    id: "disinfecting-services",
+    emoji: "🦠",
+    title: "Disinfecting Services",
+    titleTr: "Dezenfeksiyon Hizmetleri",
+    category: "Disinfecting Services",
+    categoryTr: "Dezenfeksiyon Hizmetleri",
+    tagline: "Professional disinfecting treatment for your home or office — safe and thorough.",
+    taglineTr: "Eviniz veya ofisiniz için profesyonel dezenfeksiyon işlemi — güvenli ve kapsamlı.",
+    heroGradient: "linear-gradient(150deg, #1a1a3a 0%, #2a2a6a 50%, #3a3a9a 100%)",
+    accentBg: "linear-gradient(135deg, #ede8ff 0%, #cfc0ff 100%)",
+    catId: "cleaning",
+    body: {
+      intro: "Protect your family with professional disinfection services using hospital-grade disinfectants approved for residential use.",
+      introTr: "Konut kullanımı için onaylanmış hastane kalitesi dezenfektanları kullanan profesyonel dezenfeksiyon hizmetleriyle ailenizi koruyun.",
+      sections: [
+        {
+          heading: "Disinfecting coverage",
+          headingTr: "Dezenfeksiyon kapsamı",
+          paragraphs: ["Complete disinfection of high-touch surfaces, door handles, and frequently used areas."],
+          paragraphsTr: ["Sık dokunulan yüzeyler, kapı kolları ve sık kullanılan alanların tam dezenfeksiyonu."],
+        },
+      ],
+    },
+  },
+
+  "Carpet Cleaning Service": {
+    id: "carpet-cleaning",
+    emoji: "🪴",
+    title: "Carpet Cleaning",
+    titleTr: "Halı Temizliği",
+    category: "Carpet Cleaning",
+    categoryTr: "Halı Temizliği",
+    tagline: "Professional carpet cleaning using steam and dry methods — stain removal guaranteed.",
+    taglineTr: "Buhar ve kuru yöntemler kullanarak profesyonel halı temizliği — leke kaldırma garantili.",
+    heroGradient: "linear-gradient(150deg, #0d3320 0%, #1a6640 50%, #2a9960 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "cleaning",
+    body: {
+      intro: "Revive your carpets with professional cleaning. We remove stains, odors, and deep-set dirt leaving your carpets fresh and extends their life.",
+      introTr: "Halılarınızı profesyonel temizlikle yenileyin. Lekeleri, kokuları ve derinlemesine çöpü kaldırarak halılarınızı taze tutarız ve ömrünü uzatırız.",
+      sections: [
+        {
+          heading: "Carpet cleaning methods",
+          headingTr: "Halı temizliği yöntemleri",
+          paragraphs: ["Steam extraction for deep cleaning or dry cleaning for immediate use."],
+          paragraphsTr: ["Derin temizlik için buhar ekstraksiyon veya hemen kullanım için kuru temizlik."],
+        },
+      ],
+    },
+  },
+
+  // MOVING SUBTYPES
+  "Help Moving": {
+    id: "help-moving",
+    emoji: "🚛",
+    title: "Help Moving",
+    titleTr: "Taşıma Yardımı",
+    category: "Help Moving",
+    categoryTr: "Taşıma Yardımı",
+    tagline: "Extra hands to make your move easier — lifting, carrying, and organization.",
+    taglineTr: "Taşınmanızı kolaylaştırmak için ek eller — kaldırma, taşıma ve organize etme.",
+    heroGradient: "linear-gradient(150deg, #1a3a2a 0%, #2a6a4a 50%, #3a9a6a 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "moving",
+    body: {
+      intro: "Moving doesn't have to be a hassle. Book a Tasker to help with heavy lifting and packing — making your move stress-free.",
+      introTr: "Taşınma zahmetli olmak zorunda değil. Ağır kaldırma ve paketlemede yardımcı olmak için bir usta rezervasyonu yapın.",
+      sections: [
+        {
+          heading: "Moving help services",
+          headingTr: "Taşıma yardımı hizmetleri",
+          paragraphs: ["Professional movers ready to help with your residential or commercial move."],
+          paragraphsTr: ["Konut veya ticari taşınmanızda yardımcı olmaya hazır profesyonel taşıyıcılar."],
+        },
+      ],
+    },
+  },
+
+  "Heavy Lifting": {
+    id: "heavy-lifting",
+    emoji: "💪",
+    title: "Heavy Lifting",
+    titleTr: "Ağır Kaldırma",
+    category: "Heavy Lifting",
+    categoryTr: "Ağır Kaldırma",
+    tagline: "Strong hands for heavy items — sofas, refrigerators, pianos, and more.",
+    taglineTr: "Ağır eşyalar için güçlü eller — koltuklar, buzdolapları, piyanolar ve daha fazlası.",
+    heroGradient: "linear-gradient(150deg, #3a1a0a 0%, #6a2a1a 50%, #9a4a2a 100%)",
+    accentBg: "linear-gradient(135deg, #fff5e8 0%, #ffd8a0 100%)",
+    catId: "moving",
+    body: {
+      intro: "Some items are just too heavy to move alone. Our Taskers have the strength and experience to safely move appliances, pianos, and furniture.",
+      introTr: "Bazı eşyalar yalnız taşınmak için çok ağır. Ustalarımız cihazları, piyanolları ve mobilyaları güvenle taşımak için güç ve deneyime sahiptir.",
+      sections: [
+        {
+          heading: "Heavy lifting services",
+          headingTr: "Ağır kaldırma hizmetleri",
+          paragraphs: ["Safe and experienced moving of heavy furniture and appliances within your home."],
+          paragraphsTr: ["Evinizde ağır mobilya ve cihazların güvenli ve deneyimli taşınması."],
+        },
+      ],
+    },
+  },
+
+  "Packing Services & Help": {
+    id: "packing-services",
+    emoji: "📦",
+    title: "Packing Services",
+    titleTr: "Paketleme Hizmetleri",
+    category: "Packing Services",
+    categoryTr: "Paketleme Hizmetleri",
+    tagline: "Professional packing with protective materials — your items arrive safely.",
+    taglineTr: "Koruyucu malzemelerle profesyonel paketleme — eşyalarınız güvenle vardığında.",
+    heroGradient: "linear-gradient(150deg, #1a3a2a 0%, #2a6a4a 50%, #3a9a6a 100%)",
+    accentBg: "linear-gradient(135deg, #eafff4 0%, #b0ffd8 100%)",
+    catId: "moving",
+    body: {
+      intro: "Expert packing takes the stress out of moving. We use quality materials and proper technique to ensure fragile items arrive safely.",
+      introTr: "Uzman paketleme taşınmanın stresini alır. Kırılgan eşyaların güvenle varmasını sağlamak için kaliteli malzemeler ve uygun teknik kullanırız.",
+      sections: [
+        {
+          heading: "Packing services include",
+          headingTr: "Paketleme hizmetleri içerir",
+          paragraphs: ["Professional wrapping and packing of all items using protective materials."],
+          paragraphsTr: ["Koruyucu malzemeleri kullanarak tüm eşyaların profesyonel sarılması ve paketlenmesi."],
+        },
+      ],
+    },
+  },
+
+  "Junk Pickup": {
+    id: "junk-pickup",
+    emoji: "♻️",
+    title: "Junk Pickup",
+    titleTr: "Hurda Kaldırma",
+    category: "Junk Pickup",
+    categoryTr: "Hurda Kaldırma",
+    tagline: "Get rid of unwanted items — furniture, appliances, and general clutter.",
+    taglineTr: "İstenmeyen eşyalardan kurtulun — mobilya, cihazlar ve genel karışıklık.",
+    heroGradient: "linear-gradient(150deg, #1a1a1a 0%, #3a3a3a 50%, #5a5a5a 100%)",
+    accentBg: "linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 100%)",
+    catId: "moving",
+    body: {
+      intro: "Declutter quickly and easily. Our Taskers remove unwanted furniture, appliances, and general junk — leaving your space clean and tidy.",
+      introTr: "Hızlı ve kolay bir şekilde düzeni bozun. Ustalarımız istenmeyen mobilya, cihazlar ve genel çöpü kaldırarak alanınızı temiz bırakırlar.",
+      sections: [
+        {
+          heading: "Junk removal services",
+          headingTr: "Hurda kaldırma hizmetleri",
+          paragraphs: ["Removal and disposal of old furniture, appliances, and unwanted items."],
+          paragraphsTr: ["Eski mobilya, cihazlar ve istenmeyen eşyaların kaldırılması ve imha edilmesi."],
+        },
+      ],
+    },
+  },
+
+  "Furniture Removal": {
+    id: "furniture-removal",
+    emoji: "🪑",
+    title: "Furniture Removal",
+    titleTr: "Mobilya Kaldırma",
+    category: "Furniture Removal",
+    categoryTr: "Mobilya Kaldırma",
+    tagline: "Remove old furniture safely — couches, beds, dressers, and more.",
+    taglineTr: "Eski mobilyaları güvenle kaldırın — koltuklar, yataklar, komodolar ve daha fazlası.",
+    heroGradient: "linear-gradient(150deg, #3a1a0a 0%, #6a2a1a 50%, #9a4a2a 100%)",
+    accentBg: "linear-gradient(135deg, #fff5e8 0%, #ffd8a0 100%)",
+    catId: "moving",
+    body: {
+      intro: "Clear out old pieces without the effort. Our Taskers remove bulky furniture and make sure it's disposed of responsibly.",
+      introTr: "Çaba harcamadan eski parçaları temizleyin. Ustalarımız büyük mobilyaları kaldırır ve sorumlu şekilde imha edilmesini sağlar.",
+      sections: [
+        {
+          heading: "Furniture removal",
+          headingTr: "Mobilya kaldırma",
+          paragraphs: ["Safe removal of old furniture from your home with responsible disposal."],
+          paragraphsTr: ["Eski mobilyanın evinizden sorumlu şekilde güvenli kaldırılması."],
+        },
+      ],
+    },
+  },
+
+  "Grocery Shopping & Delivery": {
+    id: "grocery-shopping",
+    emoji: "🛒",
+    title: "Grocery Shopping & Delivery",
+    titleTr: "Market Alışverişi & Teslimat",
+    category: "Grocery Shopping",
+    categoryTr: "Market Alışverişi",
+    tagline: "Shop for groceries and have them delivered to your door — save time, stay home.",
+    taglineTr: "Marketten alışveriş yapın ve kapınıza teslim edilsin — zamandan tasarruf edin, evde kalın.",
+    heroGradient: "linear-gradient(150deg, #1a2a5a 0%, #2a508a 50%, #3a7abf 100%)",
+    accentBg: "linear-gradient(135deg, #eaf0ff 0%, #c0d8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Too busy for grocery shopping? Send a Tasker to shop your full grocery list and deliver fresh items to your door.",
+      introTr: "Market alışverişi için çok mu meşgul? Tam alışveriş listenizi almak için bir usta gönderin ve taze eşyaları kapınıza teslim etsin.",
+      sections: [
+        {
+          heading: "Grocery shopping services",
+          headingTr: "Market alışverişi hizmetleri",
+          paragraphs: ["Full grocery shopping from any supermarket with same-day delivery to your home."],
+          paragraphsTr: ["Her marketten tam alışveriş ve aynı gün eve teslim."],
+        },
+      ],
+    },
+  },
+
+  "Running Your Errands": {
+    id: "running-errands",
+    emoji: "🏃",
+    title: "Running Errands",
+    titleTr: "Ayak İşleri Yapma",
+    category: "Running Errands",
+    categoryTr: "Ayak İşleri",
+    tagline: "Handle all your errands — bank, post office, returns, shopping, and more.",
+    taglineTr: "Tüm ayak işlerinizi yapın — banka, posta, iade, alışveriş ve daha fazlası.",
+    heroGradient: "linear-gradient(150deg, #1a2a5a 0%, #2a508a 50%, #3a7abf 100%)",
+    accentBg: "linear-gradient(135deg, #eaf0ff 0%, #c0d8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Let a Tasker handle your daily errands while you focus on what matters. From the bank to the post office — we've got you covered.",
+      introTr: "Günlük ayak işlerini bir usta halletsin, siz önemli şeylere odaklanın. Bankadan posta ofisine — her şey sizin için halledilebilir.",
+      sections: [
+        {
+          heading: "Errand services available",
+          headingTr: "Mevcut ayak işi hizmetleri",
+          paragraphs: ["Complete errand running including banking, postal services, and shopping tasks."],
+          paragraphsTr: ["Bankacılık, posta hizmetleri ve alışveriş görevleri dahil tam ayak işi hizmetleri."],
+        },
+      ],
+    },
+  },
+
+  "Wait in Line": {
+    id: "wait-in-line",
+    emoji: "⏳",
+    title: "Wait in Line",
+    titleTr: "Kuyrukta Bekle",
+    category: "Wait in Line",
+    categoryTr: "Kuyrukta Bekle",
+    tagline: "Don't waste time in lines — a Tasker will wait for you at the DMV, store, or anywhere.",
+    taglineTr: "Kuyrukta zaman harcamayın — bir usta sizin için DMV, mağaza veya başka yerde sırada bekleyecek.",
+    heroGradient: "linear-gradient(150deg, #1a2a5a 0%, #2a508a 50%, #3a7abf 100%)",
+    accentBg: "linear-gradient(135deg, #eaf0ff 0%, #c0d8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "No more wasting time in long queues. Send a Tasker to wait in line for you anywhere — DMV, post office, shops, events.",
+      introTr: "Artık uzun kuyrukta zaman harcamayın. Bir ustayı DMV, posta ofisi, mağazalar, etkinlikler gibi her yerde sırada beklemek için gönderin.",
+      sections: [
+        {
+          heading: "Waiting services",
+          headingTr: "Bekleme hizmetleri",
+          paragraphs: ["Taskers will wait in line for you at any venue, store, or service location."],
+          paragraphsTr: ["Ustalar herhangi bir mekan, mağaza veya hizmet noktasında sizin için sırada bekleyecekler."],
+        },
+      ],
+    },
+  },
+
+  "Install Shelves, Rods & Hooks": {
+    id: "install-shelves",
+    emoji: "🖼️",
+    title: "Install Shelves, Rods & Hooks",
+    titleTr: "Raf, Çubuk & Kanca Kurulumu",
+    category: "Install Shelves",
+    categoryTr: "Raf Kurulumu",
+    tagline: "Secure shelving installation — floating shelves, rods, towel rails, hooks perfectly mounted.",
+    taglineTr: "Güvenli raf kurulumu — duvara monte raflar, çubuklar, havlu askıları, kancalar mükemmel bir şekilde monte edilir.",
+    heroGradient: "linear-gradient(150deg, #2a1a5a 0%, #4a2a9a 50%, #7a4ade 100%)",
+    accentBg: "linear-gradient(135deg, #f4f0ff 0%, #d8c8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Install shelves and storage solutions throughout your home — wall-mounted, floating, or bracket-based with perfect leveling every time.",
+      introTr: "Evinizde raf ve depolama çözümleri kurun — duvar monte, duvara asılı veya braketli her seferinde mükemmel hizalama ile.",
+      sections: [
+        {
+          heading: "Shelf installation services",
+          headingTr: "Raf kurulumu hizmetleri",
+          paragraphs: ["Professional installation of shelves, rods, and wall-mounted storage solutions."],
+          paragraphsTr: ["Raf, çubuk ve duvar monte depolama çözümlerinin profesyonel kurulumu."],
+        },
+      ],
+    },
+  },
+
+  "Hang Art, Mirror & Decor": {
+    id: "hang-art-decor",
+    emoji: "🖼️",
+    title: "Hang Art, Mirror & Decor",
+    titleTr: "Tablo, Ayna & Dekor Asma",
+    category: "Hang Art & Decor",
+    categoryTr: "Tablo & Dekor Asma",
+    tagline: "Professional hanging of artwork, mirrors, and decorative pieces — perfectly level every time.",
+    taglineTr: "Sanat eserleri, aynalar ve dekoratif parçaların profesyonel asılması — her seferinde mükemmel hizalama.",
+    heroGradient: "linear-gradient(150deg, #2a1a5a 0%, #4a2a9a 50%, #7a4ade 100%)",
+    accentBg: "linear-gradient(135deg, #f4f0ff 0%, #d8c8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Get your artwork and decorative pieces hung at the perfect height and angle — creating a gallery-perfect display in your home.",
+      introTr: "Sanat eserlerinizi ve dekoratif parçalarınızı mükemmel yükseklik ve açıda asın — evinizde galeri-mükemmel bir görüntü oluşturun.",
+      sections: [
+        {
+          heading: "Art hanging services",
+          headingTr: "Tablo asma hizmetleri",
+          paragraphs: ["Perfect placement of artwork, mirrors, and decorative items on any wall type."],
+          paragraphsTr: ["Sanat eserlerinin, aynaların ve dekoratif eşyaların herhangi bir duvar tipine mükemmel şekilde yerleştirilmesi."],
+        },
+      ],
+    },
+  },
+
+  "General Mounting": {
+    id: "general-mounting",
+    emoji: "🔨",
+    title: "General Mounting",
+    titleTr: "Genel Montaj",
+    category: "General Mounting",
+    categoryTr: "Genel Montaj",
+    tagline: "Wall mounting for anything — quick, level, and secure installation.",
+    taglineTr: "Her şey için duvar montajı — hızlı, düzgün ve güvenli kurulum.",
+    heroGradient: "linear-gradient(150deg, #2a1a5a 0%, #4a2a9a 50%, #7a4ade 100%)",
+    accentBg: "linear-gradient(135deg, #f4f0ff 0%, #d8c8ff 100%)",
+    catId: "other",
+    body: {
+      intro: "Any mounting project — shelves, rails, brackets, or decorative items — our Taskers handle it all with precision and care.",
+      introTr: "Herhangi bir montaj projesi — raflar, raylar, braketler veya dekoratif eşyalar — ustalarımız hepsi duyarlılık ve özeni ile halleder.",
+      sections: [
+        {
+          heading: "Mounting services",
+          headingTr: "Montaj hizmetleri",
+          paragraphs: ["Professional mounting of any item on walls with proper anchors and leveling."],
+          paragraphsTr: ["Uygun dingillerle ve hizalama ile herhangi bir eşyanın duvarlara profesyonel montajı."],
+        },
+      ],
+    },
+  },
+
+  "Lawn Mowing Services": {
+    id: "lawn-mowing",
+    emoji: "🌱",
+    title: "Lawn Mowing Services",
+    titleTr: "Çim Biçme Hizmetleri",
+    category: "Lawn Mowing",
+    categoryTr: "Çim Biçme",
+    tagline: "Regular lawn mowing and edging — keep your grass looking neat all season.",
+    taglineTr: "Düzenli çim biçme ve kenar düzeltme — çiminizi mevsimboyunca tertip tutun.",
+    heroGradient: "linear-gradient(150deg, #1a3a0a 0%, #2a6a1a 50%, #4aaa2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f090 100%)",
+    catId: "other",
+    body: {
+      intro: "Keep your lawn looking its best with regular mowing. Book a one-off service or a regular weekly schedule.",
+      introTr: "Çiminizi düzenli biçme ile en iyi durumda tutun. Tek seferlik bir hizmet veya haftalık düzenli bir program rezervasyonu yapın.",
+      sections: [
+        {
+          heading: "Lawn mowing services",
+          headingTr: "Çim biçme hizmetleri",
+          paragraphs: ["Professional lawn mowing, edging, and garden tidying for regular maintenance."],
+          paragraphsTr: ["Düzenli bakım için profesyonel çim biçme, kenar düzeltme ve bahçe temizliği."],
+        },
+      ],
+    },
+  },
+
+  "Gardening Services": {
+    id: "gardening-services",
+    emoji: "🌱",
+    title: "Gardening Services",
+    titleTr: "Bahçeleme Hizmetleri",
+    category: "Gardening",
+    categoryTr: "Bahçeleme",
+    tagline: "Professional gardening from planting to maintenance — beautify your outdoor space.",
+    taglineTr: "Dikim ve bakımdan profesyonel bahçeleme — dış mekanınızı güzelleştirin.",
+    heroGradient: "linear-gradient(150deg, #1a3a0a 0%, #2a6a1a 50%, #4aaa2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f090 100%)",
+    catId: "other",
+    body: {
+      intro: "Create a beautiful garden with help from our gardening experts — design, planting, and ongoing maintenance all handled by skilled Taskers.",
+      introTr: "Bahçeleme uzmanlarımızın yardımıyla güzel bir bahçe oluşturun — tasarım, dikim ve devam eden bakım tamamı yetenekli ustalar tarafından yapılır.",
+      sections: [
+        {
+          heading: "Gardening services available",
+          headingTr: "Mevcut bahçeleme hizmetleri",
+          paragraphs: ["Garden design, planting, seasonal maintenance, and long-term care."],
+          paragraphsTr: ["Bahçe tasarımı, dikim, mevsimsel bakım ve uzun vadeli bakım."],
+        },
+      ],
+    },
+  },
+
+  "Tree Trimming Service": {
+    id: "tree-trimming",
+    emoji: "🌳",
+    title: "Tree Trimming Service",
+    titleTr: "Ağaç Budama Hizmetleri",
+    category: "Tree Trimming",
+    categoryTr: "Ağaç Budama",
+    tagline: "Safe and professional tree trimming — keep your trees healthy and your space safe.",
+    taglineTr: "Güvenli ve profesyonel ağaç budama — ağaçlarınızı sağlıklı ve alanınızı güvenli tutun.",
+    heroGradient: "linear-gradient(150deg, #1a3a0a 0%, #2a6a1a 50%, #4aaa2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f090 100%)",
+    catId: "other",
+    body: {
+      intro: "Professional tree care keeps your garden looking great and ensures safety. Our Taskers trim branches, shape trees, and remove dead wood.",
+      introTr: "Profesyonel ağaç bakımı bahçenizi harika tutar ve güvenliği sağlar. Ustalarımız dalları kesiyor, ağaçları şekillendiriyor ve ölü ağacı kaldırıyor.",
+      sections: [
+        {
+          heading: "Tree trimming services",
+          headingTr: "Ağaç budama hizmetleri",
+          paragraphs: ["Professional tree trimming, branch removal, and tree shaping services."],
+          paragraphsTr: ["Profesyonel ağaç budama, dal kaldırma ve ağaç şekillendirme hizmetleri."],
+        },
+      ],
+    },
+  },
+
+  "Weed Removal": {
+    id: "weed-removal",
+    emoji: "🌿",
+    title: "Weed Removal",
+    titleTr: "Yabani Ot Kaldırma",
+    category: "Weed Removal",
+    categoryTr: "Yabani Ot Kaldırma",
+    tagline: "Remove weeds from gardens, patios, and driveways — restore your outdoor space.",
+    taglineTr: "Bahçeler, teraslar ve yollardan yabani otları kaldırın — dış mekanınızı eski haline getirin.",
+    heroGradient: "linear-gradient(150deg, #1a3a0a 0%, #2a6a1a 50%, #4aaa2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f090 100%)",
+    catId: "other",
+    body: {
+      intro: "Keep your garden weed-free and looking neat. Our Taskers remove weeds safely and can set up regular maintenance to keep your space pristine.",
+      introTr: "Bahçenizi yabani otlardan temiz ve düzenli tutun. Ustalarımız yabani otları güvenle kaldırır ve alanınızı pristine tutmak için düzenli bakım ayarlayabilir.",
+      sections: [
+        {
+          heading: "Weed removal services",
+          headingTr: "Yabani ot kaldırma hizmetleri",
+          paragraphs: ["Safe and effective weed removal from gardens, driveways, and outdoor areas."],
+          paragraphsTr: ["Bahçeler, yollar ve dış mekan alanlarından güvenli ve etkili yabani ot kaldırma."],
+        },
+      ],
+    },
+  },
+
+  "Hedge Trimming Service": {
+    id: "hedge-trimming",
+    emoji: "🌳",
+    title: "Hedge Trimming Service",
+    titleTr: "Çit Budama Hizmetleri",
+    category: "Hedge Trimming",
+    categoryTr: "Çit Budama",
+    tagline: "Professional hedge trimming — neat, shaped, and well-maintained hedges.",
+    taglineTr: "Profesyonel çit budama — düzenli, şekilli ve bakımlı çitler.",
+    heroGradient: "linear-gradient(150deg, #1a3a0a 0%, #2a6a1a 50%, #4aaa2a 100%)",
+    accentBg: "linear-gradient(135deg, #f0ffe8 0%, #c0f090 100%)",
+    catId: "other",
+    body: {
+      intro: "Keep your hedges looking neat and well-maintained. Our skilled Taskers trim and shape hedges to perfection.",
+      introTr: "Çitlerinizi düzenli ve bakımlı tutun. Yetenekli ustalarımız çitleri trim ve şekil vererek mükemmelleştirir.",
+      sections: [
+        {
+          heading: "Hedge trimming services",
+          headingTr: "Çit budama hizmetleri",
+          paragraphs: ["Professional hedge trimming and shaping for a well-manicured garden."],
+          paragraphsTr: ["İyi bakım yapılmış bir bahçe için profesyonel çit kesme ve şekillendirme."],
         },
       ],
     },

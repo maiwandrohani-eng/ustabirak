@@ -17,6 +17,8 @@ export const db = {
     {
       id: "w1",
       fullName: "Mehmet Kaya",
+      email: "mehmet@example.com",
+      phone: "+90 555 111 2233",
       bio: "Certified electrician with 8 years of residential experience.",
       categories: ["electrician"],
       experienceYears: 8,
@@ -35,11 +37,15 @@ export const db = {
         { weekday: 4, from: "08:00", to: "22:00" },
         { weekday: 5, from: "08:00", to: "22:00" }
       ],
-      hourlyPrice: 35
+      hourlyPrice: 35,
+      bankName: "Ziraat Bankasi",
+      accountHolderName: "Mehmet Kaya"
     },
     {
       id: "w2",
       fullName: "Ayse Demir",
+      email: "ayse@example.com",
+      phone: "+90 555 444 5566",
       bio: "Fast and detail-focused cleaner for home and office tasks.",
       categories: ["cleaning"],
       experienceYears: 5,
@@ -59,13 +65,17 @@ export const db = {
         { weekday: 5, from: "09:00", to: "18:00" },
         { weekday: 6, from: "10:00", to: "16:00" }
       ],
-      hourlyPrice: 25
+      hourlyPrice: 25,
+      bankName: "Is Bankasi",
+      accountHolderName: "Ayse Demir"
     }
   ] as WorkerProfile[],
   customers: [
     {
       id: "c1",
       fullName: "Zeynep Yilmaz",
+      email: "zeynep@example.com",
+      phone: "+90 555 987 6543",
       location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" }
     }
   ] as CustomerProfile[],
@@ -73,6 +83,11 @@ export const db = {
   payments: [] as Payment[],
   reviews: [] as Review[],
   commissionRate: 0.12
+};
+
+export const authSecrets = {
+  customerPasswordHashes: {} as Record<string, string>,
+  workerPasswordHashes: {} as Record<string, string>
 };
 
 export const makeId = (prefix: string) => `${prefix}_${Math.random().toString(36).slice(2, 10)}`;

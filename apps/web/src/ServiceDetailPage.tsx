@@ -4,6 +4,9 @@ import { apiGet } from "./api";
 import { SERVICE_DETAILS } from "./serviceData";
 import AuthModal from "./AuthModal";
 import CheckoutModal from "./CheckoutModal";
+import TaskDescriptionModal, { type TaskDescription } from "./TaskDescriptionModal";
+import WorkerBrowsingModal from "./WorkerBrowsingModal";
+import DateTimePickerModal from "./DateTimePickerModal";
 import { useLang } from "./LangContext";
 import { t } from "./translations";
 
@@ -20,14 +23,29 @@ const VerifiedIcon = () => (
 
 interface Props {
   serviceId: string;
-  onBack: () => void;
+  customerId: string;
+  onBackHome: () => void;
+  onBackServices: () => void;
+  onOpenWorkers: () => void;
+  onOpenBecomeWorker: () => void;
 }
 
-export default function ServiceDetailPage({ serviceId, onBack }: Props) {
+export default function ServiceDetailPage({
+  serviceId,
+  customerId,
+  onBackHome,
+  onBackServices,
+  onOpenWorkers,
+  onOpenBecomeWorker,
+}: Props) {
   const detail = SERVICE_DETAILS[serviceId];
   const { lang } = useLang();
   const [workers, setWorkers] = useState<WorkerProfile[]>([]);
-  const [checkoutWorker, setCheckoutWorker] = useState<WorkerProfile | null>(null);
+  const [bookingStep, setBookingStep] = useState<null | "describe" | "browse" | "datetime" | "confirm">(null);
+  const [taskDescription, setTaskDescription] = useState<TaskDescription | null>(null);
+  const [selectedWorker, setSelectedWorker] = useState<WorkerProfile | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
 
@@ -42,14 +60,30 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
   if (!detail) {
     return (
       <div className="root" style={{ padding: "4rem 2rem", textAlign: "center" }}>
-        <p>Service not found.</p>
-        <button className="btn-primary" onClick={onBack}>Go back</button>
+        <p>{t("error_not_found", lang)}</p>
+        <button className="btn-primary" onClick={onBackServices}>{t("go_back", lang)}</button>
       </div>
     );
   }
 
-  const handleBook = (worker: WorkerProfile) => {
-    setCheckoutWorker(worker);
+  const handleStartBooking = () => {
+    setBookingStep("describe");
+  };
+
+  const handleTaskDescriptionConfirm = (desc: TaskDescription) => {
+    setTaskDescription(desc);
+    setBookingStep("browse");
+  };
+
+  const handleWorkerSelect = (worker: WorkerProfile) => {
+    setSelectedWorker(worker);
+    setBookingStep("datetime");
+  };
+
+  const handleDateTimeConfirm = (date: string, time: string) => {
+    setSelectedDate(date);
+    setSelectedTime(time);
+    setBookingStep("confirm");
   };
 
   return (
@@ -57,32 +91,17 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {/* ── Navbar ── */}
       <nav className="navbar">
         <div className="navbar-inner">
-          <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
+          <button className="nav-logo-btn" onClick={onBackHome} aria-label="Go to homepage">
             <img src="/logo.png" alt="UstaYolda" height={52} />
           </button>
           <div className="nav-links">
-            <button className="nav-link nav-link-btn" onClick={onBack}>{t("sd_services", lang)}</button>
-            <button
-              className="nav-link nav-link-btn"
-              onClick={() => { onBack(); setTimeout(() => document.getElementById("workers")?.scrollIntoView({ behavior: "smooth" }), 80); }}
-            >
-              Workers
-            </button>
-            <button
-              className="nav-link nav-link-btn"
-              onClick={() => { onBack(); setTimeout(() => document.getElementById("become-worker")?.scrollIntoView({ behavior: "smooth" }), 80); }}
-            >
-              Become a Worker
-            </button>
+            <button className="nav-link nav-link-btn" onClick={onBackServices}>{t("sd_services", lang)}</button>
+            <button className="nav-link nav-link-btn" onClick={onOpenWorkers}>{t("nav_workers", lang)}</button>
+            <button className="nav-link nav-link-btn" onClick={onOpenBecomeWorker}>{t("nav_become_worker", lang)}</button>
           </div>
           <div className="nav-auth">
             <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
-            <button
-              className="btn-primary"
-              onClick={() => { onBack(); setTimeout(() => document.getElementById("become-worker")?.scrollIntoView({ behavior: "smooth" }), 80); }}
-            >
-              Become a Worker
-            </button>
+            <button className="btn-primary" onClick={onOpenBecomeWorker}>{t("nav_become_worker", lang)}</button>
           </div>
         </div>
       </nav>
@@ -99,7 +118,7 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
             className="btn-primary sd-book-btn"
             onClick={(e) => {
               e.preventDefault();
-              document.getElementById("sd-workers")?.scrollIntoView({ behavior: "smooth" });
+              handleStartBooking();
             }}
           >
             {t("book_now", lang)}
@@ -110,14 +129,19 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       {/* ── Breadcrumb ── */}
       <div className="sd-breadcrumb">
         <div className="sd-breadcrumb-inner">
-          <button className="sd-bc-link" onClick={onBack}>{t("sd_home", lang)}</button>
+          <button className="sd-bc-link" onClick={onBackHome}>{t("sd_home", lang)}</button>
           <span className="sd-bc-sep">›</span>
-          <button className="sd-bc-link" onClick={onBack}>{t("sd_services", lang)}</button>
+          <button className="sd-bc-link" onClick={onBackServices}>{t("sd_services", lang)}</button>
           <span className="sd-bc-sep">›</span>
           <span className="sd-bc-link">{lang === "tr" ? detail.categoryTr : detail.category}</span>
           <span className="sd-bc-sep">›</span>
           <span className="sd-bc-current">{lang === "tr" ? detail.titleTr : detail.title}</span>
         </div>
+      </div>
+
+      <div style={{ maxWidth: "1180px", margin: "0 auto", padding: "1rem 1.5rem 0" }}>
+        <button className="static-back-btn" onClick={onBackHome}>{t("back_home", lang)}</button>
+        <button className="static-back-btn" onClick={onBackServices} style={{ marginLeft: "1rem" }}>{t("back_services", lang)}</button>
       </div>
 
       {/* ── Body ── */}
@@ -187,7 +211,17 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
             {workers.map((worker) => (
               <article className="worker-card" key={worker.id}>
                 <div className="worker-card-top">
-                  <div className="worker-avatar">{worker.fullName.charAt(0)}</div>
+                  <div className="worker-avatar">
+                    {worker.avatarUrl ? (
+                      <img
+                        src={worker.avatarUrl}
+                        alt={worker.fullName}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                      />
+                    ) : (
+                      worker.fullName.charAt(0)
+                    )}
+                  </div>
                   <div className="worker-meta">
                     <div className="worker-name-row">
                       <span className="worker-name">{worker.fullName}</span>
@@ -210,12 +244,12 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
                 </div>
                 <div className="worker-footer">
                   <div className="worker-price">
-                    <span className="price-amount">&#8364;{worker.hourlyPrice}</span>
+                    <span className="price-amount">₺{worker.hourlyPrice}</span>
                     <span className="price-unit"> {t("hour", lang)}</span>
                   </div>
                   <button
                     className="btn-primary btn-book"
-                    onClick={() => handleBook(worker)}
+                    onClick={() => handleStartBooking()}
                   >
                     {t("book_now", lang)}
                   </button>
@@ -227,25 +261,62 @@ export default function ServiceDetailPage({ serviceId, onBack }: Props) {
       </section>
 
       <footer className="footer">
-        <button className="nav-logo-btn" onClick={onBack}>
+        <button className="nav-logo-btn" onClick={onBackHome}>
           <img src="/logo.png" alt="UstaYolda" height={26} />
         </button>
-        <p>&#169; {new Date().getFullYear()} UstaYolda.com &#8212; All rights reserved.</p>
+        <p>© {new Date().getFullYear()} UstaYolda.com — {t("footer_rights", lang)}</p>
       </footer>
 
       {showAuth && (
         <AuthModal onClose={() => setShowAuth(false)} onSuccess={() => setShowAuth(false)} />
       )}
 
-      {checkoutWorker && (
+      {bookingStep === "describe" && (
+        <TaskDescriptionModal
+          serviceName={lang === "tr" ? detail.titleTr : detail.title}
+          onConfirm={handleTaskDescriptionConfirm}
+          onCancel={() => setBookingStep(null)}
+        />
+      )}
+
+      {bookingStep === "browse" && taskDescription && (
+        <WorkerBrowsingModal
+          workers={workers}
+          onSelectWorker={handleWorkerSelect}
+          onBack={() => setBookingStep("describe")}
+        />
+      )}
+
+      {bookingStep === "datetime" && selectedWorker && (
+        <DateTimePickerModal
+          onConfirm={handleDateTimeConfirm}
+          onCancel={() => setBookingStep("browse")}
+        />
+      )}
+
+      {bookingStep === "confirm" && selectedWorker && selectedDate && selectedTime && taskDescription && (
         <CheckoutModal
-          worker={checkoutWorker}
+          customerId={customerId}
+          worker={selectedWorker}
           serviceTitle={lang === "tr" ? detail.titleTr : detail.title}
           catId={detail.catId}
-          onClose={() => setCheckoutWorker(null)}
+          taskDescription={taskDescription}
+          selectedDate={selectedDate}
+          selectedTime={selectedTime}
+          onClose={() => {
+            setBookingStep(null);
+            setTaskDescription(null);
+            setSelectedWorker(null);
+            setSelectedDate(null);
+            setSelectedTime(null);
+          }}
           onSuccess={(booking) => {
-            setBookingStatus(`Booking confirmed — ${booking.id}`);
-            setCheckoutWorker(null);
+            setBookingStatus(`${t("co_confirmed", lang)} — ${booking.id}`);
+            setBookingStep(null);
+            setTaskDescription(null);
+            setSelectedWorker(null);
+            setSelectedDate(null);
+            setSelectedTime(null);
             setTimeout(() => setBookingStatus(null), 5000);
           }}
         />

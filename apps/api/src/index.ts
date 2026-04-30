@@ -3,7 +3,7 @@ import Fastify from "fastify";
 import { Server } from "socket.io";
 import { registerRoutes } from "./routes.js";
 
-const app = Fastify({ logger: true });
+const app = Fastify({ logger: true, bodyLimit: 6 * 1024 * 1024 });
 await app.register(cors, { origin: true });
 
 const io = new Server(app.server, {

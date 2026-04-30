@@ -36,6 +36,9 @@ export interface AvailabilitySlot {
 export interface WorkerProfile {
   id: string;
   fullName: string;
+  avatarUrl?: string;
+  email?: string;
+  phone?: string;
   bio: string;
   categories: ServiceCategory[];
   experienceYears: number;
@@ -49,11 +52,16 @@ export interface WorkerProfile {
   location: LocationPoint;
   availability: AvailabilitySlot[];
   hourlyPrice: number;
+  bankName?: string;
+  accountHolderName?: string;
 }
 
 export interface CustomerProfile {
   id: string;
   fullName: string;
+  avatarUrl?: string;
+  email?: string;
+  phone?: string;
   location: LocationPoint;
 }
 

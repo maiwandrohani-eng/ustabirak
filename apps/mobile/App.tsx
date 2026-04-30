@@ -14,10 +14,46 @@ const API = "http://localhost:4000";
 const socket = io(API);
 
 type Role = "customer" | "worker";
+type Lang = "en" | "tr";
+
+const copy = {
+  en: {
+    subtitle: "Mobile command center for customers and workers",
+    customer: "Customer",
+    worker: "Worker",
+    workerActions: "Worker Quick Actions",
+    customerActions: "Customer Quick Actions",
+    workerBody: "Set availability, receive requests, accept jobs, and track payouts to your IBAN.",
+    customerBody: "Search categories, request instant jobs, schedule services, and track confirmations.",
+    realtime: "Realtime Activity",
+    noEvents: "No live events yet.",
+    newJob: "New job request",
+    acceptedJob: "Accepted job",
+    payoutReleased: "Payout released",
+    language: "TR",
+  },
+  tr: {
+    subtitle: "Musteriler ve ustalar icin mobil kontrol merkezi",
+    customer: "Musteri",
+    worker: "Usta",
+    workerActions: "Usta Hizli Islemleri",
+    customerActions: "Musteri Hizli Islemleri",
+    workerBody: "Musaitlik ayarlayin, talepleri alin, isleri kabul edin ve IBAN odemelerini takip edin.",
+    customerBody: "Kategorileri arayin, hizli is talep edin, hizmet planlayin ve onaylari takip edin.",
+    realtime: "Canli Etkinlik",
+    noEvents: "Henuz canli etkinlik yok.",
+    newJob: "Yeni is talebi",
+    acceptedJob: "Kabul edilen is",
+    payoutReleased: "Serbest birakilan odeme",
+    language: "EN",
+  },
+} as const;
 
 export default function App() {
   const [role, setRole] = useState<Role>("customer");
+  const [lang, setLang] = useState<Lang>("en");
   const [events, setEvents] = useState<string[]>([]);
+  const text = copy[lang];
 
   useEffect(() => {
     if (role === "customer") {
@@ -27,13 +63,13 @@ export default function App() {
     }
 
     socket.on("job:new", (payload) => {
-      setEvents((prev) => [`New job request: ${payload.job.title}`, ...prev].slice(0, 8));
+      setEvents((prev) => [`${text.newJob}: ${payload.job.title}`, ...prev].slice(0, 8));
     });
     socket.on("job:accepted", (payload) => {
-      setEvents((prev) => [`Accepted job: ${payload.job.id}`, ...prev].slice(0, 8));
+      setEvents((prev) => [`${text.acceptedJob}: ${payload.job.id}`, ...prev].slice(0, 8));
     });
     socket.on("payment:released", (payload) => {
-      setEvents((prev) => [`Payout released: ${payload.payoutAmount} EUR`, ...prev].slice(0, 8));
+      setEvents((prev) => [`${text.payoutReleased}: ${payload.payoutAmount} EUR`, ...prev].slice(0, 8));
     });
 
     return () => {
@@ -41,49 +77,54 @@ export default function App() {
       socket.off("job:accepted");
       socket.off("payment:released");
     };
-  }, [role]);
+  }, [role, text.acceptedJob, text.newJob, text.payoutReleased]);
 
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.brand}>
-          Ustaya<Text style={styles.brandAccent}>Birak</Text>
+          UstaYolda
         </Text>
-        <Text style={styles.subtitle}>Mobile command center for customers and workers</Text>
+        <View style={styles.topRow}>
+          <Text style={styles.subtitle}>{text.subtitle}</Text>
+          <TouchableOpacity style={styles.langButton} onPress={() => setLang((value) => (value === "en" ? "tr" : "en"))}>
+            <Text style={styles.langButtonText}>{text.language}</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.roleRow}>
           <TouchableOpacity
             style={[styles.roleButton, role === "customer" && styles.roleSelected]}
             onPress={() => setRole("customer")}
           >
-            <Text style={styles.roleText}>Customer</Text>
+            <Text style={styles.roleText}>{text.customer}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.roleButton, role === "worker" && styles.roleSelected]}
             onPress={() => setRole("worker")}
           >
-            <Text style={styles.roleText}>Worker</Text>
+            <Text style={styles.roleText}>{text.worker}</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>{role === "worker" ? "Worker Quick Actions" : "Customer Quick Actions"}</Text>
+          <Text style={styles.cardTitle}>{role === "worker" ? text.workerActions : text.customerActions}</Text>
           <Text style={styles.cardBody}>
             {role === "worker"
-              ? "Set availability, receive requests, accept jobs, and track payouts to your IBAN."
-              : "Search categories, request instant jobs, schedule services, and track confirmations."}
+              ? text.workerBody
+              : text.customerBody}
           </Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Realtime Activity</Text>
+          <Text style={styles.cardTitle}>{text.realtime}</Text>
           {events.map((item, index) => (
             <Text key={`${item}-${index}`} style={styles.event}>
               {item}
             </Text>
           ))}
-          {!events.length ? <Text style={styles.event}>No live events yet.</Text> : null}
+          {!events.length ? <Text style={styles.event}>{text.noEvents}</Text> : null}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -109,6 +150,24 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: "#bdbdbd"
+  },
+  topRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12
+  },
+  langButton: {
+    borderWidth: 1,
+    borderColor: "#ffffff26",
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: "#151515"
+  },
+  langButtonText: {
+    color: "#f5f5f5",
+    fontWeight: "600"
   },
   roleRow: {
     flexDirection: "row",

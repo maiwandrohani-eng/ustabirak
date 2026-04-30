@@ -1,16 +1,41 @@
 import { useEffect, useRef, useState } from "react";
-import type { WorkerProfile } from "@ustaya/shared";
-import { apiGet, apiPost } from "./api";
+import type { Role, WorkerProfile } from "@ustaya/shared";
+import { apiGet } from "./api";
 import { socket } from "./socket";
 import ServiceDetailPage from "./ServiceDetailPage";
 import BecomeWorkerPage from "./BecomeWorkerPage";
 import AuthModal from "./AuthModal";
 import CheckoutModal, { type BookingRecord } from "./CheckoutModal";
+import TaskDescriptionModal, { type TaskDescription } from "./TaskDescriptionModal";
+import DateTimePickerModal from "./DateTimePickerModal";
 import MyBookingsPage from "./MyBookingsPage";
 import UserProfilePage from "./UserProfilePage";
 import WorkerDashboardPage from "./WorkerDashboardPage";
+import { SERVICE_DETAILS } from "./serviceData";
 import { useLang } from "./LangContext";
 import { t } from "./translations";
+
+interface AppUser {
+  id: string;
+  fullName: string;
+  role: Role;
+  avatarUrl?: string;
+  email?: string;
+  phone?: string;
+  location?: {
+    city: string;
+    district?: string;
+  };
+}
+
+interface BookingFlowState {
+  worker: WorkerProfile;
+  serviceTitle: string;
+  catId: string;
+  taskDescription?: TaskDescription;
+  selectedDate?: string;
+  selectedTime?: string;
+}
 
 const ElectricalIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -79,190 +104,244 @@ const CAT_LABEL: Record<string, { en: string; tr: string }> = {
   _trending:   { en: "Trending",     tr: "Popüler" },
 };
 
+const SUB_PILL_PAGE_MAP: Record<string, string> = {
+  "Outlet Repair": "Electrical Help",
+  "Light Fixture Install": "Light Installation",
+  "Fuse Box": "Electrical Help",
+  "Smart Wiring": "Smart Home Installation",
+  "Circuit Breaker": "Electrical Help",
+  "Leak Repair": "Plumbing",
+  "Tap & Faucet": "Plumbing",
+  "Toilet Fix": "Plumbing",
+  "Pipe Inspection": "Plumbing",
+  "Boiler Check": "Plumbing",
+  "Deep Clean": "Deep Cleaning",
+  "Regular Clean": "Cleaning",
+  "Office Clean": "Office Services",
+  "Move-Out Clean": "Cleaning",
+  "Window Clean": "Cleaning",
+  "Interior Painting": "Painting",
+  "Exterior Painting": "Painting",
+  "Wallpapering": "Wallpapering Service",
+  "Accent Wall": "Painting",
+  "Wood Staining": "Painting",
+  "AC Service": "Install Air Conditioner",
+  "AC Install": "Install Air Conditioner",
+  "Heating Repair": "Home Maintenance",
+  "Filter Change": "Home Maintenance",
+  "Duct Cleaning": "Home Maintenance",
+  "Help Moving": "Help Moving",
+  "Packing & Unpacking": "Packing Services & Help",
+  "Furniture Removal": "Furniture Removal",
+  "Heavy Lifting": "Heavy Lifting",
+  "Junk Removal": "Junk Pickup",
+  "Door & Cabinet": "Door, Cabinet & Furniture Repair",
+  "Wall Repair": "Drywall Repair Service",
+  "Flooring Help": "Flooring & Tiling Help",
+  "Appliance Install": "Appliance Installation & Repairs",
+  "Light Carpentry": "Carpentry Services",
+  "General Cleaning": "Cleaning",
+  "Light Fixture": "Light Installation",
+};
+
 const CATEGORIES = [
   { id: "electrician", label: "Electrical", Icon: ElectricalIcon, accent: "#fff4f2", iconBg: "#fde8e4",
     subs: ["Outlet Repair", "Light Fixture Install", "Fuse Box", "Smart Wiring", "Circuit Breaker"],
-    headline: "Electrical Help",
+    headline: "Electrical Help",        headlineTr: "Elektrik Yardımı",
     bullets: ["Fix outlets, switches, and power issues safely.", "Install light fixtures, fans, and smart home devices."],
-    trending: "Smart home setups, EV charger installs, and LED upgrades are highly requested." },
+    bulletsTr: ["Priz, anahtar ve elektrik sorunlarını güvenle çözün.", "Aydınlatma armatürleri, fanlar ve akıllı ev cihazları kurun."],
+    trending: "Smart home setups, EV charger installs, and LED upgrades are highly requested.",
+    trendingTr: "Akıllı ev kurulumları, EV şarj cihazları ve LED yükseltmeleri yoğun talep görüyor." },
   { id: "plumber", label: "Plumbing", Icon: PlumbingIcon, accent: "#f0f7ff", iconBg: "#d6eaff",
     subs: ["Leak Repair", "Tap & Faucet", "Toilet Fix", "Pipe Inspection", "Boiler Check"],
-    headline: "Plumbing Services",
+    headline: "Plumbing Services",      headlineTr: "Su Tesisatı Hizmetleri",
     bullets: ["Fix leaks, blocked drains, and burst pipes fast.", "Install taps, boilers, and bathroom fixtures."],
-    trending: "Boiler servicing, smart showers, and water-saving faucets." },
+    bulletsTr: ["Su kaçaklarını, tıkalı boruları ve patlak boruları hızla çözün.", "Musluklar, kazanlar ve banyo armatürleri kurulumu yapın."],
+    trending: "Boiler servicing, smart showers, and water-saving faucets.",
+    trendingTr: "Kazan servisi, akıllı duşlar ve su tasarruflu musluklar." },
   { id: "cleaning", label: "Cleaning", Icon: CleaningIcon, accent: "#f3fbff", iconBg: "#caeeff",
     subs: ["Deep Clean", "Regular Clean", "Office Clean", "Move-Out Clean", "Window Clean"],
-    headline: "Cleaning",
+    headline: "Cleaning",               headlineTr: "Temizlik",
     bullets: ["Clean your home or office; deep clean appliances and every space.", "Eco-friendly products and professional-grade equipment."],
-    trending: "Post-renovation deep cleans and eco-friendly cleaning kits." },
+    bulletsTr: ["Ev veya ofisinizi temizleyin; cihazları ve her alanı derinlemesine temizleyin.", "Çevre dostu ürünler ve profesyonel ekipmanlarla."],
+    trending: "Post-renovation deep cleans and eco-friendly cleaning kits.",
+    trendingTr: "Tadilat sonrası derin temizlik ve çevre dostu temizlik kitleri." },
   { id: "painting", label: "Painting", Icon: PaintingIcon, accent: "#fff8f0", iconBg: "#fde6c8",
     subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"],
-    headline: "Painting",
+    headline: "Painting",               headlineTr: "Boyama",
     bullets: ["Paint walls, ceilings, molding, and doors; includes prep and cleanup.", "Color blocking, feature walls, and specialist finishes."],
-    trending: "Limewash finishes, accent walls, and bold statement colors." },
+    bulletsTr: ["Duvarlar, tavanlar, pervazlar ve kapıları boyayın; hazırlık ve temizlik dahildir.", "Renk blokları, özellik duvarları ve uzman kaplamalar."],
+    trending: "Limewash finishes, accent walls, and bold statement colors.",
+    trendingTr: "Kireç boyaları, aksan duvarlar ve cesur renkler popüler." },
   { id: "ac-repair", label: "AC & Heating", Icon: AcIcon, accent: "#f0fafc", iconBg: "#c8ecf8",
     subs: ["AC Service", "AC Install", "Heating Repair", "Filter Change", "Duct Cleaning"],
-    headline: "AC & Heating",
+    headline: "AC & Heating",           headlineTr: "Klima & Isıtma",
     bullets: ["Service, repair, and install air conditioning and heating units.", "Seasonal maintenance to keep your home comfortable all year."],
-    trending: "Smart thermostats, energy-efficient units, and air quality sensors." },
+    bulletsTr: ["Klima ve ısıtma sistemleri için bakım, onarım ve kurulum.", "Evinizi yıl boyunca konforlu tutmak için mevsimlik bakım."],
+    trending: "Smart thermostats, energy-efficient units, and air quality sensors.",
+    trendingTr: "Akıllı termostatlar, enerji verimli cihazlar ve hava kalitesi sensörleri." },
   { id: "moving", label: "Moving", Icon: MovingIcon, accent: "#f5fff2", iconBg: "#c8f0be",
     subs: ["Help Moving", "Packing & Unpacking", "Furniture Removal", "Heavy Lifting", "Junk Removal"],
-    headline: "Moving",
+    headline: "Moving",                 headlineTr: "Nakliyat",
     bullets: ["Packing, loading, and lifting help for any move size.", "Single-item moves, apartment moves, and junk removal."],
-    trending: "Single-item moves, last-mile delivery, and apartment relocations." },
+    bulletsTr: ["Her boyutta taşıma için paketleme, yükleme ve kaldırma yardımı.", "Tek parça taşıma, daire taşıma ve hurda kaldırma."],
+    trending: "Single-item moves, last-mile delivery, and apartment relocations.",
+    trendingTr: "Tek parça taşıma, son kilometre teslimat ve daire taşınmaları." },
   { id: "other", label: "Home Repairs", Icon: RepairIcon, accent: "#fffbf0", iconBg: "#faeabe",
     subs: ["Door & Cabinet", "Wall Repair", "Flooring Help", "Appliance Install", "Light Carpentry"],
-    headline: "Home Repairs",
+    headline: "Home Repairs",           headlineTr: "Ev Tamiratı",
     bullets: ["Home improvements: plumbing, electrical, and appliance installation.", "Small fixes done right — no job is too small."],
-    trending: "Smart home devices, energy-efficient appliances, and bathroom upgrades." },
+    bulletsTr: ["Ev bakımı: tesisat, elektrik ve beyaz eşya kurulumu.", "Küçük onarımlar doğru yapılır — hiçbir iş küçük değildir."],
+    trending: "Smart home devices, energy-efficient appliances, and bathroom upgrades.",
+    trendingTr: "Akıllı ev cihazları, enerji verimli beyaz eşyalar ve banyo yenilemeleri." },
   { id: "_trending", label: "Trending", Icon: TrendingIcon, accent: "#fff4f2", iconBg: "#ffcdc6",
     subs: ["Help Moving", "General Cleaning", "Appliance Install", "AC Service", "Light Fixture"],
-    headline: "Trending Now",
+    headline: "Trending Now",           headlineTr: "Şu An Popüler",
     bullets: ["Discover the most-booked services on the platform this week.", "Book a top-rated worker before they fill up."],
-    trending: "Spring cleaning, AC tune-ups, and smart lighting are all surging." },
+    bulletsTr: ["Bu hafta platformdaki en çok rezerve edilen hizmetleri keşfedin.", "Dolmadan önce en yüksek puanlı ustayı rezerve edin."],
+    trending: "Spring cleaning, AC tune-ups, and smart lighting are all surging.",
+    trendingTr: "Bahar temizliği, klima ayarı ve akıllı aydınlatma yoğun talep görüyor." },
 ] as const;
 
 type CatId = (typeof CATEGORIES)[number]["id"];
 
 const POPULAR_PROJECTS = [
-  { emoji: "🪑", title: "Furniture Assembly", startPrice: 199, color: "#eef0ff", page: "Furniture Assembly" },
-  { emoji: "🖼️", title: "Mount Art or Shelves", startPrice: 249, color: "#fff0f0", page: "Mounting & Installation" },
-  { emoji: "📺", title: "Mount a TV", startPrice: 269, color: "#f0fff8", page: "Mounting & Installation" },
-  { emoji: "🚚", title: "Help Moving", startPrice: 279, color: "#fff8f0", page: "Moving Services" },
-  { emoji: "🧹", title: "Home Cleaning", startPrice: 199, color: "#f0f8ff", page: "Cleaning" },
-  { emoji: "🔧", title: "Minor Plumbing Repair", startPrice: 299, color: "#fffff0", page: "Handyman" },
-  { emoji: "⚡", title: "Electrical Help", startPrice: 279, color: "#fffaf0", page: "Handyman" },
-  { emoji: "💪", title: "Heavy Lifting", startPrice: 249, color: "#fff0fc", page: "Moving Services" },
+  { emoji: "🪑", title: "Furniture Assembly",    titleTr: "Mobilya Montajı",          startPrice: 199, color: "#eef0ff", page: "Furniture Assembly" },
+  { emoji: "🖼️", title: "Mount Art or Shelves", titleTr: "Tablo veya Raf Asma",       startPrice: 249, color: "#fff0f0", page: "Mounting & Installation" },
+  { emoji: "📺", title: "Mount a TV",            titleTr: "TV Montajı",               startPrice: 269, color: "#f0fff8", page: "Mounting & Installation" },
+  { emoji: "🚚", title: "Help Moving",           titleTr: "Taşıma Yardımı",           startPrice: 279, color: "#fff8f0", page: "Moving Services" },
+  { emoji: "🧹", title: "Home Cleaning",         titleTr: "Ev Temizliği",             startPrice: 199, color: "#f0f8ff", page: "Cleaning" },
+  { emoji: "🔧", title: "Minor Plumbing Repair", titleTr: "Küçük Tesisat Tamiri",     startPrice: 299, color: "#fffff0", page: "Handyman" },
+  { emoji: "⚡", title: "Electrical Help",       titleTr: "Elektrik Yardımı",         startPrice: 279, color: "#fffaf0", page: "Handyman" },
+  { emoji: "💪", title: "Heavy Lifting",         titleTr: "Ağır Kaldırma",            startPrice: 249, color: "#fff0fc", page: "Moving Services" },
 ];
 
 const REVIEWS = [
   {
-    name: "Mehmet K.",
-    stars: 5,
-    text: "The worker arrived on time and assembled our IKEA wardrobe perfectly in under an hour. Very professional and cleaned up everything afterward.",
-    service: "IKEA Furniture Assembly",
-    page: "IKEA Services",
-  },
-  {
     name: "Ayşe D.",
     stars: 5,
     text: "Fantastic service! They mounted our TV and two shelves exactly where we wanted. Quick, tidy and friendly. Will definitely book again.",
+    textTr: "Harika hizmet! TV'mizi ve iki rafa tam istediğimiz yere monte ettiler. Hızlı, düzenli ve güler yüzlü. Kesinlikle tekrar rezervasyon yapacağız.",
     service: "Mounting & Installation",
+    serviceTr: "Montaj & Kurulum",
     page: "Mounting & Installation",
   },
   {
     name: "Ali R.",
     stars: 5,
     text: "We had the whole apartment deep-cleaned before moving in. The difference was incredible — spotless from top to bottom. Highly recommend!",
+    textTr: "Taşınmadan önce tüm apartmanı derinlemesine temizlettirdik. Fark inanılmazdı — baştan sona tertemiz. Kesinlikle tavsiye ederim!",
     service: "Home Cleaning",
+    serviceTr: "Ev Temizliği",
     page: "Cleaning",
   },
 ];
 
 const SERVICE_QUICK_LINKS = [
-  { label: "General Mounting", page: "Mounting & Installation" },
-  { label: "TV Mounting", page: "Mounting & Installation" },
+  { label: "General Mounting", page: "General Mounting" },
+  { label: "TV Mounting", page: "TV Mounting" },
   { label: "Furniture Assembly", page: "Furniture Assembly" },
-  { label: "IKEA Furniture Assembly", page: "IKEA Services" },
-  { label: "Help Moving", page: "Moving Services" },
+  { label: "Help Moving", page: "Help Moving" },
   { label: "House Cleaning", page: "Cleaning" },
   { label: "Yardwork", page: "Yardwork" },
-  { label: "Furniture Removal", page: "Moving Services" },
+  { label: "Furniture Removal", page: "Furniture Removal" },
   { label: "Lawn Care", page: "Yardwork" },
   { label: "Hang Pictures", page: "Mounting & Installation" },
   { label: "In Home Furniture Movers", page: "Moving Services" },
-  { label: "Shelf Mounting", page: "Mounting & Installation" },
+  { label: "Shelf Mounting", page: "Install Shelves, Rods & Hooks" },
   { label: "Light Installation", page: "Handyman" },
-  { label: "Plumbing", page: "Handyman" },
-  { label: "Electrical Help", page: "Handyman" },
-  { label: "Home Repairs", page: "Handyman" },
+  { label: "Plumbing", page: "Plumbing" },
+  { label: "Electrical Help", page: "Electrical Help" },
+  { label: "Home Repairs", page: "Home Repairs" },
   { label: "Painting", page: "Painting" },
   { label: "Personal Assistant", page: "Personal Assistant" },
 ];
 
-const SEARCH_INDEX: { label: string; page: string }[] = [
-  { label: "Handyman", page: "Handyman" },
-  { label: "Cleaning", page: "Cleaning" },
-  { label: "Furniture Assembly", page: "Furniture Assembly" },
-  { label: "Mounting & Installation", page: "Mounting & Installation" },
-  { label: "Moving Services", page: "Moving Services" },
-  { label: "Yardwork", page: "Yardwork" },
-  { label: "Shopping & Delivery", page: "Shopping & Delivery" },
-  { label: "IKEA Services", page: "IKEA Services" },
-  { label: "Painting", page: "Painting" },
-  { label: "Virtual & Online Tasks", page: "Virtual & Online Tasks" },
-  { label: "Office Services", page: "Office Services" },
-  { label: "Baby Prep", page: "Baby Prep" },
-  { label: "Holidays", page: "Holidays" },
-  { label: "Winter Tasks", page: "Winter Tasks" },
-  { label: "Personal Assistant", page: "Personal Assistant" },
-  { label: "Contactless Tasks", page: "Contactless Tasks" },
-  { label: "Featured Tasks", page: "Featured Tasks" },
-  { label: "Door, Cabinet & Furniture Repair", page: "Door, Cabinet & Furniture Repair" },
-  { label: "Appliance Installation & Repairs", page: "Appliance Installation & Repairs" },
-  { label: "TV Mounting", page: "TV Mounting" },
-  { label: "Drywall Repair Service", page: "Drywall Repair Service" },
-  { label: "Flooring & Tiling Help", page: "Flooring & Tiling Help" },
-  { label: "Electrical Help", page: "Electrical Help" },
-  { label: "Plumbing", page: "Plumbing" },
-  { label: "Window & Blinds Repair", page: "Window & Blinds Repair" },
-  { label: "Ceiling Fan Installation", page: "Ceiling Fan Installation" },
-  { label: "Smart Home Installation", page: "Smart Home Installation" },
-  { label: "Heavy Lifting", page: "Moving Services" },
-  { label: "Install Air Conditioner", page: "Install Air Conditioner" },
-  { label: "Home Maintenance", page: "Home Maintenance" },
-  { label: "Baby Proofing", page: "Baby Prep" },
-  { label: "Carpentry Services", page: "Carpentry Services" },
-  { label: "General Mounting", page: "Mounting & Installation" },
-  { label: "Cabinet Installation", page: "Cabinet Installation" },
-  { label: "Wallpapering Service", page: "Wallpapering Service" },
-  { label: "Fence Installation & Repair", page: "Fence Installation & Repair" },
-  { label: "Deck Restoration Services", page: "Deck Restoration Services" },
-  { label: "Doorbell Installation", page: "Doorbell Installation" },
-  { label: "Home Repairs", page: "Home Repairs" },
-  { label: "Sealing & Caulking", page: "Sealing & Caulking" },
-  { label: "Home Theater Installing", page: "Home Theater Installing" },
-  { label: "House Cleaning Services", page: "Cleaning" },
-  { label: "Deep Cleaning", page: "Cleaning" },
-  { label: "Move In Cleaning", page: "Cleaning" },
-  { label: "Move Out Cleaning", page: "Cleaning" },
-  { label: "Carpet Cleaning Service", page: "Cleaning" },
-  { label: "Garage Cleaning", page: "Cleaning" },
-  { label: "Spring Cleaning", page: "Cleaning" },
-  { label: "Pressure Washing", page: "Cleaning" },
-  { label: "Patio Furniture Assembly", page: "Furniture Assembly" },
-  { label: "Desk Assembly", page: "Furniture Assembly" },
-  { label: "Bed Assembly", page: "Furniture Assembly" },
-  { label: "Bookshelf Assembly", page: "Furniture Assembly" },
-  { label: "Wardrobe Assembly", page: "Furniture Assembly" },
-  { label: "Install Shelves, Rods & Hooks", page: "Mounting & Installation" },
-  { label: "Hang Art, Mirror & Decor", page: "Mounting & Installation" },
-  { label: "Hang Christmas Lights", page: "Mounting & Installation" },
-  { label: "Help Moving", page: "Moving Services" },
-  { label: "Packing Services & Help", page: "Moving Services" },
-  { label: "Junk Pickup", page: "Moving Services" },
-  { label: "Furniture Removal", page: "Moving Services" },
-  { label: "Mattress Pick-Up & Removal", page: "Moving Services" },
-  { label: "Gardening Services", page: "Yardwork" },
-  { label: "Lawn Mowing Services", page: "Yardwork" },
-  { label: "Landscaping Services", page: "Yardwork" },
-  { label: "Tree Trimming Service", page: "Yardwork" },
-  { label: "Gutter Cleaning", page: "Yardwork" },
-  { label: "Weed Removal", page: "Yardwork" },
-  { label: "Grocery Shopping & Delivery", page: "Shopping & Delivery" },
-  { label: "Delivery Service", page: "Shopping & Delivery" },
-  { label: "Running Your Errands", page: "Shopping & Delivery" },
-  { label: "Interior Painting", page: "Painting" },
-  { label: "Exterior Painting", page: "Painting" },
-  { label: "Accent Wall", page: "Painting" },
-  { label: "Wood Staining", page: "Painting" },
-  { label: "Virtual Assistant", page: "Virtual & Online Tasks" },
-  { label: "Data Entry", page: "Virtual & Online Tasks" },
-  { label: "Computer Help", page: "Virtual & Online Tasks" },
-  { label: "Snow Removal", page: "Winter Tasks" },
-  { label: "Gift Wrapping Services", page: "Holidays" },
-  { label: "Holiday Decorating", page: "Holidays" },
-  { label: "Christmas Tree Delivery", page: "Holidays" },
+const SEARCH_INDEX: { label: string; labelTr: string; page: string }[] = [
+  { label: "Handyman", labelTr: "Tamirci", page: "Handyman" },
+  { label: "Cleaning", labelTr: "Temizlik", page: "Cleaning" },
+  { label: "Furniture Assembly", labelTr: "Mobilya Kurulum", page: "Furniture Assembly" },
+  { label: "Mounting & Installation", labelTr: "Montaj ve Kurulum", page: "Mounting & Installation" },
+  { label: "Moving Services", labelTr: "Taşıma Hizmetleri", page: "Moving Services" },
+  { label: "Yardwork", labelTr: "Bahçe İşleri", page: "Yardwork" },
+  { label: "Shopping & Delivery", labelTr: "Alışveriş ve Teslimat", page: "Shopping & Delivery" },
+  { label: "Painting", labelTr: "Boyama", page: "Painting" },
+  { label: "Virtual & Online Tasks", labelTr: "Sanal ve Online İşler", page: "Virtual & Online Tasks" },
+  { label: "Office Services", labelTr: "Ofis Hizmetleri", page: "Office Services" },
+  { label: "Baby Prep", labelTr: "Bebek Hazırlığı", page: "Baby Prep" },
+  { label: "Holidays", labelTr: "Tatil Dekorasyonu", page: "Holidays" },
+  { label: "Winter Tasks", labelTr: "Kış İşleri", page: "Winter Tasks" },
+  { label: "Personal Assistant", labelTr: "Kişisel Asistan", page: "Personal Assistant" },
+  { label: "Contactless Tasks", labelTr: "Temassız Görevler", page: "Contactless Tasks" },
+  { label: "Featured Tasks", labelTr: "Öne Çıkan Görevler", page: "Featured Tasks" },
+  { label: "Door, Cabinet & Furniture Repair", labelTr: "Kapı, Dolap ve Mobilya Tamiri", page: "Door, Cabinet & Furniture Repair" },
+  { label: "Appliance Installation & Repairs", labelTr: "Cihaz Kurulumu ve Tamiri", page: "Appliance Installation & Repairs" },
+  { label: "TV Mounting", labelTr: "TV Montajı", page: "TV Mounting" },
+  { label: "Drywall Repair Service", labelTr: "Alçıpan Tamiri", page: "Drywall Repair Service" },
+  { label: "Flooring & Tiling Help", labelTr: "Zemin ve Fayans Yardımı", page: "Flooring & Tiling Help" },
+  { label: "Electrical Help", labelTr: "Elektrik Yardımı", page: "Electrical Help" },
+  { label: "Plumbing", labelTr: "Sıhhi Tesisat", page: "Plumbing" },
+  { label: "Window & Blinds Repair", labelTr: "Pencere ve Stor Tamiri", page: "Window & Blinds Repair" },
+  { label: "Ceiling Fan Installation", labelTr: "Tavan Vantilatörü Kurulumu", page: "Ceiling Fan Installation" },
+  { label: "Smart Home Installation", labelTr: "Akıllı Ev Kurulumu", page: "Smart Home Installation" },
+  { label: "Heavy Lifting", labelTr: "Ağır Taşıma", page: "Heavy Lifting" },
+  { label: "Install Air Conditioner", labelTr: "Klima Kurulumu", page: "Install Air Conditioner" },
+  { label: "Home Maintenance", labelTr: "Ev Bakımı", page: "Home Maintenance" },
+  { label: "Baby Proofing", labelTr: "Bebek Güvenliği", page: "Baby Prep" },
+  { label: "Carpentry Services", labelTr: "Marangozluk", page: "Carpentry Services" },
+  { label: "General Mounting", labelTr: "Genel Montaj", page: "General Mounting" },
+  { label: "Cabinet Installation", labelTr: "Dolap Kurulumu", page: "Cabinet Installation" },
+  { label: "Wallpapering Service", labelTr: "Duvar Kağıdı Servis", page: "Wallpapering Service" },
+  { label: "Fence Installation & Repair", labelTr: "Çit Kurulumu ve Tamiri", page: "Fence Installation & Repair" },
+  { label: "Deck Restoration Services", labelTr: "Deck Restorasyon", page: "Deck Restoration Services" },
+  { label: "Doorbell Installation", labelTr: "Kapı Zili Kurulumu", page: "Doorbell Installation" },
+  { label: "Home Repairs", labelTr: "Ev Tamiri", page: "Home Repairs" },
+  { label: "Sealing & Caulking", labelTr: "Sızdırmazlık ve Derz", page: "Sealing & Caulking" },
+  { label: "Home Theater Installing", labelTr: "Ev Sineması Kurulumu", page: "Home Theater Installing" },
+  { label: "House Cleaning Services", labelTr: "Ev Temizlik Hizmetleri", page: "Cleaning" },
+  { label: "Deep Cleaning", labelTr: "Derin Temizlik", page: "Deep Cleaning" },
+  { label: "Move In Cleaning", labelTr: "Taşınma Öncesi Temizlik", page: "Move In Cleaning" },
+  { label: "Move Out Cleaning", labelTr: "Taşınma Sonrası Temizlik", page: "Cleaning" },
+  { label: "Carpet Cleaning Service", labelTr: "Halı Temizleme", page: "Carpet Cleaning Service" },
+  { label: "Garage Cleaning", labelTr: "Garaj Temizliği", page: "Cleaning" },
+  { label: "Spring Cleaning", labelTr: "Bahar Temizliği", page: "Spring Cleaning" },
+  { label: "Pressure Washing", labelTr: "Basınçlı Yıkama", page: "Cleaning" },
+  { label: "Disinfecting Services", labelTr: "Dezenfeksiyon Hizmeti", page: "Disinfecting Services" },
+  { label: "Patio Furniture Assembly", labelTr: "Bahçe Mobilyası Kurulumu", page: "Furniture Assembly" },
+  { label: "Desk Assembly", labelTr: "Masa Kurulumu", page: "Furniture Assembly" },
+  { label: "Bed Assembly", labelTr: "Yatak Kurulumu", page: "Furniture Assembly" },
+  { label: "Bookshelf Assembly", labelTr: "Kitaplık Kurulumu", page: "Furniture Assembly" },
+  { label: "Wardrobe Assembly", labelTr: "Gardırop Kurulumu", page: "Furniture Assembly" },
+  { label: "Install Shelves, Rods & Hooks", labelTr: "Raf, Askı ve Kanca Kurulumu", page: "Install Shelves, Rods & Hooks" },
+  { label: "Hang Art, Mirror & Decor", labelTr: "Tablo, Ayna ve Dekor Asma", page: "Hang Art, Mirror & Decor" },
+  { label: "Hang Christmas Lights", labelTr: "Yılbaşı Işığı Asma", page: "Mounting & Installation" },
+  { label: "Help Moving", labelTr: "Taşınma Yardımı", page: "Help Moving" },
+  { label: "Packing Services & Help", labelTr: "Paketleme Hizmeti", page: "Packing Services & Help" },
+  { label: "Junk Pickup", labelTr: "Hurda Toplama", page: "Junk Pickup" },
+  { label: "Furniture Removal", labelTr: "Mobilya Kaldırma", page: "Furniture Removal" },
+  { label: "Mattress Pick-Up & Removal", labelTr: "Yatak Alma ve Kaldırma", page: "Moving Services" },
+  { label: "Gardening Services", labelTr: "Bahçe Bakımı", page: "Gardening Services" },
+  { label: "Lawn Mowing Services", labelTr: "Çim Biçme", page: "Lawn Mowing Services" },
+  { label: "Landscaping Services", labelTr: "Peyzaj Hizmetleri", page: "Yardwork" },
+  { label: "Tree Trimming Service", labelTr: "Ağaç Budama", page: "Tree Trimming Service" },
+  { label: "Gutter Cleaning", labelTr: "Oluk Temizliği", page: "Yardwork" },
+  { label: "Weed Removal", labelTr: "Yabani Ot Temizleme", page: "Weed Removal" },
+  { label: "Hedge Trimming Service", labelTr: "Çit Budama", page: "Hedge Trimming Service" },
+  { label: "Grocery Shopping & Delivery", labelTr: "Market Alışverişi ve Teslimat", page: "Grocery Shopping & Delivery" },
+  { label: "Delivery Service", labelTr: "Teslimat Hizmeti", page: "Shopping & Delivery" },
+  { label: "Running Your Errands", labelTr: "İş Takibi", page: "Running Your Errands" },
+  { label: "Wait in Line", labelTr: "Kuyrukta Bekleme", page: "Wait in Line" },
+  { label: "Interior Painting", labelTr: "İç Mekan Boyama", page: "Painting" },
+  { label: "Exterior Painting", labelTr: "Dış Cephe Boyama", page: "Painting" },
+  { label: "Accent Wall", labelTr: "Vurgu Duvarı Boyama", page: "Painting" },
+  { label: "Wood Staining", labelTr: "Ahşap Boyama", page: "Painting" },
+  { label: "Virtual Assistant", labelTr: "Sanal Asistan", page: "Virtual & Online Tasks" },
+  { label: "Data Entry", labelTr: "Veri Girişi", page: "Virtual & Online Tasks" },
+  { label: "Computer Help", labelTr: "Bilgisayar Yardımı", page: "Virtual & Online Tasks" },
+  { label: "Snow Removal", labelTr: "Kar Temizleme", page: "Winter Tasks" },
+  { label: "Gift Wrapping Services", labelTr: "Hediye Paketleme", page: "Holidays" },
+  { label: "Holiday Decorating", labelTr: "Tatil Dekorasyonu", page: "Holidays" },
+  { label: "Christmas Tree Delivery", labelTr: "Yılbaşı Ağacı Teslimatı", page: "Holidays" },
 ];
 
 const STATIC_PAGES: Record<string, { title: string; sections: { heading: string; body: string }[] }> = {
@@ -365,6 +444,8 @@ const STATIC_PAGES_TR: Record<string, { title: string; sections: { heading: stri
 export default function App() {
   const [activeCat, setActiveCat] = useState<CatId>("electrician");
   const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [activePage, setActivePage] = useState<string | null>(null);
+  const [workers, setWorkers] = useState<WorkerProfile[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const { lang, setLang } = useLang();
   const LangToggle = () => (
@@ -373,36 +454,53 @@ export default function App() {
     </button>
   );
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [workers, setWorkers] = useState<WorkerProfile[]>([]);
-  const [statusLog, setStatusLog] = useState<string[]>([]);
-  const [bookingInProgress, setBookingInProgress] = useState(false);
-  const [activePage, setActivePage] = useState<string | null>(null);
+  const [statusLog, setStatusLog] = useState<Array<{ key: string; id: string }>>([]);
   const [showAuth, setShowAuth] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{ id: string; fullName: string; role: string } | null>(null);
+  const [authRole, setAuthRole] = useState<"customer" | "worker">("customer");
+  const [currentUser, setCurrentUser] = useState<AppUser | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [checkoutTarget, setCheckoutTarget] = useState<{ worker: WorkerProfile; serviceTitle: string; catId: string } | null>(null);
-  const [bookings, setBookings] = useState<BookingRecord[]>([]);
+  const [bookingFlow, setBookingFlow] = useState<BookingFlowState | null>(null);
+  const [bookingStep, setBookingStep] = useState<null | "describe" | "datetime" | "confirm">(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const customerId = "c1";
-  const category = CATEGORIES.find((c) => c.id === activeCat)!
+  const customerId = currentUser?.role === "customer" ? currentUser.id : "c1";
+  const category = CATEGORIES.find((c) => c.id === activeCat)!;
+
+  const resetBookingFlow = () => {
+    setBookingFlow(null);
+    setBookingStep(null);
+  };
 
   useEffect(() => {
-    socket.emit("join:customer", customerId);
+    if (currentUser?.role === "worker") {
+      socket.emit("join:worker", currentUser.id);
+    } else {
+      socket.emit("join:customer", customerId);
+    }
+
+    socket.on("job:pending", (p: { job: { id: string } }) =>
+      setStatusLog((prev) => [{ key: "status_pending_worker", id: p.job.id }, ...prev].slice(0, 5))
+    );
     socket.on("job:accepted", (p) =>
-      setStatusLog((prev) => [`Worker accepted — job ${p.job.id}`, ...prev].slice(0, 5))
+      setStatusLog((prev) => [{ key: "status_accepted", id: p.job.id }, ...prev].slice(0, 5))
     );
     socket.on("job:started", (p) =>
-      setStatusLog((prev) => [`Worker is on the way — ${p.job.id}`, ...prev].slice(0, 5))
+      setStatusLog((prev) => [{ key: "status_started", id: p.job.id }, ...prev].slice(0, 5))
     );
     socket.on("job:completed", (p) =>
-      setStatusLog((prev) => [`Job completed — ${p.job.id}`, ...prev].slice(0, 5))
+      setStatusLog((prev) => [{ key: "status_completed", id: p.job.id }, ...prev].slice(0, 5))
     );
+    socket.on("job:cancelled", (p: { job: { id: string }; reason?: string }) => {
+      const key = p.reason === "Worker declined" ? "status_declined" : "status_booking_cancelled";
+      setStatusLog((prev) => [{ key, id: p.job.id }, ...prev].slice(0, 5));
+    });
     return () => {
+      socket.off("job:pending");
       socket.off("job:accepted");
       socket.off("job:started");
       socket.off("job:completed");
+      socket.off("job:cancelled");
     };
-  }, []);
+  }, [currentUser?.id, currentUser?.role, customerId]);
 
   useEffect(() => {
     const apiCat = activeCat === "_trending" ? "cleaning" : activeCat;
@@ -415,13 +513,30 @@ export default function App() {
   const handleBook = (worker: WorkerProfile) => {
     const apiCat = activeCat === "_trending" ? "other" : activeCat;
     const serviceTitle = `${category.headline} - ${activeSub ?? category.subs[0]}`;
-    setCheckoutTarget({ worker, serviceTitle, catId: apiCat });
+    setBookingFlow({ worker, serviceTitle, catId: apiCat });
+    setBookingStep("describe");
+  };
+
+  const handleAuthSuccess = (user: AppUser) => {
+    setCurrentUser(user);
+    setShowAuth(false);
+    if (user.role === "worker") {
+      setActivePage("__worker-dashboard");
+    }
+  };
+
+  const openAuth = (role: "customer" | "worker") => {
+    setAuthRole(role);
+    setShowAuth(true);
   };
 
   const suggestions = searchQuery.trim().length > 0
-    ? SEARCH_INDEX.filter((s) =>
-        s.label.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 8)
+    ? SEARCH_INDEX.filter((s) => {
+        const q = searchQuery.toLowerCase();
+        return lang === "tr"
+          ? s.labelTr.toLowerCase().includes(q) || s.label.toLowerCase().includes(q)
+          : s.label.toLowerCase().includes(q);
+      }).slice(0, 8)
     : [];
 
   const filteredWorkers = searchQuery.trim()
@@ -436,7 +551,6 @@ export default function App() {
     return (
       <MyBookingsPage
         user={currentUser}
-        bookings={bookings}
         onBack={() => setActivePage(null)}
         onNavigate={(p) => setActivePage(p)}
       />
@@ -450,6 +564,7 @@ export default function App() {
         onBack={() => setActivePage(null)}
         onSignOut={() => { setCurrentUser(null); setActivePage(null); }}
         onNavigate={(p) => setActivePage(p)}
+        onUserChange={(user) => setCurrentUser(user)}
       />
     );
   }
@@ -480,13 +595,39 @@ export default function App() {
             <div className="nav-auth">
               <LangToggle />
               {currentUser ? (
-                <div className="nav-user">
-                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
-                  <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
+                <div className="nav-user" ref={userMenuRef} style={{ position: "relative" }}>
+                  <button className="nav-user-btn" onClick={() => setShowUserMenu((v) => !v)}>
+                    <span className="nav-user-avatar">
+                      {currentUser.avatarUrl ? (
+                        <img
+                          src={currentUser.avatarUrl}
+                          alt={currentUser.fullName}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                        />
+                      ) : (
+                        currentUser.fullName.charAt(0).toUpperCase()
+                      )}
+                    </span>
+                    <span className="nav-user-name">{currentUser.fullName}</span>
+                    <span className="nav-caret">▾</span>
+                  </button>
+                  {showUserMenu && (
+                    <div className="user-dropdown">
+                      <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>{t("nav_profile", lang)}</button>
+                      <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>{t("nav_bookings", lang)}</button>
+                      {currentUser.role === "worker" && (
+                        <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>{t("nav_dashboard", lang)}</button>
+                      )}
+                      <hr className="dropdown-divider" />
+                      <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>{t("nav_signout", lang)}</button>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
+                <>
+                  <button className="btn-ghost" onClick={() => openAuth("customer")}>{t("nav_login_customer", lang)}</button>
+                  <button className="btn-ghost" onClick={() => openAuth("worker")}>{t("nav_login_worker", lang)}</button>
+                </>
               )}
               <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
@@ -548,7 +689,8 @@ export default function App() {
         {showAuth && (
           <AuthModal
             onClose={() => setShowAuth(false)}
-            onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+            onSuccess={handleAuthSuccess}
+            defaultSignInRole={authRole}
           />
         )}
       </div>
@@ -556,7 +698,14 @@ export default function App() {
   }
 
   if (activePage === "__become-worker") {
-    return <BecomeWorkerPage onBack={() => setActivePage(null)} />;
+    return (
+      <BecomeWorkerPage
+        onBackHome={() => setActivePage(null)}
+        onOpenServices={() => setActivePage("__services")}
+        onOpenWorkers={() => setActivePage("__workers")}
+        onRegistered={(user) => { setCurrentUser(user); setActivePage("__worker-dashboard"); }}
+      />
+    );
   }
 
   if (activePage === "__services") {
@@ -574,13 +723,39 @@ export default function App() {
             <div className="nav-auth">
               <LangToggle />
               {currentUser ? (
-                <div className="nav-user">
-                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
-                  <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
+                <div className="nav-user" ref={userMenuRef} style={{ position: "relative" }}>
+                  <button className="nav-user-btn" onClick={() => setShowUserMenu((v) => !v)}>
+                    <span className="nav-user-avatar">
+                      {currentUser.avatarUrl ? (
+                        <img
+                          src={currentUser.avatarUrl}
+                          alt={currentUser.fullName}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                        />
+                      ) : (
+                        currentUser.fullName.charAt(0).toUpperCase()
+                      )}
+                    </span>
+                    <span className="nav-user-name">{currentUser.fullName}</span>
+                    <span className="nav-caret">▾</span>
+                  </button>
+                  {showUserMenu && (
+                    <div className="user-dropdown">
+                      <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>{t("nav_profile", lang)}</button>
+                      <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>{t("nav_bookings", lang)}</button>
+                      {currentUser.role === "worker" && (
+                        <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>{t("nav_dashboard", lang)}</button>
+                      )}
+                      <hr className="dropdown-divider" />
+                      <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>{t("nav_signout", lang)}</button>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
+                <>
+                  <button className="btn-ghost" onClick={() => openAuth("customer")}>{t("nav_login_customer", lang)}</button>
+                  <button className="btn-ghost" onClick={() => openAuth("worker")}>{t("nav_login_worker", lang)}</button>
+                </>
               )}
               <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
@@ -602,7 +777,6 @@ export default function App() {
                 { img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=70", title: "Moving Services", desc: "From heavy lifting to unpacking — make your move easy", subs: ["Help Moving", "Truck Assisted Help Moving", "Packing Services & Help", "Unpacking Services", "Heavy Lifting", "Local Movers", "Junk Pickup", "Furniture Movers", "One Item Movers", "Storage Unit Moving", "Couch Removal", "Mattress Pick-Up & Removal", "Furniture Removal", "Pool Table Movers", "Appliance Removal", "Heavy Furniture Moving", "Rearranging Furniture", "Full Service Help Moving", "In-Home Furniture Movers"] },
                 { img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=70", title: "Yardwork", desc: "Hire a Tasker for yardwork & landscaping", subs: ["Gardening Services", "Weed Removal", "Lawn Care Services", "Lawn Mowing Services", "Landscaping Services", "Gutter Cleaning", "Tree Trimming Service", "Vacation Plant Watering", "Patio Cleaning", "Hot Tub Cleaning", "Fence Installation & Repair Services", "Deck Restoration Services", "Patio Furniture Assembly", "Fence Staining", "Mulching Services", "Lawn Fertilizer Service", "Hedge Trimming Service", "Outdoor Party Setup", "Urban Gardening Service", "Leaf Raking & Removal", "Produce Gardening", "Hose Installation", "Shed Maintenance", "Pressure Washing"] },
                 { img: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=70", title: "Shopping & Delivery", desc: "Get anything from groceries to furniture", subs: ["Delivery Service", "Grocery Shopping & Delivery", "Running Your Errands", "Christmas Tree Delivery", "Wait in Line", "Deliver Big Piece of Furniture", "Drop Off Donations", "Contactless Delivery", "Pet Food Delivery", "Baby Food Delivery", "Return Items", "Wait for Delivery", "Shipping", "Breakfast Delivery", "Coffee Delivery"] },
-                { img: "https://images.unsplash.com/photo-1550226940-43a3038f3826?auto=format&fit=crop&w=600&q=70", title: "IKEA Services", desc: "Hire a Tasker for all your IKEA needs", subs: ["Light Installation", "Furniture Removal", "Smart Home Installation", "Organization", "Furniture Assembly", "General Mounting"] },
                 { img: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=600&q=70", title: "Painting", desc: "Interior, exterior & specialist finishes", subs: ["Interior Painting", "Exterior Painting", "Wallpapering", "Accent Wall", "Wood Staining"] },
                 { img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=70", title: "Virtual & Online Tasks", desc: "Virtual assistance, organization, research & more", subs: ["Virtual Assistant", "Organization", "Data Entry", "Computer Help"] },
                 { img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=70", title: "Office Services", desc: "Hire a Tasker to help around the office!", subs: ["Office Cleaning", "Office Tech Setup", "Office Movers", "Office Supply & Snack Delivery", "Office Furniture Assembly", "Office Setup & Organization", "Office Administration", "Office Interior Design", "Moving Office Furniture", "Office Mounting Service"] },
@@ -611,33 +785,43 @@ export default function App() {
                 { img: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?auto=format&fit=crop&w=600&q=70", title: "Winter Tasks", desc: "Get help with winter tasks", subs: ["Snow Removal", "Sidewalk Salting", "Window Winterization", "Residential Snow Removal", "Christmas Tree Removal", "AC Winterization", "Winter Yardwork", "Pipe Insulation", "Storm Door Installation", "Winter Deck Maintenance", "Water Heater Maintenance", "Wait in Line"] },
                 { img: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=600&q=70", title: "Personal Assistant", desc: "Hire a Tasker to be your personal assistant!", subs: ["Personal Assistant", "Running Your Errands", "Wait in Line", "Organization", "Organize Home", "Closet Organization Service", "Interior Design Service", "Virtual Assistant"] },
                 { img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=600&q=70", title: "Contactless Tasks", desc: "No-contact delivery, shopping & errands", subs: ["Contactless Delivery", "Contactless Prescription Pick-up & Delivery", "Running Your Errands", "Grocery Shopping & Delivery", "Disinfecting Services", "Drop Off Donations", "Yard Work Services", "Virtual Assistant"] },
-              ].map(({ img, title, desc, subs }) => (
-                <div
-                  className="service-category-card"
-                  key={title}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => setActivePage(title)}
-                  onKeyDown={(e) => e.key === "Enter" && setActivePage(title)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className="service-card-img-wrap">
-                    <img src={img} alt={title} className="service-card-img" loading="lazy" />
+              ].map(({ img, title, desc, subs }) => {
+                const serviceDetail = SERVICE_DETAILS[title];
+                const localizedTitle = lang === "tr" ? serviceDetail?.titleTr ?? title : title;
+                const localizedDesc = lang === "tr" ? serviceDetail?.taglineTr ?? desc : serviceDetail?.tagline ?? desc;
+                const localizedSubs = subs.map((s) => ({
+                  page: s,
+                  label: lang === "tr" ? SERVICE_DETAILS[s]?.titleTr ?? s : s,
+                }));
+
+                return (
+                  <div
+                    className="service-category-card"
+                    key={title}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setActivePage(title)}
+                    onKeyDown={(e) => e.key === "Enter" && setActivePage(title)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="service-card-img-wrap">
+                      <img src={img} alt={localizedTitle} className="service-card-img" loading="lazy" />
+                    </div>
+                    <div className="service-card-info">
+                      <h3 className="service-card-title">{localizedTitle}</h3>
+                      <p className="service-card-desc">{localizedDesc}</p>
+                      <hr className="service-card-divider" />
+                      <ul className="service-card-subs">
+                        {localizedSubs.map((item) => (
+                          <li key={`${title}-${item.page}`}>
+                            <a className="service-sub-link" onClick={(e) => { e.stopPropagation(); setActivePage(item.page); }}>{item.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <div className="service-card-info">
-                    <h3 className="service-card-title">{title}</h3>
-                    <p className="service-card-desc">{desc}</p>
-                    <hr className="service-card-divider" />
-                    <ul className="service-card-subs">
-                      {subs.map((s) => (
-                        <li key={s}>
-                          <a className="service-sub-link" onClick={(e) => { e.stopPropagation(); setActivePage(title); }}>{s}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -684,7 +868,8 @@ export default function App() {
         {showAuth && (
           <AuthModal
             onClose={() => setShowAuth(false)}
-            onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+            onSuccess={handleAuthSuccess}
+            defaultSignInRole={authRole}
           />
         )}
       </div>
@@ -706,13 +891,39 @@ export default function App() {
             <div className="nav-auth">
               <LangToggle />
               {currentUser ? (
-                <div className="nav-user">
-                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
-                  <span className="nav-user-name">{currentUser.fullName}</span>
-                  <button className="btn-ghost" onClick={() => setCurrentUser(null)}>{t("nav_signout", lang)}</button>
+                <div className="nav-user" ref={userMenuRef} style={{ position: "relative" }}>
+                  <button className="nav-user-btn" onClick={() => setShowUserMenu((v) => !v)}>
+                    <span className="nav-user-avatar">
+                      {currentUser.avatarUrl ? (
+                        <img
+                          src={currentUser.avatarUrl}
+                          alt={currentUser.fullName}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                        />
+                      ) : (
+                        currentUser.fullName.charAt(0).toUpperCase()
+                      )}
+                    </span>
+                    <span className="nav-user-name">{currentUser.fullName}</span>
+                    <span className="nav-caret">▾</span>
+                  </button>
+                  {showUserMenu && (
+                    <div className="user-dropdown">
+                      <button onClick={() => { setActivePage("__profile"); setShowUserMenu(false); }}>{t("nav_profile", lang)}</button>
+                      <button onClick={() => { setActivePage("__my-bookings"); setShowUserMenu(false); }}>{t("nav_bookings", lang)}</button>
+                      {currentUser.role === "worker" && (
+                        <button onClick={() => { setActivePage("__worker-dashboard"); setShowUserMenu(false); }}>{t("nav_dashboard", lang)}</button>
+                      )}
+                      <hr className="dropdown-divider" />
+                      <button className="dropdown-signout" onClick={() => { setCurrentUser(null); setShowUserMenu(false); }}>{t("nav_signout", lang)}</button>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
+                <>
+                  <button className="btn-ghost" onClick={() => openAuth("customer")}>{t("nav_login_customer", lang)}</button>
+                  <button className="btn-ghost" onClick={() => openAuth("worker")}>{t("nav_login_worker", lang)}</button>
+                </>
               )}
               <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
             </div>
@@ -747,7 +958,17 @@ export default function App() {
               {workers.map((worker) => (
                 <article className="worker-card" key={worker.id}>
                   <div className="worker-card-top">
-                    <div className="worker-avatar">{worker.fullName.charAt(0)}</div>
+                    <div className="worker-avatar">
+                      {worker.avatarUrl ? (
+                        <img
+                          src={worker.avatarUrl}
+                          alt={worker.fullName}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                        />
+                      ) : (
+                        worker.fullName.charAt(0)
+                      )}
+                    </div>
                     <div className="worker-meta">
                       <div className="worker-name-row">
                         <span className="worker-name">{worker.fullName}</span>
@@ -776,9 +997,8 @@ export default function App() {
                     <button
                       className="btn-primary btn-book"
                       onClick={() => handleBook(worker)}
-                      disabled={bookingInProgress}
                     >
-                      {bookingInProgress ? "Sending\u2026" : "Book Now"}
+                      {t("book_now", lang)}
                     </button>
                   </div>
                 </article>
@@ -829,7 +1049,8 @@ export default function App() {
         {showAuth && (
           <AuthModal
             onClose={() => setShowAuth(false)}
-            onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+            onSuccess={handleAuthSuccess}
+            defaultSignInRole={authRole}
           />
         )}
       </div>
@@ -837,7 +1058,16 @@ export default function App() {
   }
 
   if (activePage) {
-    return <ServiceDetailPage serviceId={activePage} onBack={() => setActivePage(null)} />;
+    return (
+      <ServiceDetailPage
+        serviceId={activePage}
+        customerId={customerId}
+        onBackHome={() => setActivePage(null)}
+        onBackServices={() => setActivePage("__services")}
+        onOpenWorkers={() => setActivePage("__workers")}
+        onOpenBecomeWorker={() => setActivePage("__become-worker")}
+      />
+    );
   }
 
   return (
@@ -861,7 +1091,17 @@ export default function App() {
                   className="nav-user-btn"
                   onClick={() => setShowUserMenu((v) => !v)}
                 >
-                  <span className="nav-user-avatar">{currentUser.fullName.charAt(0).toUpperCase()}</span>
+                  <span className="nav-user-avatar">
+                    {currentUser.avatarUrl ? (
+                      <img
+                        src={currentUser.avatarUrl}
+                        alt={currentUser.fullName}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                      />
+                    ) : (
+                      currentUser.fullName.charAt(0).toUpperCase()
+                    )}
+                  </span>
                   <span className="nav-user-name">{currentUser.fullName}</span>
                   <span className="nav-caret">▾</span>
                 </button>
@@ -878,7 +1118,10 @@ export default function App() {
                 )}
               </div>
             ) : (
-              <button className="btn-ghost" onClick={() => setShowAuth(true)}>{t("nav_signin", lang)}</button>
+              <>
+                <button className="btn-ghost" onClick={() => openAuth("customer")}>{t("nav_login_customer", lang)}</button>
+                <button className="btn-ghost" onClick={() => openAuth("worker")}>{t("nav_login_worker", lang)}</button>
+              </>
             )}
             <button className="btn-primary" onClick={() => setActivePage("__become-worker")}>{t("nav_become_worker", lang)}</button>
           </div>
@@ -907,7 +1150,7 @@ export default function App() {
           />
           <button
             className="search-btn"
-            aria-label="Search"
+            aria-label={t("search", lang)}
             onClick={() => {
               if (suggestions.length > 0) {
                 setActivePage(suggestions[0].page);
@@ -930,8 +1173,8 @@ export default function App() {
                     setShowSuggestions(false);
                   }}
                 >
-                  <span className="suggestion-label">{s.label}</span>
-                  <span className="suggestion-page">{s.page}</span>
+                  <span className="suggestion-label">{lang === "tr" ? s.labelTr : s.label}</span>
+                  <span className="suggestion-page">{lang === "tr" ? s.labelTr : s.label}</span>
                 </li>
               ))}
             </ul>
@@ -954,9 +1197,15 @@ export default function App() {
             <button
               key={sub}
               className={"sub-pill" + (activeSub === sub ? " sub-pill--active" : "")}
-              onClick={() => setActiveSub(activeSub === sub ? null : sub)}
+              onClick={() => {
+                setActiveSub(activeSub === sub ? null : sub);
+                const targetPage = SUB_PILL_PAGE_MAP[sub] ?? sub;
+                if (SERVICE_DETAILS[targetPage]) {
+                  setActivePage(targetPage);
+                }
+              }}
             >
-              {sub}
+              {lang === "tr" ? (SERVICE_DETAILS[sub]?.titleTr ?? sub) : sub}
             </button>
           ))}
         </div>
@@ -966,14 +1215,14 @@ export default function App() {
       <section className="spotlight-section">
         <div className="spotlight-card" style={{ background: category.accent }}>
           <div className="spotlight-text">
-            <h2 className="spotlight-title">{category.headline}</h2>
+            <h2 className="spotlight-title">{lang === "tr" ? category.headlineTr : category.headline}</h2>
             <ul className="spotlight-bullets">
-              {category.bullets.map((b) => (
+              {(lang === "tr" ? category.bulletsTr : category.bullets).map((b) => (
                 <li key={b}><span className="bullet-check">&#10003;</span>{b}</li>
               ))}
             </ul>
             <p className="spotlight-trending">
-              <strong>{t("now_trending", lang)}</strong> {category.trending}
+              <strong>{t("now_trending", lang)}</strong> {lang === "tr" ? category.trendingTr : category.trending}
             </p>
           </div>
           <div className="spotlight-visual" style={{ background: category.iconBg }}>
@@ -1011,8 +1260,8 @@ export default function App() {
                   <span className="pp-emoji">{p.emoji}</span>
                 </div>
                 <div className="pp-info">
-                  <strong className="pp-title">{p.title}</strong>
-                  <span className="pp-price">{t("pp_from", lang)} ₺{p.startPrice}</span>
+                  <strong className="pp-title">{lang === "tr" ? p.titleTr : p.title}</strong>
+                  <span className="pp-price">{t("from_short", lang)} ₺{p.startPrice}</span>
                 </div>
               </div>
             ))}
@@ -1031,9 +1280,9 @@ export default function App() {
                   <strong className="reviewer-name">{r.name}</strong>
                   <div className="review-stars">{"★".repeat(r.stars)}</div>
                 </div>
-                <p className="review-text">{r.text}</p>
+                <p className="review-text">{lang === "tr" ? r.textTr : r.text}</p>
                 <span className="review-service-link" onClick={() => setActivePage(r.page)}>
-                  {r.service}
+                  {lang === "tr" ? r.serviceTr : r.service}
                 </span>
               </div>
             ))}
@@ -1088,22 +1337,22 @@ export default function App() {
             <div className="hiw-card">
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🔧</span>
-                <span>{lang === "tr" ? "Tamirci hizmetleri" : "Handyman services"}</span>
-                <span className="hiw-card-price">from ₺199</span>
+                <span>{CAT_LABEL.other[lang]}</span>
+                <span className="hiw-card-price">{t("from_short", lang)} ₺199</span>
               </div>
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🧹</span>
-                <span>{lang === "tr" ? "Temizlik" : "Cleaning"}</span>
-                <span className="hiw-card-price">from ₺199</span>
+                <span>{CAT_LABEL.cleaning[lang]}</span>
+                <span className="hiw-card-price">{t("from_short", lang)} ₺199</span>
               </div>
               <div className="hiw-card-row">
                 <span className="hiw-card-icon">🚚</span>
-                <span>{lang === "tr" ? "Nakliyat yardımı" : "Moving help"}</span>
-                <span className="hiw-card-price">from ₺279</span>
+                <span>{CAT_LABEL.moving[lang]}</span>
+                <span className="hiw-card-price">{t("from_short", lang)} ₺279</span>
               </div>
               <div className="hiw-card-row hiw-card-row--btn">
                 <button className="btn-primary" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                  Book Now
+                    {t("book_now", lang)}
                 </button>
               </div>
             </div>
@@ -1115,12 +1364,14 @@ export default function App() {
       <section className="workers-section" id="workers">
         <div className="workers-header">
           <h2 className="section-title">
-            {activeSub ? (lang === "tr" ? `Ustalar: "${activeSub}"` : `Workers for "${activeSub}"`) : (lang === "tr" ? `En iyi ${CAT_LABEL[category.id]?.tr ?? category.label} ustat` : `Top ${category.label} workers`)}
+            {activeSub
+              ? `${t("workers_for", lang)} "${activeSub}"`
+              : `${t("workers_top", lang)} ${CAT_LABEL[category.id]?.[lang] ?? category.label} ${t("workers_label", lang)}`}
           </h2>
           {statusLog.length > 0 && (
             <div className="status-log">
               {statusLog.map((item, i) => (
-                <span key={i} className="status-pill">{item}</span>
+                <span key={i} className="status-pill">{t(item.key as Parameters<typeof t>[0], lang)} {item.id}</span>
               ))}
             </div>
           )}
@@ -1132,7 +1383,17 @@ export default function App() {
             {filteredWorkers.map((worker) => (
               <article className="worker-card" key={worker.id}>
                 <div className="worker-card-top">
-                  <div className="worker-avatar">{worker.fullName.charAt(0)}</div>
+                  <div className="worker-avatar">
+                    {worker.avatarUrl ? (
+                      <img
+                        src={worker.avatarUrl}
+                        alt={worker.fullName}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                      />
+                    ) : (
+                      worker.fullName.charAt(0)
+                    )}
+                  </div>
                   <div className="worker-meta">
                     <div className="worker-name-row">
                       <span className="worker-name">{worker.fullName}</span>
@@ -1161,9 +1422,8 @@ export default function App() {
                   <button
                     className="btn-primary btn-book"
                     onClick={() => handleBook(worker)}
-                    disabled={bookingInProgress}
                   >
-                    {bookingInProgress ? t("sending", lang) : t("book_now", lang)}
+                    {t("book_now", lang)}
                   </button>
                 </div>
               </article>
@@ -1179,7 +1439,7 @@ export default function App() {
           <div className="ght-pills">
             {SERVICE_QUICK_LINKS.map((s) => (
               <button key={s.label} className="ght-pill" onClick={() => setActivePage(s.page)}>
-                {s.label}
+                {lang === "tr" ? (SERVICE_DETAILS[s.page]?.titleTr ?? SERVICE_DETAILS[s.label]?.titleTr ?? s.label) : s.label}
               </button>
             ))}
           </div>
@@ -1207,15 +1467,15 @@ export default function App() {
             <div className="become-worker-card">
               <div className="bw-card-header">{t("bw_top_earners", lang)}</div>
               {[
-                { name: "Aryan K.", cat: "Electrical", earn: "₺3,200", rating: "4.9" },
-                { name: "Leila M.", cat: "Cleaning", earn: "₺2,800", rating: "5.0" },
-                { name: "Deniz Y.", cat: "Moving", earn: "₺2,450", rating: "4.8" },
+                { name: "Aryan K.", cat: "Electrical", catTr: "Elektrik",  earn: "₺3,200", rating: "4.9" },
+                { name: "Leila M.", cat: "Cleaning",   catTr: "Temizlik",  earn: "₺2,800", rating: "5.0" },
+                { name: "Deniz Y.", cat: "Moving",     catTr: "Nakliyat",  earn: "₺2,450", rating: "4.8" },
               ].map((w) => (
                 <div className="bw-earner-row" key={w.name}>
                   <div className="bw-earner-avatar">{w.name.charAt(0)}</div>
                   <div className="bw-earner-info">
                     <span className="bw-earner-name">{w.name}</span>
-                    <span className="bw-earner-cat">{w.cat}</span>
+                    <span className="bw-earner-cat">{lang === "tr" ? w.catTr : w.cat}</span>
                   </div>
                   <div className="bw-earner-right">
                     <span className="bw-earner-earn">{w.earn}</span>
@@ -1271,20 +1531,47 @@ export default function App() {
       {showAuth && (
         <AuthModal
           onClose={() => setShowAuth(false)}
-          onSuccess={(user) => { setCurrentUser(user); setShowAuth(false); }}
+          onSuccess={handleAuthSuccess}
+          defaultSignInRole={authRole}
         />
       )}
 
-      {checkoutTarget && (
+      {bookingStep === "describe" && bookingFlow && (
+        <TaskDescriptionModal
+          serviceName={bookingFlow.serviceTitle}
+          onConfirm={(taskDescription) => {
+            setBookingFlow((prev) => (prev ? { ...prev, taskDescription } : prev));
+            setBookingStep("datetime");
+          }}
+          onCancel={resetBookingFlow}
+        />
+      )}
+
+      {bookingStep === "datetime" && bookingFlow?.taskDescription && (
+        <DateTimePickerModal
+          onConfirm={(selectedDate, selectedTime) => {
+            setBookingFlow((prev) => (
+              prev ? { ...prev, selectedDate, selectedTime } : prev
+            ));
+            setBookingStep("confirm");
+          }}
+          onCancel={() => setBookingStep("describe")}
+        />
+      )}
+
+      {bookingStep === "confirm" && bookingFlow?.taskDescription && bookingFlow.selectedDate && bookingFlow.selectedTime && (
         <CheckoutModal
-          worker={checkoutTarget.worker}
-          serviceTitle={checkoutTarget.serviceTitle}
-          catId={checkoutTarget.catId}
-          onClose={() => setCheckoutTarget(null)}
+          customerId={customerId}
+          worker={bookingFlow.worker}
+          serviceTitle={bookingFlow.serviceTitle}
+          catId={bookingFlow.catId}
+          taskDescription={bookingFlow.taskDescription}
+          selectedDate={bookingFlow.selectedDate}
+          selectedTime={bookingFlow.selectedTime}
+          onClose={resetBookingFlow}
           onSuccess={(booking) => {
-            setBookings((prev) => [booking, ...prev]);
-            setStatusLog((prev) => [`Booking confirmed — ${booking.id}`, ...prev].slice(0, 5));
-            setCheckoutTarget(null);
+            setStatusLog((prev) => [{ key: "status_booked", id: booking.id }, ...prev].slice(0, 5));
+            resetBookingFlow();
           }}
         />
       )}

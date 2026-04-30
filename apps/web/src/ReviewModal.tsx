@@ -33,13 +33,13 @@ export default function ReviewModal({ workerName, serviceTitle, onClose, onSubmi
           <div className="review-success">
             <div className="review-success-icon">🌟</div>
             <h3>{t("rev_thanks", lang)}</h3>
-            <p>Your feedback helps the UstaYolda community.</p>
+            <p>{t("rev_thanks_sub", lang)}</p>
             <button className="btn-primary" onClick={onClose}>{t("rev_done", lang)}</button>
           </div>
         ) : (
           <>
             <h2 className="review-modal-title">{t("rev_title", lang)}</h2>
-            <p className="review-modal-sub">with <strong>{workerName}</strong> — {serviceTitle}</p>
+            <p className="review-modal-sub">{t("rev_with", lang)} <strong>{workerName}</strong> — {serviceTitle}</p>
 
             <div className="review-stars-input">
               {[1, 2, 3, 4, 5].map((n) => (
@@ -60,10 +60,10 @@ export default function ReviewModal({ workerName, serviceTitle, onClose, onSubmi
             )}
 
             <div className="checkout-field-group" style={{ marginTop: "1rem" }}>
-              <label className="checkout-label">Your review <span className="optional">(optional)</span></label>
+              <label className="checkout-label">{t("rev_label", lang)} <span className="optional">({t("co_optional", lang)})</span></label>
               <textarea
                 className="checkout-textarea"
-                placeholder="Tell others about your experience..."
+                placeholder={t("rev_ph", lang)}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 rows={4}

@@ -3,6 +3,7 @@ import { useLang } from "./LangContext";
 import { t } from "./translations";
 import type { WorkerProfile } from "@ustaya/shared";
 import { apiPost } from "./api";
+import type { TaskDescription } from "./TaskDescriptionModal";
 
 export interface BookingRecord {
   id: string;
@@ -16,21 +17,30 @@ export interface BookingRecord {
 }
 
 interface Props {
+  customerId: string;
   worker: WorkerProfile;
   serviceTitle: string;
   catId: string;
+  taskDescription: TaskDescription;
+  selectedDate: string;
+  selectedTime: string;
   onClose: () => void;
   onSuccess: (booking: BookingRecord) => void;
 }
 
-const today = new Date().toISOString().split("T")[0];
-
-export default function CheckoutModal({ worker, serviceTitle, catId, onClose, onSuccess }: Props) {
+export default function CheckoutModal({
+  customerId,
+  worker,
+  serviceTitle,
+  catId,
+  taskDescription,
+  selectedDate,
+  selectedTime,
+  onClose,
+  onSuccess,
+}: Props) {
   const { lang } = useLang();
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [date, setDate] = useState(today);
-  const [time, setTime] = useState("10:00");
-  const [notes, setNotes] = useState("");
+  const [step, setStep] = useState<1 | 2>(1); // 1 = Review & Confirm, 2 = Confirmed
   const [cardHolder, setCardHolder] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -49,49 +59,43 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
     return d.length >= 3 ? d.slice(0, 2) + "/" + d.slice(2) : d;
   };
 
-  const validateStep1 = () => {
-    if (!date) { setError("Please select a date."); return false; }
-    if (!time) { setError("Please select a time."); return false; }
-    setError("");
-    return true;
-  };
-
-  const validateStep2 = () => {
-    if (!cardHolder.trim()) { setError("Enter cardholder name."); return false; }
-    if (cardNumber.replace(/\s/g, "").length < 16) { setError("Enter a valid 16-digit card number."); return false; }
-    if (expiry.length < 5) { setError("Enter expiry as MM/YY."); return false; }
-    if (cvv.length < 3) { setError("Enter a 3-digit CVV."); return false; }
+  const validatePayment = () => {
+    if (!cardHolder.trim()) { setError(t("co_error_cardholder", lang)); return false; }
+    if (cardNumber.replace(/\s/g, "").length < 16) { setError(t("co_error_cardnum", lang)); return false; }
+    if (expiry.length < 5) { setError(t("co_error_expiry", lang)); return false; }
+    if (cvv.length < 3) { setError(t("co_error_cvv", lang)); return false; }
     setError("");
     return true;
   };
 
   const handleConfirm = async () => {
-    if (!validateStep2()) return;
+    if (!validatePayment()) return;
     setLoading(true);
     try {
-      const scheduledAt = new Date(`${date}T${time}`).toISOString();
+      const scheduledAt = new Date(`${selectedDate}T${selectedTime}`).toISOString();
       const res = await apiPost<{ job: { id: string } }>("/jobs/request", {
-        customerId: "c1",
+        customerId,
+        workerId: worker.id,
         category: catId,
         title: serviceTitle,
-        description: notes || `Booked via UstaYolda — ${serviceTitle}`,
+        description: `${taskDescription.details}\n\n${t("co_location", lang)}: ${taskDescription.location}${taskDescription.unitApt ? ` (${taskDescription.unitApt})` : ""}\n${t("co_task_size", lang)}: ${taskDescription.taskSize}\n${t("co_vehicle_required", lang)}: ${taskDescription.vehicleRequired}`,
         scheduledAt,
         amount: total,
-        location: { lat: 41.015, lng: 28.98, city: "Istanbul", district: "Beyoglu" },
+        location: { lat: 41.015, lng: 28.98, city: taskDescription.location, district: "District" },
       });
       setJobId(res.job.id);
-      setStep(3);
+      setStep(2);
       onSuccess({
         id: res.job.id,
         service: serviceTitle,
         worker: worker.fullName,
-        date,
-        time,
+        date: selectedDate,
+        time: selectedTime,
         amount: total,
         status: "pending",
       });
     } catch {
-      setError("Booking failed. Please try again.");
+      setError(t("co_error_failed", lang));
     } finally {
       setLoading(false);
     }
@@ -104,87 +108,81 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
 
         <div className="checkout-header">
           <h2 className="checkout-title">
-            {step === 3 ? t("co_confirmed", lang) : `${t("co_book", lang)} ${worker.fullName}`}
+            {step === 2 ? t("co_confirmed", lang) : `${t("co_book", lang)} ${worker.fullName}`}
           </h2>
-          {step !== 3 && (
+          {step !== 2 && (
             <div className="checkout-steps">
-              {[1, 2].map((n) => (
-                <div key={n} className={`checkout-step-dot${step >= n ? " checkout-step-dot--active" : ""}`}>
-                  {n}
-                </div>
-              ))}
               <div className="checkout-step-label">
-                {step === 1 ? t("co_schedule", lang) : t("co_payment", lang)}
+                {t("co_step_payment", lang)}
               </div>
             </div>
           )}
         </div>
 
-        {step !== 3 && (
+        {step !== 2 && (
           <div className="checkout-worker-summary">
-            <div className="checkout-worker-avatar">{worker.fullName.charAt(0)}</div>
+            <div className="checkout-worker-avatar">
+              {worker.avatarUrl ? (
+                <img
+                  src={worker.avatarUrl}
+                  alt={worker.fullName}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                />
+              ) : (
+                worker.fullName.charAt(0)
+              )}
+            </div>
             <div className="checkout-worker-info">
               <span className="checkout-worker-name">{worker.fullName}</span>
               <span className="checkout-service-title">{serviceTitle}</span>
             </div>
-            <div className="checkout-worker-price">₺{worker.hourlyPrice}<span>/hr</span></div>
+            <div className="checkout-worker-price">₺{worker.hourlyPrice}<span>{t("co_per_hr", lang)}</span></div>
           </div>
         )}
 
-        {/* ── Step 1: Schedule ── */}
+        {/* ── Step 1: Review & Payment ── */}
         {step === 1 && (
           <div className="checkout-body">
-            <div className="checkout-row-2">
-              <div className="checkout-field-group">
-                <label className="checkout-label">{t("co_date", lang)}</label>
-                <input
-                  className="checkout-input"
-                  type="date"
-                  value={date}
-                  min={today}
-                  onChange={(e) => setDate(e.target.value)}
-                />
+            {/* Task Summary */}
+            <div className="checkout-summary-section">
+              <h3 className="checkout-summary-title">
+                {t("co_task_summary", lang)}
+              </h3>
+              <div className="checkout-detail-row">
+                <span>{t("service", lang)}</span>
+                <strong>{serviceTitle}</strong>
               </div>
-              <div className="checkout-field-group">
-                <label className="checkout-label">{t("co_time", lang)}</label>
-                <input
-                  className="checkout-input"
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                />
+              <div className="checkout-detail-row">
+                <span>{t("co_location", lang)}</span>
+                <strong>{taskDescription.location}</strong>
+              </div>
+              <div className="checkout-detail-row">
+                <span>{t("datetime", lang)}</span>
+                <strong>
+                  {new Date(selectedDate).toLocaleDateString(lang === "tr" ? "tr-TR" : "en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                  })}, {selectedTime}
+                </strong>
+              </div>
+              <div className="checkout-detail-row">
+                <span>{t("co_task_size", lang)}</span>
+                <strong>{taskDescription.taskSize}</strong>
+              </div>
+              <div className="checkout-detail-row">
+                <span>{t("co_vehicle_required", lang)}</span>
+                <strong>{taskDescription.vehicleRequired}</strong>
               </div>
             </div>
-            <div className="checkout-field-group">
-              <label className="checkout-label">{t("co_notes", lang)} <span className="optional">{t("co_optional", lang)}</span></label>
-              <textarea
-                className="checkout-textarea"
-                placeholder={lang === "tr" ? "Özel talimatlar veya erişim notları..." : "Any special instructions or access notes..."}
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={3}
-              />
-            </div>
-            {error && <p className="checkout-error">{error}</p>}
-            <div className="checkout-total-row">
-              <span>{t("co_est_total", lang)}</span>
-              <strong>₺{total}</strong>
-            </div>
-            <button className="btn-primary checkout-cta" onClick={() => { if (validateStep1()) setStep(2); }}>
-              {t("co_continue", lang)}
-            </button>
-          </div>
-        )}
 
-        {/* ── Step 2: Payment ── */}
-        {step === 2 && (
-          <div className="checkout-body">
+            {/* Payment Card */}
             <div className="checkout-card-preview">
               <div className="card-chip" />
               <div className="card-number">{cardNumber || "**** **** **** ****"}</div>
               <div className="card-bottom">
-                <span>{cardHolder || "CARD HOLDER"}</span>
-                <span>{expiry || "MM/YY"}</span>
+                <span>{cardHolder || t("co_card_preview", lang)}</span>
+                <span>{expiry || t("co_expiry_ph", lang)}</span>
               </div>
             </div>
 
@@ -193,7 +191,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               <input
                 className="checkout-input"
                 type="text"
-                placeholder="As shown on card"
+                placeholder={t("co_cardholder_ph", lang)}
                 value={cardHolder}
                 onChange={(e) => setCardHolder(e.target.value)}
               />
@@ -203,7 +201,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               <input
                 className="checkout-input"
                 type="text"
-                placeholder="1234 5678 9012 3456"
+                placeholder={t("co_card_num_ph", lang)}
                 value={cardNumber}
                 onChange={(e) => setCardNumber(formatCard(e.target.value))}
                 maxLength={19}
@@ -216,7 +214,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
                 <input
                   className="checkout-input"
                   type="text"
-                  placeholder="MM/YY"
+                  placeholder={t("co_expiry_ph", lang)}
                   value={expiry}
                   onChange={(e) => setExpiry(formatExpiry(e.target.value))}
                   maxLength={5}
@@ -228,7 +226,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
                 <input
                   className="checkout-input"
                   type="password"
-                  placeholder="•••"
+                  placeholder={t("co_cvv_ph", lang)}
                   value={cvv}
                   onChange={(e) => setCvv(e.target.value.replace(/\D/g, "").slice(0, 3))}
                   maxLength={3}
@@ -242,7 +240,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               <strong>₺{total}</strong>
             </div>
             <div className="checkout-actions">
-              <button className="btn-ghost" onClick={() => { setStep(1); setError(""); }}>{t("co_back", lang)}</button>
+              <button className="btn-ghost" onClick={onClose}>{t("co_cancel", lang)}</button>
               <button className="btn-primary checkout-cta" onClick={handleConfirm} disabled={loading}>
                 {loading ? t("co_processing", lang) : `${t("co_confirm_pay", lang)} ₺${total}`}
               </button>
@@ -250,12 +248,12 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
           </div>
         )}
 
-        {/* ── Step 3: Confirmed ── */}
-        {step === 3 && (
+        {/* ── Step 2: Confirmed ── */}
+        {step === 2 && (
           <div className="checkout-confirmed">
             <div className="checkout-confirmed-icon">🎉</div>
             <p className="checkout-confirmed-text">
-              Your booking with <strong>{worker.fullName}</strong> is confirmed!
+              {t("co_conf_with", lang)} <strong>{worker.fullName}</strong> {t("co_conf_is", lang)}
             </p>
             <div className="checkout-confirmed-details">
               <div className="checkout-detail-row">
@@ -264,7 +262,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               </div>
               <div className="checkout-detail-row">
                 <span>{t("co_det_datetime", lang)}</span>
-                <strong>{date} at {time}</strong>
+                <strong>{selectedDate} {t("at", lang)} {selectedTime}</strong>
               </div>
               <div className="checkout-detail-row">
                 <span>{t("co_det_amount", lang)}</span>
@@ -276,7 +274,7 @@ export default function CheckoutModal({ worker, serviceTitle, catId, onClose, on
               </div>
             </div>
             <p className="checkout-confirmed-note">
-              You'll receive a confirmation email shortly. The worker will contact you before arrival.
+              {t("co_note", lang)}
             </p>
             <button className="btn-primary" onClick={onClose}>{t("co_done", lang)}</button>
           </div>

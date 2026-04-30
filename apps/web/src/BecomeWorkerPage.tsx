@@ -24,6 +24,8 @@ interface FormState {
   fullName: string;
   email: string;
   phone: string;
+  password: string;
+  confirmPassword: string;
   city: string;
   district: string;
   mahalle: string;
@@ -43,6 +45,8 @@ const INITIAL: FormState = {
   fullName: "",
   email: "",
   phone: "",
+  password: "",
+  confirmPassword: "",
   city: "",
   district: "",
   mahalle: "",
@@ -61,10 +65,13 @@ const INITIAL: FormState = {
 const STEPS = ["About You", "Your Skills", "Rates & Schedule", "Bank Details", "Review & Submit"];
 
 interface Props {
-  onBack: () => void;
+  onBackHome: () => void;
+  onOpenServices: () => void;
+  onOpenWorkers: () => void;
+  onRegistered?: (user: { id: string; fullName: string; role: "worker"; avatarUrl?: string; email?: string; phone?: string; location?: { city: string; district?: string } }) => void;
 }
 
-export default function BecomeWorkerPage({ onBack }: Props) {
+export default function BecomeWorkerPage({ onBackHome, onOpenServices, onOpenWorkers, onRegistered }: Props) {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState | "submit", string>>>({});
@@ -101,6 +108,8 @@ export default function BecomeWorkerPage({ onBack }: Props) {
       if (!form.fullName.trim() || form.fullName.length < 2) errs.fullName = "Please enter your full name.";
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Please enter a valid email address.";
       if (!form.phone.trim()) errs.phone = "Please enter your phone number.";
+      if (form.password.length < 8) errs.password = "Password must be at least 8 characters.";
+      if (form.password !== form.confirmPassword) errs.confirmPassword = "Passwords do not match.";
       if (!form.city.trim()) errs.city = "Please enter your city.";
     }
     if (step === 1) {
@@ -145,6 +154,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         role: "worker",
         fullName: form.fullName.trim(),
         email: form.email.trim(),
+        password: form.password,
         phone: form.phone.trim(),
         city: form.city.trim(),
         district: form.district.trim() || undefined,
@@ -159,6 +169,16 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         iban: form.iban.replace(/\s/g, ""),
         availability,
       });
+      onRegistered?.({
+        ...res.user,
+        role: "worker",
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        location: {
+          city: form.city.trim(),
+          district: form.district.trim() || undefined,
+        },
+      });
       setSuccess({ id: res.user.id, name: res.user.fullName });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Registration failed. Please try again.";
@@ -171,7 +191,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
   if (success) {
     return (
       <div className="root">
-        <Navbar onBack={onBack} />
+        <Navbar onBackHome={onBackHome} onOpenServices={onOpenServices} onOpenWorkers={onOpenWorkers} />
         <div className="bw-success-page">
           <div className="bw-success-card">
             <div className="bw-success-icon">🎉</div>
@@ -183,19 +203,19 @@ export default function BecomeWorkerPage({ onBack }: Props) {
               <div className="bw-success-step"><span>📲</span><p>Start receiving jobs</p></div>
             </div>
             <p className="bw-success-id">Worker ID: <strong>{success.id}</strong></p>
-            <button className="btn-primary" style={{ marginTop: "1.5rem", padding: ".85rem 2.5rem" }} onClick={onBack}>
+            <button className="btn-primary" style={{ marginTop: "1.5rem", padding: ".85rem 2.5rem" }} onClick={onBackHome}>
               Back to Home
             </button>
           </div>
         </div>
-        <Footer onBack={onBack} />
+        <Footer onBack={onBackHome} />
       </div>
     );
   }
 
   return (
     <div className="root">
-      <Navbar onBack={onBack} />
+      <Navbar onBackHome={onBackHome} onOpenServices={onOpenServices} onOpenWorkers={onOpenWorkers} />
 
       {/* ── Hero Banner ── */}
       <div className="bw-reg-hero">
@@ -203,6 +223,11 @@ export default function BecomeWorkerPage({ onBack }: Props) {
           <h1 className="bw-reg-hero-title">Become a Worker</h1>
           <p className="bw-reg-hero-sub">Join 3,200+ verified Taskers earning on their own schedule</p>
         </div>
+      </div>
+
+      <div style={{ maxWidth: "1180px", margin: "0 auto", padding: "1rem 1.5rem 0" }}>
+        <button className="static-back-btn" onClick={onBackHome}>← Back to Home</button>
+        <button className="static-back-btn" onClick={onOpenServices} style={{ marginLeft: "1rem" }}>← Back to Services</button>
       </div>
 
       {/* ── Progress Bar ── */}
@@ -272,6 +297,30 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                     onChange={(e) => set("phone", e.target.value)}
                   />
                   {errors.phone && <span className="bw-error">{errors.phone}</span>}
+                </div>
+
+                <div className="bw-field">
+                  <label className="bw-label">Password <span className="bw-req">*</span></label>
+                  <input
+                    className={"bw-input" + (errors.password ? " bw-input--error" : "")}
+                    type="password"
+                    placeholder="At least 8 characters"
+                    value={form.password}
+                    onChange={(e) => set("password", e.target.value)}
+                  />
+                  {errors.password && <span className="bw-error">{errors.password}</span>}
+                </div>
+
+                <div className="bw-field">
+                  <label className="bw-label">Confirm Password <span className="bw-req">*</span></label>
+                  <input
+                    className={"bw-input" + (errors.confirmPassword ? " bw-input--error" : "")}
+                    type="password"
+                    placeholder="Re-enter your password"
+                    value={form.confirmPassword}
+                    onChange={(e) => set("confirmPassword", e.target.value)}
+                  />
+                  {errors.confirmPassword && <span className="bw-error">{errors.confirmPassword}</span>}
                 </div>
 
                 <div className="bw-field">
@@ -624,7 +673,7 @@ export default function BecomeWorkerPage({ onBack }: Props) {
                 ← Back
               </button>
             ) : (
-              <button className="btn-ghost bw-back-btn" onClick={onBack}>
+              <button className="btn-ghost bw-back-btn" onClick={onBackHome}>
                 ← Home
               </button>
             )}
@@ -691,23 +740,31 @@ export default function BecomeWorkerPage({ onBack }: Props) {
         )}
       </div>
 
-      <Footer onBack={onBack} />
+      <Footer onBack={onBackHome} />
     </div>
   );
 }
 
-function Navbar({ onBack }: { onBack: () => void }) {
+function Navbar({
+  onBackHome,
+  onOpenServices,
+  onOpenWorkers,
+}: {
+  onBackHome: () => void;
+  onOpenServices: () => void;
+  onOpenWorkers: () => void;
+}) {
   const [showAuth, setShowAuth] = useState(false);
   return (
     <>
       <nav className="navbar">
         <div className="navbar-inner">
-          <button className="nav-logo-btn" onClick={onBack} aria-label="Go to homepage">
+          <button className="nav-logo-btn" onClick={onBackHome} aria-label="Go to homepage">
             <img src="/logo.png" alt="UstaYolda" height={52} />
           </button>
           <div className="nav-links">
-            <button className="nav-link nav-link-btn" onClick={onBack}>Services</button>
-            <button className="nav-link nav-link-btn" onClick={onBack}>Workers</button>
+            <button className="nav-link nav-link-btn" onClick={onOpenServices}>Services</button>
+            <button className="nav-link nav-link-btn" onClick={onOpenWorkers}>Workers</button>
             <span className="nav-link" style={{ color: "var(--primary)", fontWeight: 700 }}>Become a Worker</span>
           </div>
           <div className="nav-auth">

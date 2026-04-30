@@ -1,14 +1,31 @@
 import type { FastifyInstance } from "fastify";
 import type { Server } from "socket.io";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
-import { rankWorkers } from "./matching.js";
 import { createEscrowPayment, releaseEscrowPayment } from "./payments.js";
-import { db, makeId, touchJob } from "./store.js";
+import { authSecrets, db, makeId, touchJob } from "./store.js";
 
 const now = () => new Date().toISOString();
 
+const hashPassword = (password: string) => {
+  const salt = randomBytes(16).toString("hex");
+  const hash = scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+};
+
+const verifyPassword = (password: string, stored: string) => {
+  const [salt, hashHex] = stored.split(":");
+  if (!salt || !hashHex) {
+    return false;
+  }
+  const expectedHash = Buffer.from(hashHex, "hex");
+  const candidateHash = scryptSync(password, salt, expectedHash.length);
+  return timingSafeEqual(expectedHash, candidateHash);
+};
+
 const requestJobSchema = z.object({
   customerId: z.string(),
+  workerId: z.string(),
   category: z.enum(["electrician", "plumber", "cleaning", "painting", "ac-repair", "moving", "other"]),
   title: z.string().min(3),
   description: z.string().min(3),
@@ -30,7 +47,8 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       .object({
         role: z.enum(["customer", "worker"]),
         fullName: z.string().min(2),
-        email: z.string().email().optional(),
+        email: z.string().email(),
+        password: z.string().min(8),
         phone: z.string().optional(),
         city: z.string(),
         district: z.string().optional(),
@@ -50,11 +68,19 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       })
       .parse(req.body);
 
+    const normalizedEmail = body.email.trim().toLowerCase();
+    const duplicateCustomer = db.customers.find((customer) => customer.email?.toLowerCase() === normalizedEmail);
+    const duplicateWorker = db.workers.find((worker) => worker.email?.toLowerCase() === normalizedEmail);
+    if (duplicateCustomer || duplicateWorker) {
+      throw new Error("An account with this email already exists.");
+    }
+
     if (body.role === "customer") {
       const customer = {
         id: makeId("c"),
         fullName: body.fullName,
-        email: body.email,
+        email: normalizedEmail,
+        phone: body.phone,
         location: {
           lat: 41,
           lng: 29,
@@ -63,12 +89,15 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
         }
       };
       db.customers.push(customer);
-      return { user: customer, token: `dev-token-${customer.id}` };
+      authSecrets.customerPasswordHashes[customer.id] = hashPassword(body.password);
+      return { user: customer, role: "customer", token: `dev-token-${customer.id}` };
     }
 
     const worker = {
       id: makeId("w"),
       fullName: body.fullName,
+      email: normalizedEmail,
+      phone: body.phone,
       bio: body.bio ?? "New worker profile",
       categories: body.categories ?? ["other"],
       experienceYears: body.experienceYears ?? 0,
@@ -77,7 +106,6 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       completionRate: 1,
       responseTimeSeconds: 60,
       verified: false,
-      iban: body.iban ?? "",
       serviceRadiusKm: body.serviceRadiusKm ?? 10,
       location: {
         lat: 41,
@@ -93,18 +121,100 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       iban: body.iban ?? ""
     };
     db.workers.push(worker);
-    return { user: worker, token: `dev-token-${worker.id}` };
+    authSecrets.workerPasswordHashes[worker.id] = hashPassword(body.password);
+    return { user: worker, role: "worker", token: `dev-token-${worker.id}` };
   });
 
-  app.post("/auth/login", async (req) => {
-    const { email } = z.object({ email: z.string().email() }).parse(req.body);
-    // Find existing customer by email, or create a guest session
-    const existing = db.customers.find((c: { email?: string }) => c.email === email);
-    if (existing) return { user: existing, token: `dev-token-${existing.id}` };
-    // Create guest customer
-    const guest = { id: makeId("c"), fullName: email.split("@")[0], email, location: { lat: 41, lng: 29, city: "Istanbul" } };
-    db.customers.push(guest);
-    return { user: guest, token: `dev-token-${guest.id}` };
+  app.post("/auth/login", async (req, reply) => {
+    const { email, password, role } = z
+      .object({
+        email: z.string().email(),
+        password: z.string().min(8),
+        role: z.enum(["customer", "worker"]).optional()
+      })
+      .parse(req.body);
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingCustomer = db.customers.find((customer) => customer.email?.toLowerCase() === normalizedEmail);
+    if (existingCustomer) {
+      if (role === "worker") {
+        return reply.status(401).send({ message: "This email is registered as a customer account." });
+      }
+      const storedHash = authSecrets.customerPasswordHashes[existingCustomer.id];
+      if (!storedHash) {
+        authSecrets.customerPasswordHashes[existingCustomer.id] = hashPassword(password);
+      } else if (!verifyPassword(password, storedHash)) {
+        return reply.status(401).send({ message: "Invalid email or password." });
+      }
+      return { user: existingCustomer, role: "customer", token: `dev-token-${existingCustomer.id}` };
+    }
+
+    const existingWorker = db.workers.find((worker) => worker.email?.toLowerCase() === normalizedEmail);
+    if (existingWorker) {
+      if (role === "customer") {
+        return reply.status(401).send({ message: "This email is registered as a worker account." });
+      }
+      const storedHash = authSecrets.workerPasswordHashes[existingWorker.id];
+      if (!storedHash) {
+        authSecrets.workerPasswordHashes[existingWorker.id] = hashPassword(password);
+      } else if (!verifyPassword(password, storedHash)) {
+        return reply.status(401).send({ message: "Invalid email or password." });
+      }
+      return { user: existingWorker, role: "worker", token: `dev-token-${existingWorker.id}` };
+    }
+
+    return reply.status(401).send({ message: "No account found for this email." });
+  });
+
+  app.get("/customers/:customerId/profile", async (req, reply) => {
+    const params = z.object({ customerId: z.string() }).parse(req.params);
+    const customer = db.customers.find((item) => item.id === params.customerId);
+    if (!customer) {
+      return reply.status(404).send({ message: "Customer not found" });
+    }
+    return { user: customer };
+  });
+
+  app.put("/customers/:customerId/profile", async (req, reply) => {
+    const params = z.object({ customerId: z.string() }).parse(req.params);
+    const body = z
+      .object({
+        fullName: z.string().min(2).optional(),
+        email: z.string().email().optional(),
+        phone: z.string().min(3).optional(),
+        city: z.string().min(2).optional(),
+        district: z.string().optional(),
+        avatarUrl: z.string().max(2_000_000).nullable().optional()
+      })
+      .parse(req.body);
+
+    const customer = db.customers.find((item) => item.id === params.customerId);
+    if (!customer) {
+      return reply.status(404).send({ message: "Customer not found" });
+    }
+
+    if (body.fullName !== undefined) customer.fullName = body.fullName;
+    if (body.email !== undefined) customer.email = body.email;
+    if (body.phone !== undefined) customer.phone = body.phone;
+    if (body.city !== undefined) customer.location.city = body.city;
+    if (body.district !== undefined) customer.location.district = body.district;
+    if (body.avatarUrl !== undefined) customer.avatarUrl = body.avatarUrl ?? undefined;
+
+    return { user: customer };
+  });
+
+  app.get("/customers/:customerId/jobs", async (req) => {
+    const params = z.object({ customerId: z.string() }).parse(req.params);
+    const jobs = db.jobs
+      .filter((item) => item.customerId === params.customerId)
+      .sort((left, right) => right.scheduledAt.localeCompare(left.scheduledAt));
+
+    return {
+      jobs: jobs.map((job) => ({
+        ...job,
+        workerName: job.workerId ? db.workers.find((item) => item.id === job.workerId)?.fullName ?? "" : "",
+        reviewed: db.reviews.some((item) => item.jobId === job.id)
+      }))
+    };
   });
 
   app.get("/services", async () => ({
@@ -152,6 +262,9 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     const params = z.object({ workerId: z.string() }).parse(req.params);
     const body = z
       .object({
+        fullName: z.string().min(2).optional(),
+        email: z.string().email().optional(),
+        phone: z.string().min(3).optional(),
         bio: z.string().optional(),
         categories: z
           .array(
@@ -161,10 +274,13 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
         experienceYears: z.number().optional(),
         hourlyPrice: z.number().positive().optional(),
         iban: z.string().optional(),
+        bankName: z.string().optional(),
+        accountHolderName: z.string().optional(),
         serviceRadiusKm: z.number().positive().optional(),
         city: z.string().optional(),
         district: z.string().optional(),
-        documentsUploaded: z.boolean().optional()
+        documentsUploaded: z.boolean().optional(),
+        avatarUrl: z.string().max(2_000_000).nullable().optional()
       })
       .parse(req.body);
 
@@ -173,14 +289,20 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       return reply.status(404).send({ message: "Worker not found" });
     }
 
+  if (body.fullName !== undefined) worker.fullName = body.fullName;
+  if (body.email !== undefined) worker.email = body.email;
+  if (body.phone !== undefined) worker.phone = body.phone;
     if (body.bio !== undefined) worker.bio = body.bio;
     if (body.categories !== undefined) worker.categories = body.categories;
     if (body.experienceYears !== undefined) worker.experienceYears = body.experienceYears;
     if (body.hourlyPrice !== undefined) worker.hourlyPrice = body.hourlyPrice;
     if (body.iban !== undefined) worker.iban = body.iban;
+  if (body.bankName !== undefined) worker.bankName = body.bankName;
+  if (body.accountHolderName !== undefined) worker.accountHolderName = body.accountHolderName;
     if (body.serviceRadiusKm !== undefined) worker.serviceRadiusKm = body.serviceRadiusKm;
     if (body.city !== undefined) worker.location.city = body.city;
     if (body.district !== undefined) worker.location.district = body.district;
+    if (body.avatarUrl !== undefined) worker.avatarUrl = body.avatarUrl ?? undefined;
     if (body.documentsUploaded) worker.verified = true;
 
     return { worker };
@@ -211,12 +333,19 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       return reply.status(404).send({ message: "Customer not found" });
     }
 
-    const candidates = db.workers.filter((item) => item.categories.includes(payload.category));
-    const ranked = rankWorkers(candidates, payload.location).slice(0, 7);
+    const worker = db.workers.find((item) => item.id === payload.workerId);
+    if (!worker) {
+      return reply.status(404).send({ message: "Worker not found" });
+    }
+
+    if (!worker.categories.includes(payload.category)) {
+      return reply.status(400).send({ message: "Worker does not offer this service category" });
+    }
 
     const job = {
       id: makeId("job"),
       customerId: payload.customerId,
+      workerId: payload.workerId,
       category: payload.category,
       title: payload.title,
       description: payload.description,
@@ -230,24 +359,11 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     };
     db.jobs.push(job);
 
-    for (const match of ranked) {
-      io.to(`worker:${match.worker.id}`).emit("job:new", {
-        job,
-        recommendationScore: match.recommendationScore,
-        distanceKm: match.distanceKm
-      });
-    }
-
+    io.to(`worker:${payload.workerId}`).emit("job:new", { job });
+    io.to(`customer:${job.customerId}`).emit("job:pending", { job });
     io.to("admins").emit("admin:event", { type: "job_requested", jobId: job.id });
 
-    return {
-      job,
-      suggestedWorkers: ranked.map((item) => ({
-        workerId: item.worker.id,
-        score: Number(item.recommendationScore.toFixed(3)),
-        distanceKm: Number(item.distanceKm.toFixed(1))
-      }))
-    };
+    return { job };
   });
 
   app.post("/jobs/:jobId/respond", async (req, reply) => {
@@ -264,20 +380,31 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
       return reply.status(404).send({ message: "Job not found" });
     }
 
+    if (job.status !== "requested") {
+      return reply.status(409).send({ message: "This job is not awaiting a response" });
+    }
+
+    if (job.workerId != null && job.workerId !== body.workerId) {
+      return reply.status(403).send({ message: "You are not assigned to this request" });
+    }
+
     if (body.decision === "reject") {
-      return { ok: true, message: "Worker rejected" };
+      touchJob(job, "cancelled");
+      const reason = "Worker declined";
+      io.to(`customer:${job.customerId}`).emit("job:cancelled", { job, reason });
+      io.to(`worker:${body.workerId}`).emit("job:cancelled", { job, reason });
+      io.to("admins").emit("admin:event", { type: "job_cancelled", jobId: job.id });
+      return { ok: true, job };
     }
 
-    if (job.workerId) {
-      return reply.status(409).send({ message: "Job already assigned" });
+    if (job.workerId == null) {
+      job.workerId = body.workerId;
     }
-
-    job.workerId = body.workerId;
     touchJob(job, "accepted");
     const payment = createEscrowPayment(job);
 
     io.to(`customer:${job.customerId}`).emit("job:accepted", { job, payment });
-    io.to(`worker:${body.workerId}`).emit("job:accepted", { job, payment });
+    io.to(`worker:${job.workerId}`).emit("job:accepted", { job, payment });
     io.to("admins").emit("admin:event", { type: "job_accepted", jobId: job.id });
 
     return { job, payment };
@@ -402,7 +529,35 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     const past = db.jobs.filter(
       (item) => item.workerId === params.workerId && ["completed", "confirmed", "cancelled"].includes(item.status)
     );
-    return { upcoming, past };
+    const withCustomerName = (job: typeof upcoming[number]) => ({
+      ...job,
+      customerName: db.customers.find((item) => item.id === job.customerId)?.fullName ?? ""
+    });
+    return { upcoming: upcoming.map(withCustomerName), past: past.map(withCustomerName) };
+  });
+
+  app.get("/workers/:workerId/requests", async (req) => {
+    const params = z.object({ workerId: z.string() }).parse(req.params);
+    const worker = db.workers.find((item) => item.id === params.workerId);
+    if (!worker) {
+      return { requests: [] };
+    }
+
+    const requests = db.jobs
+      .filter(
+        (item) =>
+          item.status === "requested" &&
+          worker.categories.includes(item.category) &&
+          (item.workerId == null || item.workerId === params.workerId)
+      )
+      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+
+    return {
+      requests: requests.map((job) => ({
+        ...job,
+        customerName: db.customers.find((item) => item.id === job.customerId)?.fullName ?? ""
+      }))
+    };
   });
 
   app.get("/workers/:workerId/earnings", async (req) => {
@@ -453,5 +608,19 @@ export const registerRoutes = (app: FastifyInstance, io: Server) => {
     db.commissionRate = body.rate;
     io.to("admins").emit("admin:event", { type: "commission_updated", rate: body.rate });
     return { commissionRate: db.commissionRate };
+  });
+
+  app.get("/admin/workers/pending", async () => {
+    const pending = db.workers.filter((w) => !w.verified);
+    return { workers: pending };
+  });
+
+  app.put("/admin/workers/:workerId/approve", async (req, reply) => {
+    const { workerId } = z.object({ workerId: z.string() }).parse(req.params);
+    const worker = db.workers.find((w) => w.id === workerId);
+    if (!worker) return reply.status(404).send({ message: "Worker not found" });
+    worker.verified = true;
+    io.to("admins").emit("admin:event", { type: "worker_approved", jobId: workerId });
+    return { worker };
   });
 };
