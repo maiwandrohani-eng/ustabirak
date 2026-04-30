@@ -408,7 +408,7 @@ const STATIC_PAGES_TR: Record<string, { title: string; sections: { heading: stri
     sections: [
       { heading: "Ekibimize Katılın", body: "Türkiye'de ev işlerinin yapılma şeklini dönüştürme misyonuyla büyüyen bir girişimiz. Her zaman yetenekli ve hırslı insanları arıyoruz." },
       { heading: "Açık Pozisyonlar", body: "🚀 Full Stack Mühendis (İstanbul / Uzaktan)\n🎨 Ürün Tasarımcısı (İstanbul)\n📣 Büyüme & Pazarlama Müdürü (İstanbul)\n🤝 Şehir Operasyon Müdürü (Birden fazla şehir)\n\nRolünüzü bulamadınız mı? careers@ustayolda.com adresine genel başvuru gönderin." },
-      { heading: "Neden UstaYolda?", body: "Rekabetçi maaş ve hisse senedi. Esnek ve uzaktan çalışma dostu kültür. İlk günden itibaren gerçek etki — milyonlarca Türk'ün evde yardım almasını şekillendireceksiniz. Cömert izin, sağlık sigortası ve ekip buluşmaları." },
+      { heading: "Neden UstaYolda?", body: "Rekabetçi maaş ve hisse senedi. Esnek ve uzaktan çalışmaya uygun kültür. İlk günden itibaren somut etki: milyonlarca insanın evde yardım almasına katkıda bulunacaksınız. Cömert izin, sağlık sigortası ve düzenli ekip buluşmaları." },
     ],
   },
   "__blog": {
@@ -416,7 +416,7 @@ const STATIC_PAGES_TR: Record<string, { title: string; sections: { heading: stri
     sections: [
       { heading: "Asla Ertelememek Gereken 5 Ev Görevi", body: "Akan musluklar, gevşek kapı menteşeleri, tıkalı oluklar — küçük sorunlar hızla büyür. İşte her ev sahibinin pahalı tamiratlara dönüşmeden önce halletmesi gereken beş görev." },
       { heading: "İstanbul'da Güvenilir Tamirci Nasıl Bulunur?", body: "Yüzlerce tamirci arasından doğru kişiyi nasıl seçersiniz? Nelere dikkat etmeli: kimlik doğrulama, yorumlar, yanıt süresi ve rezervasyon yapmadan önce sormanız gereken sorular." },
-      { heading: "Bahar Temizliği Kontrol Listesi: Oda Oda", body: "O zaman geldi. Oda oda kontrol listemiz, mutfak aletlerinin derinlemesine temizlenmesinden dolap düzenlemesine kadar her şeyi kapsar — ne zaman profesyonel çağırmanız gerektiğine dair ipuçlarıyla birlikte." },
+      { heading: "Bahar Temizliği Kontrol Listesi: Oda Oda", body: "Zamanı geldi. Oda oda kontrol listemiz, mutfak ekipmanlarının derin temizliğinden dolap düzenine kadar her adımı kapsar; ne zaman profesyonel destek almanız gerektiğine dair ipuçları da içerir." },
       { heading: "Perde Arkası: UstaYolda Sizi Ustalarla Nasıl Eşleştiriyor?", body: "Eşleştirme algoritmamız, dakikalar içinde size en iyi ustayı bulmak için konum, müsaitlik, beceri ve puanları değerlendirir. İşin perde arkasına bir göz atın." },
     ],
   },
@@ -1235,11 +1235,11 @@ export default function App() {
       <section className="tr-stats-section">
         <div className="tr-stats-inner">
           {[
-            { labelEn: "Tasks completed", labelTr: "Tamamlanan görev", value: "48.000+" },
-            { labelEn: "Moving tasks", labelTr: "Nakliyat görevi", value: "9.200+" },
-            { labelEn: "Items mounted", labelTr: "Montaj yapılan", value: "12.000+" },
-            { labelEn: "Home repairs", labelTr: "Ev tamiratı", value: "8.500+" },
-            { labelEn: "Homes cleaned", labelTr: "Temizlenen ev", value: "15.000+" },
+            { labelEn: "Tasks completed", labelTr: "Tamamlanan iş", value: "48.000+" },
+            { labelEn: "Moving tasks", labelTr: "Tamamlanan nakliyat", value: "9.200+" },
+            { labelEn: "Items mounted", labelTr: "Monte edilen ürün", value: "12.000+" },
+            { labelEn: "Home repairs", labelTr: "Ev onarımı", value: "8.500+" },
+            { labelEn: "Homes cleaned", labelTr: "Temizlenen konut", value: "15.000+" },
           ].map((s) => (
             <div className="tr-stat" key={s.labelEn}>
               <span className="tr-stat-label">{lang === "tr" ? s.labelTr : s.labelEn}:</span>
@@ -1365,7 +1365,9 @@ export default function App() {
         <div className="workers-header">
           <h2 className="section-title">
             {activeSub
-              ? `${t("workers_for", lang)} "${activeSub}"`
+              ? lang === "tr"
+                ? `“${activeSub}” için ustalar`
+                : `${t("workers_for", lang)} "${activeSub}"`
               : `${t("workers_top", lang)} ${CAT_LABEL[category.id]?.[lang] ?? category.label} ${t("workers_label", lang)}`}
           </h2>
           {statusLog.length > 0 && (
